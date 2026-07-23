@@ -194,7 +194,7 @@ var pl400Questions = [
       '11.0.0.0',
     ],
     correct: [0],
-    explanation: 'Version 10.0.3.1 is correct because solution versioning follows semantic versioning where the third number (build/patch) should be incremented for bug fixes. Going from 10.0.2.1 to 10.0.3.1 indicates a patch release. 10.0.2.2 would also be acceptable for minor fixes. 10.1.0.2 implies a minor feature release. 11.0.0.0 implies a major breaking change release.',
+    explanation: 'Version 10.0.3.1 is correct because this question expects the build segment to be incremented for a bug-fix release. Going from 10.0.2.1 to 10.0.3.1 represents the next patch-level update without introducing a minor-feature or major-version change. 10.1.0.2 implies a minor feature release, and 11.0.0.0 implies a major breaking change release.',
   },
   {
     id: 1131,
