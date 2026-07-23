@@ -1016,7 +1016,7 @@ var pl900Questions2 = [
   },
   {
     "id": 9189,
-    "text": "This question requires that you evaluate the underlined text to determine if it is correct. A company requires that service representatives schedule customer visits every six months. Each service representative is required to enter a scheduled task for the next checkup as they are leaving a client site. A service representative wants to automate task entry by creating a business process flow that can be initiated from the service call screen on a phone. Review the underlined text. If it makes the statement correct, select No change is needed.' If the statement is incorrect, select the answer choice that makes the statement correct. Y C aninstant",
+    "text": "This question requires that you evaluate the underlined text to determine if it is correct. A company requires that service representatives schedule customer visits every six months. Each service representative is required to enter a scheduled task for the next checkup as they are leaving a client site. A service representative wants to automate task entry by creating a business process flow that can be initiated from the service call screen on a phone. Review the underlined text. If it makes the statement correct, select 'No change is needed.' If the statement is incorrect, select the answer choice that makes the statement correct.",
     "type": "single",
     "choices": [
       "No change is needed.",
