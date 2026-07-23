@@ -1,7 +1,8 @@
 var pl900Questions3 = [
   {
     "id": 9245,
-    "text": "You receive a copy of a Power Automate cloud flow from a colleague. For each of the following statements, select Yes if the statement is true. Otherwise, select N\n\nWhich of the following statements are TRUE? Select all that apply.",
+    "text": "You receive a copy of a Power Automate cloud flow from a colleague. For each of the following statements, select Yes if the statement is true. Otherwise, select No.
+\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
       "You can create a new flow that is a copy of the original flow.",
@@ -91,7 +92,8 @@ var pl900Questions3 = [
   },
   {
     "id": 9252,
-    "text": "You create a model-driven app. You need to determine which customizations can be made to table forms. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select\n\nWhich of the following statements are TRUE? Select all that apply.",
+    "text": "You create a model-driven app. You need to determine which customizations can be made to table forms. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.
+\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
       "A form can be made visible only to users who have been assigned a specific security role.",
@@ -213,7 +215,7 @@ var pl900Questions3 = [
   },
   {
     "id": 9260,
-    "text": "A company uses Dynamics 365 Supply Chain Management. When a sales order is created for one of the customers that a specific user manages, a Microsoft Outlook task must be created to remind the user to perform any follow up activities that are required. You need to implement the functionality to create Outlook tasks. Which feature should you use? AlBuilder E Power Bl",
+    "text": "A company uses Dynamics 365 Supply Chain Management. When a sales order is created for one of the customers that a specific user manages, a Microsoft Outlook task must be created to remind the user to perform any follow up activities that are required. You need to implement the functionality to create Outlook tasks. Which feature should you use?",
     "type": "single",
     "choices": [
       "Business Events",
@@ -227,7 +229,7 @@ var pl900Questions3 = [
   },
   {
     "id": 9261,
-    "text": "You build a custom Al Builder model and use it in Power Automate cloud flows. Users report that they are not able to use the model in their flows. You need to allow users to access the model in their flows. Which action should you perform on the model? publish",
+    "text": "You build a custom AI Builder model and use it in Power Automate cloud flows. Users report that they are not able to use the model in their flows. You need to allow users to access the model in their flows. Which action should you perform on the model?",
     "type": "single",
     "choices": [
       "edit",
@@ -244,8 +246,8 @@ var pl900Questions3 = [
     "text": "A company is considering using Power Pages for its website. You need to identify the capabilities of Power Pages. What are two capabilities of Power Pages? Each correct answer presents a complete solution.",
     "type": "single",
     "choices": [
-      "Supporting multiple languages Ace",
-      "Providing low-code websites hosted as a service honda",
+      "Supporting multiple languages",
+      "Providing low-code websites hosted as a service",
       "Supplying OData feeds",
       "Creating customized styling for each user",
       "Multilingual, low-code hosted website capability"
@@ -306,7 +308,7 @@ var pl900Questions3 = [
   },
   {
     "id": 9266,
-    "text": "A company uses Microsoft Power Platform to monitor social media. You create a Power Automate cloud flow to process social media messages that positively mention the company and its products. You need to choose a connector to perform sentiment analysis on the social media messages. Which two connectors can you use in the flow? Each correct answer presents a complete solution. Y AlBuilder Cid",
+    "text": "A company uses Microsoft Power Platform to monitor social media. You create a Power Automate cloud flow to process social media messages that positively mention the company and its products. You need to choose a connector to perform sentiment analysis on the social media messages. Which two connectors can you use in the flow? Each correct answer presents a complete solution.",
     "type": "multiple",
     "choices": [
       "Azure Communication Services Chat",
@@ -405,8 +407,8 @@ var pl900Questions3 = [
     "text": "You are creating a self-service solution to handle incoming sales support calls. The solution must detect the caller's location and translate any information the caller provides from the caller's native language to English. Which two components should you use? Each correct answer presents part of the solution.",
     "type": "multiple",
     "choices": [
-      "Microsoft Azure Cognitive Services SboBacl) |",
-      "AlBuilder Language Detection Model heated asi }",
+      "Microsoft Azure Cognitive Services",
+      "AI Builder Language Detection Model",
       "Microsoft Dynamics 365 Remote Assist for mobile"
     ],
     "correct": [
@@ -483,7 +485,8 @@ var pl900Questions3 = [
   },
   {
     "id": 9277,
-    "text": "Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select\n\nWhich of the following statements are TRUE? Select all that apply.",
+    "text": "Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.
+\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
       "The date and time are the triggers for a scheduled cloud flow.",
@@ -657,7 +660,7 @@ var pl900Questions3 = [
   },
   {
     "id": 9290,
-    "text": "You are building a canvas app to allow users to record their expenses. The app also will support screen readers for users with visual impairments. You have the following requirements: Use a tool that identifies potential issues. Use a tool that provides suggestions for modifying the app. You need a tool that meets the requirements. Which tool should you use? ~_D. Accessibility Checker",
+    "text": "You are building a canvas app to allow users to record their expenses. The app also will support screen readers for users with visual impairments. You have the following requirements: Use a tool that identifies potential issues. Use a tool that provides suggestions for modifying the app. You need a tool that meets the requirements. Which tool should you use?",
     "type": "single",
     "choices": [
       "Flow Checker",
@@ -672,10 +675,10 @@ var pl900Questions3 = [
   },
   {
     "id": 9291,
-    "text": "You work for a restaurant. The chef prepares the menu based on the availability of produce at the farmer's market. Every Friday evening, you open the farmer's market website to view the list vendors who will attend the market on Saturday morning, copy the list into an email, and send it to the chief. You need to use Power Automate to replace this manual task. Select the answer that correctly completes the sentence. Types of Power Automates To open the website and read the data, you need to use a lw. flow. automated desktop instant scheduled Types of Power Automates To open the website and read the data, you need to",
+    "text": "You work for a restaurant. The chef prepares the menu based on the availability of produce at the farmer's market. Every Friday evening, you open the farmer's market website to view the list of vendors who will attend the market on Saturday morning, copy the list into an email, and send it to the chef. You need to use Power Automate to replace this manual task. Select the answer that correctly completes the sentence. To open the website and read the data, you need to use a ___ flow.",
     "type": "single",
     "choices": [
-      "use a v flow.",
+      "scheduled",
       "automated",
       "desktop",
       "instant"
@@ -832,7 +835,8 @@ var pl900Questions3 = [
   },
   {
     "id": 9301,
-    "text": "A tutoring company has developed and deployed a model-driven app for the administration staff and a canvas app for teachers Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select\n\nWhich of the following statements are TRUE? Select all that apply.",
+    "text": "A tutoring company has developed and deployed a model-driven app for the administration staff and a canvas app for teachers Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.
+\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
       "Teachers can access the canvas app by using desktops and mobile devices.",
@@ -878,7 +882,7 @@ var pl900Questions3 = [
   },
   {
     "id": 9304,
-    "text": "You review a Power BI report about a company's sales data in Power BI. You open an insight notification and observe that one of the company stores has a higher sales value than the target sales value in the previous quarter. You need to identify the insight that is shown in the notification. Which insight is used? ~_A. key performance indicator (KPI) analysis cilia",
+    "text": "You review a Power BI report about a company's sales data in Power BI. You open an insight notification and observe that one of the company stores has a higher sales value than the target sales value in the previous quarter. You need to identify the insight that is shown in the notification. Which insight is used?",
     "type": "single",
     "choices": [
       "significant anomaly",
@@ -1129,7 +1133,8 @@ var pl900Questions3 = [
   },
   {
     "id": 9320,
-    "text": "A company plans to use Power BI to visualize data. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select\n\nWhich of the following statements are TRUE? Select all that apply.",
+    "text": "A company plans to use Power BI to visualize data. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.
+\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
       "Power BI allows users to create and consume visualizations in one view by using data from several different sources.",
@@ -1157,11 +1162,11 @@ var pl900Questions3 = [
   },
   {
     "id": 9322,
-    "text": "A company has a sales team and a support team. The company has the following requirements: The sales team must be able to access on-hand inventory from vendors. The back-office support team does not store or maintain the data. The back-office support team must maintain a list of items that the company sells. The list must include a business process flow for any sales price discounts. You need to create a Power Apps app that supports the teams by using native Power Apps functionality. Which type of Power Apps app should you create? To answer, move the appropriate Power Apps types to the correct teams. You may use each Power Apps type once, more than once, or not at all. You may need to move the split bar between panes or scroll to view content. Power Apps types Power Apps types for Teams Canvas app Team Power Apps type Model-driven app Suet teon Support team Power Apps types for Teams Team Power Apps type Sales team Canvas app Support team -_| Model-driven app\n\nSelect the option that correctly matches all requirements in the order listed.",
+    "text": "A company has a sales team and a support team. The company has the following requirements: The sales team must be able to access on-hand inventory from vendors. The back-office support team does not store or maintain the data. The back-office support team must maintain a list of items that the company sells. The list must include a business process flow for any sales price discounts. You need to create a Power Apps app that supports the teams by using native Power Apps functionality. Which type of Power Apps app should you create? To answer, move the appropriate Power Apps types to the correct teams.\n\nSelect the option that correctly matches all requirements in the order listed.",
     "type": "single",
     "choices": [
-      "1. Model-driven app | 2. Model-driven app Suet teon",
-      "1. Support team -_| Model-driven app | 2. Canvas app",
+      "1. Canvas app | 2. Canvas app",
+      "1. Model-driven app | 2. Canvas app",
       "1. Canvas app | 2. Model-driven app",
       "1. Model-driven app | 2. Canvas app"
     ],
@@ -1453,7 +1458,7 @@ var pl900Questions3 = [
   },
   {
     "id": 9344,
-    "text": "You are creating a dashboard in the Power Bl service. You need to identify where you can find visuals to pin to your dashboard. From which two components can you pin visuals? Each correct answer presents a complete solution. Dataverse galery - mostrar lista de dados form - criar/editar dados vertical container - layout + scroll responsivo",
+    "text": "You are creating a dashboard in the Power BI service. You need to identify where you can find visuals to pin to your dashboard. From which two components can you pin visuals? Each correct answer presents a complete solution.",
     "type": "multiple",
     "choices": [
       "Power Automate",
@@ -1649,12 +1654,12 @@ var pl900Questions3 = [
   },
   {
     "id": 9358,
-    "text": "You are managing several Power Automate cloud flows for a company. For each of the following statements, select Yes if the statement is true. Otherwise, select N Power Automate cloud flows statements A cloud flow run can be resubmitted. Cloud flow run history in the Power Automate maker portal is stored for up to 90 days. You can use the Power Automate for desktop application to manage cloud flow runs.\n\nWhich of the following statements are TRUE? Select all that apply.",
+    "text": "You are managing several Power Automate cloud flows for a company. For each of the following statements, select Yes if the statement is true. Otherwise, select No.\n\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
-      "You are managing several Power Automate cloud flows for a company.",
-      "For each of the following statements, select Yes if the statement is true. Otherwise, select N Power Automate cloud flows statements A cloud flow run can be resubmitted.",
-      "Cloud flow run history in the Power Automate maker portal is stored for up to 90 days."
+      "A cloud flow run can be resubmitted.",
+      "Cloud flow run history in the Power Automate maker portal is stored for up to 90 days.",
+      "You can use the Power Automate for desktop application to manage cloud flow runs."
     ],
     "correct": [
       0
