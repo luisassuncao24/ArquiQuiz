@@ -306,7 +306,7 @@ var pl400Questions4 = [
   },
   {
     id: 4121,
-    text: 'You create a custom API as part of a solution that will be made available on Microsoft AppSource.\n\nYou need to prevent others from using Dataverse code generation tools that create classes and use the messages for your custom API.\n\nWhat should you do?\n\nOPTIONS:',
+    text: 'You create a custom API as part of a solution that will be made available on Microsoft AppSource.\n\nYou need to prevent others from using Dataverse code generation tools that create classes and use the messages for your custom API.\n\nWhat should you do?',
     type: 'single',
     choices: [
       'Set Is Private to Yes.',
@@ -334,7 +334,7 @@ var pl400Questions4 = [
   },
   {
     id: 4142,
-    text: 'You have the following code:\n\n```javascript\nXrm.WebApi.createRecord("account", data).then(\n  function success(result) {\n    console.log("Success");\n  },\n  function (error) {\n    console.log(error.message);\n  }\n);\n```\n\nYou have a contact record that uses the GUID `991bf2fd-d40c-4752-9984-26b7c0455b69`.\n\nYou need to assign the contact record as the primary contact for an account when you create the account.\n\nWhich two code segments can you use? Each correct answer presents a complete solution.\n\nOPTIONS:',
+    text: 'You have the following code:\n\n```javascript\nXrm.WebApi.createRecord("account", data).then(\n  function success(result) {\n    console.log("Success");\n  },\n  function (error) {\n    console.log(error.message);\n  }\n);\n```\n\nYou have a contact record that uses the GUID `991bf2fd-d40c-4752-9984-26b7c0455b69`.\n\nYou need to assign the contact record as the primary contact for an account when you create the account.\n\nWhich two code segments can you use? Each correct answer presents a complete solution.',
     type: 'multiple',
     choices: [
       '`var data = { "name": "Contoso account", "primarycontactid": { "logicalname": "contact", "id": "991bf2fd-d40c-4752-9984-26b7c0455b69" } };`',
@@ -375,7 +375,7 @@ var pl400Questions4 = [
   },
   {
     id: 4169,
-    text: 'A company uses a plug-in within Dataverse to perform complex calculations of data in near real time.\n\nThe calculations often run longer than five minutes, which causes the plug-in to time out.\n\nYou need to recommend an appropriate replacement component.\n\nWhat should you recommend?\n\nOPTIONS:',
+    text: 'A company uses a plug-in within Dataverse to perform complex calculations of data in near real time.\n\nThe calculations often run longer than five minutes, which causes the plug-in to time out.\n\nYou need to recommend an appropriate replacement component.\n\nWhat should you recommend?',
     type: 'single',
     choices: [
       'Azure Event Hub',
@@ -414,7 +414,7 @@ var pl400Questions4 = [
   },
   {
     id: 4186,
-    text: 'You create a Power Automate flow that retrieves data from a proprietary database.\n\nYou need to ensure that the flow works for other users.\n\nWhich two actions should you perform? Each correct answer presents part of the solution.\n\nOPTIONS:',
+    text: 'You create a Power Automate flow that retrieves data from a proprietary database.\n\nYou need to ensure that the flow works for other users.\n\nWhich two actions should you perform? Each correct answer presents part of the solution.',
     type: 'multiple',
     choices: [
       'Share a view with users.',
@@ -440,7 +440,7 @@ var pl400Questions4 = [
   },
   {
     id: 4199,
-    text: 'You develop a model-driven app to manage customer information. You have the system administrator security role on all environments.\n\nYou create a business process flow that is associated with the Contact table. You grant users Create, Read, and Write permissions on the business process flow.\n\nUsers report that the new business process flow does not appear when the users create new contact records. You verify that you can view the business process flow when you sign into the app and create a new contact record.\n\nYou need to resolve the issue.\n\nWhat should you do?\n\nOPTIONS:',
+    text: 'You develop a model-driven app to manage customer information. You have the system administrator security role on all environments.\n\nYou create a business process flow that is associated with the Contact table. You grant users Create, Read, and Write permissions on the business process flow.\n\nUsers report that the new business process flow does not appear when the users create new contact records. You verify that you can view the business process flow when you sign into the app and create a new contact record.\n\nYou need to resolve the issue.\n\nWhat should you do?',
     type: 'single',
     choices: [
       'Grant users the Run Flows privilege.',
@@ -453,7 +453,7 @@ var pl400Questions4 = [
   },
   {
     id: 4200,
-    text: 'A company uses Microsoft Dataverse rollup fields to calculate insurance exposure and risk profiles for customers.\n\nUsers report that the system does not update values for the rollup fields when new insurance policies are written.\n\nYou need to recalculate the value of the rollup fields immediately after a policy is created.\n\nWhat should you do?\n\nOPTIONS:',
+    text: 'A company uses Microsoft Dataverse rollup fields to calculate insurance exposure and risk profiles for customers.\n\nUsers report that the system does not update values for the rollup fields when new insurance policies are written.\n\nYou need to recalculate the value of the rollup fields immediately after a policy is created.\n\nWhat should you do?',
     type: 'single',
     choices: [
       'Create new fields on the customer entity for insurance exposure and risk. Write a workflow process that is triggered when a new policy record is created to calculate the sum of values from policy records.',
@@ -479,7 +479,7 @@ var pl400Questions4 = [
   },
   {
     id: 4211,
-    text: 'A client requires that the system send an email from a button on their customer contact form.\n\nYou need to call the action from JavaScript.\n\nWhich two functions achieve this result?\n\nOPTIONS:',
+    text: 'A client requires that the system send an email from a button on their customer contact form.\n\nYou need to call the action from JavaScript.\n\nWhich two functions achieve this result?',
     type: 'multiple',
     choices: [
       'Xrm.WebApi.online.executeMultiple()',
@@ -492,7 +492,7 @@ var pl400Questions4 = [
   },
   {
     id: 4212,
-    text: 'A company has two development instances, two test instances, two staging instances, and one production instance.\n\nThe test team reports connection issues with the test and staging instances.\n\nYou need to identify which instances the testing team currently has access to.\n\nWhich two URLs can you use?\n\nOPTIONS:',
+    text: 'A company has two development instances, two test instances, two staging instances, and one production instance.\n\nThe test team reports connection issues with the test and staging instances.\n\nYou need to identify which instances the testing team currently has access to.\n\nWhich two URLs can you use?',
     type: 'multiple',
     choices: [
       'https://globaldisco.crm.dynamics.com/api/discovery/v9.1/instances',
@@ -506,7 +506,7 @@ var pl400Questions4 = [
   },
   {
     id: 4220,
-    text: 'You are developing an app that uses Common Data Service.\n\nYou must integrate Common Data Service with a new web application. You must allow the new web application to display data from Common Data Service.\n\nYou build a single-page web application by using the Web API.\n\nYou need to authenticate your app by using OAuth.\n\nWhat should you use?\n\nOPTIONS:',
+    text: 'You are developing an app that uses Common Data Service.\n\nYou must integrate Common Data Service with a new web application. You must allow the new web application to display data from Common Data Service.\n\nYou build a single-page web application by using the Web API.\n\nYou need to authenticate your app by using OAuth.\n\nWhat should you use?',
     type: 'single',
     choices: [
       'Windows Communication Foundation (WCF)',
@@ -519,7 +519,7 @@ var pl400Questions4 = [
   },
   {
     id: 4226,
-    text: 'You are creating a model-driven app.\n\nA JavaScript function must be manually invoked by the user from within an entity form.\n\nYou need to add a button to the form to run the JavaScript.\n\nWhat should you do?\n\nOPTIONS:',
+    text: 'You are creating a model-driven app.\n\nA JavaScript function must be manually invoked by the user from within an entity form.\n\nYou need to add a button to the form to run the JavaScript.\n\nWhat should you do?',
     type: 'single',
     choices: [
       'Use the Ribbon Workbench.',
@@ -561,7 +561,7 @@ var pl400Questions4 = [
   },
   {
     id: 4239,
-    text: 'You are developing a Power Apps app to manage records in the Account table in Microsoft Dataverse.\n\nYou must configure a Web API request to retrieve changes from the table.\n\nYou need to configure the Preference header for the API request.\n\nWhat should you include in the request header?\n\nOPTIONS:',
+    text: 'You are developing a Power Apps app to manage records in the Account table in Microsoft Dataverse.\n\nYou must configure a Web API request to retrieve changes from the table.\n\nYou need to configure the Preference header for the API request.\n\nWhat should you include in the request header?',
     type: 'single',
     choices: [
       'odata.context',
@@ -620,7 +620,7 @@ var pl400Questions4 = [
   },
   {
     id: 4259,
-    text: 'You create a custom API. You define the API as a function.\n\nThe custom API does not appear in the response received from https://[yourorg].api.crm.dynamics.com/api/data/v9.2/$metadata and returns an error when called.\n\nYou need to identify why the custom API is not working.\n\nWhat should you do?\n\nOPTIONS:',
+    text: 'You create a custom API. You define the API as a function.\n\nThe custom API does not appear in the response received from https://[yourorg].api.crm.dynamics.com/api/data/v9.2/$metadata and returns an error when called.\n\nYou need to identify why the custom API is not working.\n\nWhat should you do?',
     type: 'single',
     choices: [
       'Add a response property to the custom API.',
@@ -684,7 +684,7 @@ var pl400Questions4 = [
   },
   {
     id: 4283,
-    text: 'A company is developing multiple plug-ins.\n\nOne of the plug-ins keeps failing.\n\nYou need to debug the plug-in.\n\nWhich three actions should you perform?\n\nOPTIONS:',
+    text: 'A company is developing multiple plug-ins.\n\nOne of the plug-ins keeps failing.\n\nYou need to debug the plug-in.\n\nWhich three actions should you perform?',
     type: 'multiple',
     choices: [
       'Highlight the plug-in step and select Debug in the Plug-in Registration tool.',
@@ -740,7 +740,7 @@ var pl400Questions4 = [
   },
   {
     id: 4319,
-    text: 'You write a plug-in that creates a row in a custom table.\n\nOnly some users have permission to create rows in the custom table.\n\nYou need to allow the plug-in to run for all users by using the principle of least privilege.\n\nWhat should you do?\n\nOPTIONS:',
+    text: 'You write a plug-in that creates a row in a custom table.\n\nOnly some users have permission to create rows in the custom table.\n\nYou need to allow the plug-in to run for all users by using the principle of least privilege.\n\nWhat should you do?',
     type: 'single',
     choices: [
       'Initiate the IOrganizationService by passing the ID of a user with permissions to create rows in the custom table.',
@@ -780,7 +780,7 @@ var pl400Questions4 = [
   },
   {
     id: 4326,
-    text: 'You are designing a one-way integration from Microsoft Dataverse to another system.\n\nRequirements:\n- Use an Azure Function to update the other system.\n- Send only newly created records.\n- Support scenarios where a component of the integration is unavailable for more\n  than a few seconds without data loss.\n\nProposed solution:\nRegister a service endpoint in Dataverse that connects to an Azure Service Bus\nqueue. Create and register an Azure-aware plug-in that uses the service endpoint.\nRegister a step on the plug-in that runs asynchronously on the record\'s Create\nmessage in the post-operation stage. Configure the Azure Function to process\nrecords as they are added to the queue.\n\nDoes the solution meet the goal?\n\nOPTIONS:',
+    text: 'You are designing a one-way integration from Microsoft Dataverse to another system.\n\nRequirements:\n- Use an Azure Function to update the other system.\n- Send only newly created records.\n- Support scenarios where a component of the integration is unavailable for more\n  than a few seconds without data loss.\n\nProposed solution:\nRegister a service endpoint in Dataverse that connects to an Azure Service Bus\nqueue. Create and register an Azure-aware plug-in that uses the service endpoint.\nRegister a step on the plug-in that runs asynchronously on the record\'s Create\nmessage in the post-operation stage. Configure the Azure Function to process\nrecords as they are added to the queue.\n\nDoes the solution meet the goal?',
     type: 'single',
     choices: [
       'Yes',
@@ -791,7 +791,7 @@ var pl400Questions4 = [
   },
   {
     id: 4331,
-    text: 'You are designing a one-way integration from Microsoft Dataverse to another system.\n\nRequirements:\n- Use an Azure Function to update the other system.\n- Send only newly created records.\n- Support scenarios where a component of the integration is unavailable for more\n  than a few seconds without data loss.\n\nProposed solution:\nRegister a service endpoint in Dataverse that connects to an Azure Service Bus\nqueue. Create and register an Azure-aware plug-in that uses the service endpoint.\nRegister a step on the plug-in that runs asynchronously on the record\'s Create\nmessage in the post-operation stage. Configure the Azure Function to process\nrecords as they are added to the queue.\n\nDoes the solution meet the goal?\n\nOPTIONS:',
+    text: 'You are designing a one-way integration from Microsoft Dataverse to another system.\n\nRequirements:\n- Use an Azure Function to update the other system.\n- Send only newly created records.\n- Support scenarios where a component of the integration is unavailable for more\n  than a few seconds without data loss.\n\nProposed solution:\nRegister a service endpoint in Dataverse that connects to an Azure Service Bus\nqueue. Create and register an Azure-aware plug-in that uses the service endpoint.\nRegister a step on the plug-in that runs asynchronously on the record\'s Create\nmessage in the post-operation stage. Configure the Azure Function to process\nrecords as they are added to the queue.\n\nDoes the solution meet the goal?',
     type: 'single',
     choices: [
       'Yes',
@@ -814,7 +814,7 @@ var pl400Questions4 = [
   },
   {
     id: 4342,
-    text: 'You are developing a Power Platform solution. The solution connects to a third-party accounting system by using a Web API through a Power Apps app that automatically exchanges contacts with sales data.\n\nYou have the following code (line numbers are included for reference only):\n\n01 GET https://contoso.crm.dynamics.com/api/data/v9.1/contacts?$select=name,accountnumber,telephone1 &$top=5 HTTP/1.1\n02\n03 OData-Version: 4.0\n04 OData-MaxVersion: 4.0\n05 Content-Type: application/json\n\nYou need to ensure that the code only synchronizes data that was not previously synchronized.\n\nWhich code segment should you insert at line 02?\n\nOPTIONS:',
+    text: 'You are developing a Power Platform solution. The solution connects to a third-party accounting system by using a Web API through a Power Apps app that automatically exchanges contacts with sales data.\n\nYou have the following code (line numbers are included for reference only):\n\n01 GET https://contoso.crm.dynamics.com/api/data/v9.1/contacts?$select=name,accountnumber,telephone1 &$top=5 HTTP/1.1\n02\n03 OData-Version: 4.0\n04 OData-MaxVersion: 4.0\n05 Content-Type: application/json\n\nYou need to ensure that the code only synchronizes data that was not previously synchronized.\n\nWhich code segment should you insert at line 02?',
     type: 'single',
     choices: [
       'Prefer: odata.track-changes',
@@ -827,7 +827,7 @@ var pl400Questions4 = [
   },
   {
     id: 4349,
-    text: 'A company requires custom validation when users save form records that use a synchronous plug-in.\n\nIf validation fails, a message that explains how to resolve the issue must be displayed on the form to the user.\n\nYou need to implement the custom validation.\n\nSolution: Throw an InvalidPluginExecutionException with the message.\n\nDoes the solution meet the goal?\n\nOPTIONS:',
+    text: 'A company requires custom validation when users save form records that use a synchronous plug-in.\n\nIf validation fails, a message that explains how to resolve the issue must be displayed on the form to the user.\n\nYou need to implement the custom validation.\n\nSolution: Throw an InvalidPluginExecutionException with the message.\n\nDoes the solution meet the goal?',
     type: 'single',
     choices: [
       'Yes',
@@ -838,7 +838,7 @@ var pl400Questions4 = [
   },
   {
     id: 4367,
-    text: 'CONTEXT / QUESTION:\nA company creates a custom connector for its cloud-based ERP system.\n\nThe company requires an authentication method that can be consumed by the custom connector.\n\nWhich authentication method should you use?\n\nOPTIONS:',
+    text: 'CONTEXT / QUESTION:\nA company creates a custom connector for its cloud-based ERP system.\n\nThe company requires an authentication method that can be consumed by the custom connector.\n\nWhich authentication method should you use?',
     type: 'single',
     choices: [
       'two-factor authentication',
@@ -851,7 +851,7 @@ var pl400Questions4 = [
   },
   {
     id: 4368,
-    text: 'CONTEXT / QUESTION:\nA company plans to implement an integration between Microsoft Dataverse and Azure Service Bus.\n\nWhen an Account row is updated, if the Credit Limit is set to over $25,000, information about the row must post to an Azure Service Bus queue. The previous Credit Limit value must also be included.\n\nYou use the Microsoft Power Platform CLI to create the plug-in package.\n\nWhich interface should you implement next?\n\nOPTIONS:',
+    text: 'CONTEXT / QUESTION:\nA company plans to implement an integration between Microsoft Dataverse and Azure Service Bus.\n\nWhen an Account row is updated, if the Credit Limit is set to over $25,000, information about the row must post to an Azure Service Bus queue. The previous Credit Limit value must also be included.\n\nYou use the Microsoft Power Platform CLI to create the plug-in package.\n\nWhich interface should you implement next?',
     type: 'single',
     choices: [
       'IServiceEndpointNotificationService',
@@ -879,7 +879,7 @@ var pl400Questions4 = [
   },
   {
     id: 4376,
-    text: 'CONTEXT / QUESTION:\nA company uses Microsoft Dataverse rollup fields to calculate insurance exposure and risk profiles for customers.\n\nUsers report that the system does not update values for the rollup fields when new insurance policies are written.\n\nYou need to recalculate the value of the rollup fields immediately after a policy is created.\n\nWhat should you do?\n\nOPTIONS:',
+    text: 'CONTEXT / QUESTION:\nA company uses Microsoft Dataverse rollup fields to calculate insurance exposure and risk profiles for customers.\n\nUsers report that the system does not update values for the rollup fields when new insurance policies are written.\n\nYou need to recalculate the value of the rollup fields immediately after a policy is created.\n\nWhat should you do?',
     type: 'single',
     choices: [
       'Create new calculated fields on the customer entity for insurance exposure and risk. Create a formula to calculate the sum of values from policy records.',

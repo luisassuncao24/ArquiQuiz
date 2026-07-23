@@ -30,7 +30,7 @@ var pl900Questions3 = [
   },
   {
     "id": 9247,
-    "text": "A company uses a model-driven app to record customers' dietary preferences. You need to change the order of the columns in a personal view that you created on the Contact table. Where should you change the order? ® . Model-driven app",
+    "text": "A company uses a model-driven app to record customers' dietary preferences. You need to change the order of the columns in a personal view that you created on the Contact table. Where should you change the order?",
     "type": "single",
     "choices": [
       "Power Apps Studio",
@@ -169,7 +169,7 @@ var pl900Questions3 = [
   },
   {
     "id": 9257,
-    "text": "A.user requests the removal of the Fax column from the following form in a model-driven app: CE sme sive ecove + New Ch Deacate Ai Conect Arison G delete O Fetresh Shue @ Hone ww oy recent v Alpine Ski House -sves essere | Reanstnortens | GQ ® Povo v 'Summary Details Reloted cones 'ACCOUNT INFORMATION IE recovers Tentine +7 2 sewn R contac Aecour ame * pine Si House toner avai. Prone 5555555555 Modlied on 17/023 440 Put 1 Note modiied by 8 FNULNU 2e0 Website Inapsdtemmaipnesowe. (ab fas tan eer guna monger om tay View mote Parent Account Taher Sybet re Asses Steet pine tane Which form should you open in the app designer? f B. Information . Summary",
+    "text": "A user requests the removal of the Fax column from the Account Information form in a model-driven app. Which form should you open in the app designer?",
     "type": "single",
     "choices": [
       "Account",
@@ -182,7 +182,7 @@ var pl900Questions3 = [
   },
   {
     "id": 9258,
-    "text": "A company uses a custom-built system to record financial data that runs on a manager's machine. The system does not have an API. New customer details must be manually entered into the system by the manager from a central spreadsheet. The user interface of the system contains the complex business logic that is needed for the manual customer data entry process. You need to ensure that new customer details can be entered into the system automatically by using Power Automate. Which type of flow should you create? yY C. desktop",
+    "text": "A company uses a custom-built system to record financial data that runs on a manager's machine. The system does not have an API. New customer details must be manually entered into the system by the manager from a central spreadsheet. The user interface of the system contains the complex business logic that is needed for the manual customer data entry process. You need to ensure that new customer details can be entered into the system automatically by using Power Automate. Which type of flow should you create?",
     "type": "single",
     "choices": [
       "automated cloud",

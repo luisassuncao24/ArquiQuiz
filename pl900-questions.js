@@ -1138,7 +1138,7 @@ var pl900Questions = [
   },
   {
     "id": 9075,
-    "text": "What is a benefit of deploying Microsoft 365 and Dynamics 365 apps in the same tenant? ® . You can use Power BI to display data that comes from both environments.",
+    "text": "What is a benefit of deploying Microsoft 365 and Dynamics 365 apps in the same tenant?",
     "type": "single",
     "choices": [
       "You do not need to manually back up data.",

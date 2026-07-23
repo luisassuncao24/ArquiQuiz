@@ -189,7 +189,7 @@ var pl400Questions5 = [
   },
   {
     id: 5126,
-    text: 'You deploy a Power Platform plug-in to a production environment. The plug-in code contains detailed tracing information.\n\nYou are a member of the Environment Maker security role for the environment.\n\nUsers report unexpected results when they interact with confidential data by using the plug-in. You confirm that the plug-in works without errors in a development environment.\n\nYou need to investigate the root cause of the plug-in errors.\n\nWhat should you do?\n\nOPTIONS:',
+    text: 'You deploy a Power Platform plug-in to a production environment. The plug-in code contains detailed tracing information.\n\nYou are a member of the Environment Maker security role for the environment.\n\nUsers report unexpected results when they interact with confidential data by using the plug-in. You confirm that the plug-in works without errors in a development environment.\n\nYou need to investigate the root cause of the plug-in errors.\n\nWhat should you do?',
     type: 'single',
     choices: [
       'Send a PUT request to enable plug-in tracing for the production environment.',
@@ -241,7 +241,7 @@ var pl400Questions5 = [
   },
   {
     id: 5173,
-    text: 'You have two tables, account and contact, with a parent-child relationship. Records in the account table can be created in the UI or from an external system integrated with Dataverse by using an Azure Function.\n\nWhen a user creates a record in the account table, a default record in the contact table must be created automatically.\n\nYou need to implement a process to create the contact records.\n\nSolution: Create a custom API bound to the account table that uses a plug-in. Use the Organization service to create the contact record.\n\nDoes the solution meet the goal?\n\nOPTIONS:',
+    text: 'You have two tables, account and contact, with a parent-child relationship. Records in the account table can be created in the UI or from an external system integrated with Dataverse by using an Azure Function.\n\nWhen a user creates a record in the account table, a default record in the contact table must be created automatically.\n\nYou need to implement a process to create the contact records.\n\nSolution: Create a custom API bound to the account table that uses a plug-in. Use the Organization service to create the contact record.\n\nDoes the solution meet the goal?',
     type: 'single',
     choices: [
       'Yes',
@@ -252,7 +252,7 @@ var pl400Questions5 = [
   },
   {
     id: 5177,
-    text: 'A model-driven app form has JavaScript that runs during the OnLoad event. The event retrieves an account record and changes visibility of a form column based on one of the record columns.\n\nThe following portion of code retrieves the account record:\n`Xrm.WebApi.retrieveRecord("account", accountId)`\n\nUsers report that the form load is slow.\n\nYou need to improve the performance of the code that retrieves the account and changes visibility.\n\nWhat should you do?\n\nOPTIONS:',
+    text: 'A model-driven app form has JavaScript that runs during the OnLoad event. The event retrieves an account record and changes visibility of a form column based on one of the record columns.\n\nThe following portion of code retrieves the account record:\n`Xrm.WebApi.retrieveRecord("account", accountId)`\n\nUsers report that the form load is slow.\n\nYou need to improve the performance of the code that retrieves the account and changes visibility.\n\nWhat should you do?',
     type: 'single',
     choices: [
       'Use a synchronous XMLHttpRequest instead.',
@@ -319,7 +319,7 @@ var pl400Questions5 = [
   },
   {
     id: 5196,
-    text: 'You create a form in a model-driven app that uses data from the Lead table in a Microsoft Dataverse instance. You add a business rule to the Lead table. The business rule displays an error if the email address is null. The scope for the business rule is All Forms.\n\nYou configure a Power Apps portal by using the same Microsoft Dataverse instance. You create a web page by using the Lead form.\n\nYou need to ensure the same logic is applied on the Power Apps portal page.\n\nWhat are two possible ways to achieve the goal? Each correct answer presents a complete solution.\n\nOPTIONS:',
+    text: 'You create a form in a model-driven app that uses data from the Lead table in a Microsoft Dataverse instance. You add a business rule to the Lead table. The business rule displays an error if the email address is null. The scope for the business rule is All Forms.\n\nYou configure a Power Apps portal by using the same Microsoft Dataverse instance. You create a web page by using the Lead form.\n\nYou need to ensure the same logic is applied on the Power Apps portal page.\n\nWhat are two possible ways to achieve the goal? Each correct answer presents a complete solution.',
     type: 'multiple',
     choices: [
       'Deactivate the business rule. Change the scope for the rule to Table and then reactivate the rule.',
@@ -332,7 +332,7 @@ var pl400Questions5 = [
   },
   {
     id: 5214,
-    text: 'A multinational company requires all phone numbers to be standardized as country code + area code + phone number.\n\nThe application design team decides that a custom Power Apps component framework (PCF) control should be used to prompt users for an area code and to correctly format the phone number.\n\nYou need to get the list of valid area codes when a contact record is opened and before the user enters a new phone number.\n\nIn which function should you call webAPI.retrieveMultipleRecords?\n\nOPTIONS:',
+    text: 'A multinational company requires all phone numbers to be standardized as country code + area code + phone number.\n\nThe application design team decides that a custom Power Apps component framework (PCF) control should be used to prompt users for an area code and to correctly format the phone number.\n\nYou need to get the list of valid area codes when a contact record is opened and before the user enters a new phone number.\n\nIn which function should you call webAPI.retrieveMultipleRecords?',
     type: 'single',
     choices: [
       'updateView',
@@ -427,7 +427,7 @@ var pl400Questions5 = [
   },
   {
     id: 5240,
-    text: 'You are creating a Power Apps Component Framework (PCF) component.\n\nYou add markup to the component manifest and need to complete the control element.\n\nWhich XML markup segment should you insert?\n\nOPTIONS:',
+    text: 'You are creating a Power Apps Component Framework (PCF) component.\n\nYou add markup to the component manifest and need to complete the control element.\n\nWhich XML markup segment should you insert?',
     type: 'single',
     choices: [
       '<control DisplayNamekey="PowerContoso" constructor="CtlProducts" version="0.0.1.0" display-name-key="CtlProducts" description-key="CtlProducts" control-type="standard">',
@@ -454,7 +454,7 @@ var pl400Questions5 = [
   },
   {
     id: 5255,
-    text: 'A company is testing a Microsoft Dataverse plug-in in an environment. The plug-in works in post-operation mode and performs the update of the Account entity.\n\nDuring testing, a user observes that the plug-in unintentionally triggers a synchronous third-party ISV plug-in.\n\nYou need to modify the system design to avoid unwanted triggering of the third-party plug-in.\n\nWhat should you do?\n\nOPTIONS:',
+    text: 'A company is testing a Microsoft Dataverse plug-in in an environment. The plug-in works in post-operation mode and performs the update of the Account entity.\n\nDuring testing, a user observes that the plug-in unintentionally triggers a synchronous third-party ISV plug-in.\n\nYou need to modify the system design to avoid unwanted triggering of the third-party plug-in.\n\nWhat should you do?',
     type: 'single',
     choices: [
       'Disable the existing third-party plug-in by using the Plug-in Registration Tool.',
@@ -467,7 +467,7 @@ var pl400Questions5 = [
   },
   {
     id: 5257,
-    text: 'A company performs an update to an existing column-bound Power Apps Component Framework (PCF) code component.\n\nYou test the changes to the code component in the development environment. You then import the component to the production environment as part of a managed solution. You observe that the changes to the component are not reflected in the production environment.\n\nYou need to ensure that the changes are effective in the production environment.\n\nWhat should you do?\n\nOPTIONS:',
+    text: 'A company performs an update to an existing column-bound Power Apps Component Framework (PCF) code component.\n\nYou test the changes to the code component in the development environment. You then import the component to the production environment as part of a managed solution. You observe that the changes to the component are not reflected in the production environment.\n\nYou need to ensure that the changes are effective in the production environment.\n\nWhat should you do?',
     type: 'single',
     choices: [
       'Import the PCF code component to the production environment directly from Visual Studio Code by using the pac pcf push instruction.',
@@ -495,7 +495,7 @@ var pl400Questions5 = [
   },
   {
     id: 5263,
-    text: 'You plan to create a Microsoft Power Apps Component Framework (PCF) code component for a record form in a model-driven app.\n\nThe code must be able to read the record\'s Id column.\n\nYou need to configure the manifest.\n\nWhich solution should you use?\n\nOPTIONS:',
+    text: 'You plan to create a Microsoft Power Apps Component Framework (PCF) code component for a record form in a model-driven app.\n\nThe code must be able to read the record\'s Id column.\n\nYou need to configure the manifest.\n\nWhich solution should you use?',
     type: 'single',
     choices: [
       'resources',
@@ -508,7 +508,7 @@ var pl400Questions5 = [
   },
   {
     id: 5269,
-    text: 'You are creating an integration that uses an Azure Function to create records in the Common Data Service when leads are submitted from your company website.\n\nYou create a user and grant the user the Basic User security role.\n\nYou do not have administrator access to the environment you are using or access to Azure Active Directory. Company policy dictates that service accounts must be used for integrations, and integrations must not be granted privileges beyond what is needed.\n\nWhich three actions should an administrator perform to configure access for the Azure Function?\n\nOPTIONS:',
+    text: 'You are creating an integration that uses an Azure Function to create records in the Common Data Service when leads are submitted from your company website.\n\nYou create a user and grant the user the Basic User security role.\n\nYou do not have administrator access to the environment you are using or access to Azure Active Directory. Company policy dictates that service accounts must be used for integrations, and integrations must not be granted privileges beyond what is needed.\n\nWhich three actions should an administrator perform to configure access for the Azure Function?',
     type: 'multiple',
     choices: [
       'Create an application registration in Azure Active Directory.',
@@ -563,7 +563,7 @@ var pl400Questions5 = [
   },
   {
     id: 5282,
-    text: 'You are deploying a Power Apps app that uses the custom connector for ServiceNow.\n\nThe app loads very slowly for some users. You determine that all records from ServiceNow are being retrieved for every user.\n\nThe app must load only incidents that are assigned to each user.\n\nYou need to limit the number of records that the connector returns.\n\nWhat should you do?\n\nOPTIONS:',
+    text: 'You are deploying a Power Apps app that uses the custom connector for ServiceNow.\n\nThe app loads very slowly for some users. You determine that all records from ServiceNow are being retrieved for every user.\n\nThe app must load only incidents that are assigned to each user.\n\nYou need to limit the number of records that the connector returns.\n\nWhat should you do?',
     type: 'single',
     choices: [
       'Apply a Lifecycle Services asset scope.',
@@ -589,7 +589,7 @@ var pl400Questions5 = [
   },
   {
     id: 5287,
-    text: 'A company uses a third-party shipping company to deliver products to customers.\n\nYou need to design a custom connector that retrieves the shipping fees from the shipping company API.\n\nWhich three elements should you define for the custom connector?\n\nOPTIONS:',
+    text: 'A company uses a third-party shipping company to deliver products to customers.\n\nYou need to design a custom connector that retrieves the shipping fees from the shipping company API.\n\nWhich three elements should you define for the custom connector?',
     type: 'multiple',
     choices: [
       'Authentication model',
@@ -603,7 +603,7 @@ var pl400Questions5 = [
   },
   {
     id: 5288,
-    text: 'You are creating a Power Apps app that retrieves customer information from Azure Active Directory when you use the app to look up a customer record.\n\nYou create an Azure Function by using JSON code to retrieve the customer information.\n\nYou need to make the application work.\n\nWhich two actions should you perform?\n\nOPTIONS:',
+    text: 'You are creating a Power Apps app that retrieves customer information from Azure Active Directory when you use the app to look up a customer record.\n\nYou create an Azure Function by using JSON code to retrieve the customer information.\n\nYou need to make the application work.\n\nWhich two actions should you perform?',
     type: 'multiple',
     choices: [
       'Create a Power Automate flow to import data.',
@@ -674,7 +674,7 @@ var pl400Questions5 = [
   },
   {
     id: 5305,
-    text: 'You manage a Microsoft Power Automate cloud flow. The cloud flow queries Microsoft Dataverse data by using the List rows action.\n\nYou need to configure the cloud flow to process 10,000 records in a single run.\n\nWhat should you do? Each correct answer presents a complete solution.\n\nOPTIONS:',
+    text: 'You manage a Microsoft Power Automate cloud flow. The cloud flow queries Microsoft Dataverse data by using the List rows action.\n\nYou need to configure the cloud flow to process 10,000 records in a single run.\n\nWhat should you do? Each correct answer presents a complete solution.',
     type: 'multiple',
     choices: [
       'Set the row count parameter to 10,000.',
@@ -700,7 +700,7 @@ var pl400Questions5 = [
   },
   {
     id: 5316,
-    text: 'You have a Power Automate flow. The flow uses an HTTP action to connect to a web service and update a Microsoft Dataverse record with the result.\n\nYou must modify the flow to send an email if the web service connection fails.\n\nYou need to update the flow.\n\nWhich two actions should you perform? Each correct answer presents part of the solution.\n\nOPTIONS:',
+    text: 'You have a Power Automate flow. The flow uses an HTTP action to connect to a web service and update a Microsoft Dataverse record with the result.\n\nYou must modify the flow to send an email if the web service connection fails.\n\nYou need to update the flow.\n\nWhich two actions should you perform? Each correct answer presents part of the solution.',
     type: 'multiple',
     choices: [
       'Configure the send email step to run when the previous step fails.',
@@ -742,7 +742,7 @@ var pl400Questions5 = [
   },
   {
     id: 5338,
-    text: 'A company is creating a one-way integration from Microsoft Dataverse to an\nexternal system. Data will be sent from a webhook to an Azure Function.\n\nYou need to configure the Azure Function to handle data from the webhook.\n\nWhich class and data type must the Azure Function handle?\n\nOPTIONS:',
+    text: 'A company is creating a one-way integration from Microsoft Dataverse to an\nexternal system. Data will be sent from a webhook to an Azure Function.\n\nYou need to configure the Azure Function to handle data from the webhook.\n\nWhich class and data type must the Azure Function handle?',
     type: 'single',
     choices: [
       'RemoteExecutionContext in .NET binary format',
@@ -756,7 +756,7 @@ var pl400Questions5 = [
   },
   {
     id: 5341,
-    text: 'You are creating an integration between Microsoft Dataverse and an external system.\n\nMessages from Dataverse must be sent to Microsoft Azure Service Bus. An Azure Function will process the messages. Events must be published directly to the ServiceEndpoint for Azure Service Bus.\n\nYou need to create code for the messages.\n\nWhich class should you use?\n\nOPTIONS:',
+    text: 'You are creating an integration between Microsoft Dataverse and an external system.\n\nMessages from Dataverse must be sent to Microsoft Azure Service Bus. An Azure Function will process the messages. Events must be published directly to the ServiceEndpoint for Azure Service Bus.\n\nYou need to create code for the messages.\n\nWhich class should you use?',
     type: 'single',
     choices: [
       'RemoteExecutionContext',
@@ -782,7 +782,7 @@ var pl400Questions5 = [
   },
   {
     id: 5345,
-    text: 'A company has a model-driven app that uses Microsoft Dataverse.\n\nThe company requires a web application that retrieves information from the model-driven app. The requirements for the web application include:\n- Must be a single-page web application that uses the Web API.\n- Must display the correct company information.\n- Must authenticate using OAuth without additional verification.\n\nYou need to configure the web application.\n\nWhich methods should you use?\n\nOPTIONS:',
+    text: 'A company has a model-driven app that uses Microsoft Dataverse.\n\nThe company requires a web application that retrieves information from the model-driven app. The requirements for the web application include:\n- Must be a single-page web application that uses the Web API.\n- Must display the correct company information.\n- Must authenticate using OAuth without additional verification.\n\nYou need to configure the web application.\n\nWhich methods should you use?',
     type: 'single',
     choices: [
       'NTLM authentication',
@@ -809,7 +809,7 @@ var pl400Questions5 = [
   },
   {
     id: 5360,
-    text: 'You are designing an integration that sends created records from a custom Dataverse table to an exposed REST API.\n\nWhen the REST API is unavailable, you must be able to verify if the response status code is 503.\n\nYou need to select a solution that meets the requirement.\n\nSolution: Register a synchronous plug-in that makes an HTTP request to the REST API. Raise an InvalidPluginExecutionException when the request fails.\n\nDoes the solution meet the goal?\n\nOPTIONS:',
+    text: 'You are designing an integration that sends created records from a custom Dataverse table to an exposed REST API.\n\nWhen the REST API is unavailable, you must be able to verify if the response status code is 503.\n\nYou need to select a solution that meets the requirement.\n\nSolution: Register a synchronous plug-in that makes an HTTP request to the REST API. Raise an InvalidPluginExecutionException when the request fails.\n\nDoes the solution meet the goal?',
     type: 'single',
     choices: [
       'Yes',
@@ -820,7 +820,7 @@ var pl400Questions5 = [
   },
   {
     id: 5361,
-    text: 'CONTEXT / QUESTION:\nYou are designing an integration that sends created records from a custom Dataverse table to an exposed REST API.\n\nWhen the REST API is unavailable, you must be able to retry if the response status code is 500.\n\nSolution: Register an asynchronous plug-in that makes an HTTP request to the REST API. Raise an InvalidPluginExecutionException that is configured to retry when the request fails.\n\nDoes the solution meet the goal?\n\nOPTIONS:',
+    text: 'CONTEXT / QUESTION:\nYou are designing an integration that sends created records from a custom Dataverse table to an exposed REST API.\n\nWhen the REST API is unavailable, you must be able to retry if the response status code is 500.\n\nSolution: Register an asynchronous plug-in that makes an HTTP request to the REST API. Raise an InvalidPluginExecutionException that is configured to retry when the request fails.\n\nDoes the solution meet the goal?',
     type: 'single',
     choices: [
       'Yes',
@@ -831,7 +831,7 @@ var pl400Questions5 = [
   },
   {
     id: 5364,
-    text: 'CONTEXT / QUESTION:\nYou are creating a .NET application to load a large volume of data into a Dataverse table with one default column value. A synchronous plug-in already sets the same default column value for new rows in the table.\n\nTo speed up the process, you must disable the plug-in during the data load. The data load must run during business hours. The load must not affect rows users may be creating.\n\nWhat are two possible ways to achieve this goal? Each correct answer presents a complete solution.\n\nOPTIONS:',
+    text: 'CONTEXT / QUESTION:\nYou are creating a .NET application to load a large volume of data into a Dataverse table with one default column value. A synchronous plug-in already sets the same default column value for new rows in the table.\n\nTo speed up the process, you must disable the plug-in during the data load. The data load must run during business hours. The load must not affect rows users may be creating.\n\nWhat are two possible ways to achieve this goal? Each correct answer presents a complete solution.',
     type: 'multiple',
     choices: [
       'Send the BypassCustomPluginExecution as an optional parameter with the create request.',

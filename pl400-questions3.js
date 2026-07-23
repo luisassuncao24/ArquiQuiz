@@ -315,7 +315,7 @@ var pl400Questions3 = [
   },
   {
     id: 3147,
-    text: 'An organization uses Dynamics 365 Sales. You plan to add a custom button to the app ribbon.\n\nYou need to ensure that the button displays only when conditions specified by business rules are met.\n\nWhich two code segments can you use? Each correct answer presents a complete solution.\n\nOPTIONS:',
+    text: 'An organization uses Dynamics 365 Sales. You plan to add a custom button to the app ribbon.\n\nYou need to ensure that the button displays only when conditions specified by business rules are met.\n\nWhich two code segments can you use? Each correct answer presents a complete solution.',
     type: 'multiple',
     choices: [
       '`gridContext.refresh();`',
@@ -356,7 +356,7 @@ var pl400Questions3 = [
   },
   {
     id: 3157,
-    text: 'You create and deploy a Power Platform solution that includes synchronous plug-ins.\n\nUsers report performance issues with the solution.\n\nYou need to determine whether a plug-in is the cause of the performance issues.\n\nWhich two tools can you use? Each correct answer presents part of the solution.\n\nOPTIONS:',
+    text: 'You create and deploy a Power Platform solution that includes synchronous plug-ins.\n\nUsers report performance issues with the solution.\n\nYou need to determine whether a plug-in is the cause of the performance issues.\n\nWhich two tools can you use? Each correct answer presents part of the solution.',
     type: 'multiple',
     choices: [
       'Tracing',
@@ -383,7 +383,7 @@ var pl400Questions3 = [
   },
   {
     id: 3163,
-    text: 'A company designs a solution for use in an international organization.\n\nThe solution must provide multiple UI languages and currencies.\n\nYou need to move components to include them as part of the solution.\n\nWhich three component types can you move? Each correct answer presents part of the solution.\n\nOPTIONS:',
+    text: 'A company designs a solution for use in an international organization.\n\nThe solution must provide multiple UI languages and currencies.\n\nYou need to move components to include them as part of the solution.\n\nWhich three component types can you move? Each correct answer presents part of the solution.',
     type: 'multiple',
     choices: [
       'available UI languages',
@@ -397,7 +397,7 @@ var pl400Questions3 = [
   },
   {
     id: 3175,
-    text: 'You have two tables, account and contact, with a parent-child relationship. Records in the account table can be created in the UI or from an external system integrated with Dataverse.\n\nWhen a user creates a record in the account table, a default record in the contact table must be created automatically.\n\nYou need to implement a process to create the contact records.\n\nSolution: Create a JavaScript function that runs when the account record form is saved. Use the Web API in the JavaScript function to create the contact record.\n\nDoes the solution meet the goal?\n\nOPTIONS:',
+    text: 'You have two tables, account and contact, with a parent-child relationship. Records in the account table can be created in the UI or from an external system integrated with Dataverse.\n\nWhen a user creates a record in the account table, a default record in the contact table must be created automatically.\n\nYou need to implement a process to create the contact records.\n\nSolution: Create a JavaScript function that runs when the account record form is saved. Use the Web API in the JavaScript function to create the contact record.\n\nDoes the solution meet the goal?',
     type: 'single',
     choices: [
       'Yes',
@@ -408,7 +408,7 @@ var pl400Questions3 = [
   },
   {
     id: 3178,
-    text: 'You have a Microsoft Dataverse entity and a model-driven app. The model-driven app integrates with an external system.\n\nYou plan to run business logic each time the model-driven app creates a record. Running business logic must not negatively affect model-driven app users.\n\nYou need to implement the business logic.\n\nWhat should you use?\n\nOPTIONS:',
+    text: 'You have a Microsoft Dataverse entity and a model-driven app. The model-driven app integrates with an external system.\n\nYou plan to run business logic each time the model-driven app creates a record. Running business logic must not negatively affect model-driven app users.\n\nYou need to implement the business logic.\n\nWhat should you use?',
     type: 'single',
     choices: [
       'Synchronous plug-in registered in the PreOperation stage',
@@ -488,7 +488,7 @@ var pl400Questions3 = [
   },
   {
     id: 3213,
-    text: 'You add a button to an entity form and to the entity view that calls a JavaScript function. When you click the button, an error occurs.\n\nYou determine that the JavaScript function is calling another JavaScript function in a different web resource.\n\nHow should you resolve the error?\n\nOPTIONS:',
+    text: 'You add a button to an entity form and to the entity view that calls a JavaScript function. When you click the button, an error occurs.\n\nYou determine that the JavaScript function is calling another JavaScript function in a different web resource.\n\nHow should you resolve the error?',
     type: 'single',
     choices: [
       'In the JavaScript web resource, add the missing web resource as a dependency.',
@@ -533,7 +533,7 @@ var pl400Questions3 = [
   },
   {
     id: 3218,
-    text: 'A company is creating a Power Apps portal to collaborate with vendors.\n\nYou need to implement custom functionality in the portal by using JavaScript code.\n\nWhich two portal entities can you use?\n\nOPTIONS:',
+    text: 'A company is creating a Power Apps portal to collaborate with vendors.\n\nYou need to implement custom functionality in the portal by using JavaScript code.\n\nWhich two portal entities can you use?',
     type: 'multiple',
     choices: [
       'Web pages',
@@ -593,7 +593,7 @@ var pl400Questions3 = [
   },
   {
     id: 3244,
-    text: 'A company is creating a Power Apps portal to collaborate with vendors.\n\nYou need to implement custom functionality in the portal by using JavaScript code.\n\nWhich two portal entities can you use? Each correct answer presents a complete solution.\n\nOPTIONS:',
+    text: 'A company is creating a Power Apps portal to collaborate with vendors.\n\nYou need to implement custom functionality in the portal by using JavaScript code.\n\nWhich two portal entities can you use? Each correct answer presents a complete solution.',
     type: 'multiple',
     choices: [
       'Web pages',
@@ -664,7 +664,7 @@ var pl400Questions3 = [
   },
   {
     id: 3306,
-    text: 'A company requires a plug-in that makes multiple requests to an external web service. The plug-in must not time out when the web service is slow to respond.\n\nYou need to create the plug-in.\n\nWhat should you do?\n\nOPTIONS:',
+    text: 'A company requires a plug-in that makes multiple requests to an external web service. The plug-in must not time out when the web service is slow to respond.\n\nYou need to create the plug-in.\n\nWhat should you do?',
     type: 'single',
     choices: [
       'Assign the IOrganizationService object to a member variable.',
@@ -677,7 +677,7 @@ var pl400Questions3 = [
   },
   {
     id: 3311,
-    text: 'A company requires a plug-in that makes multiple requests to an external web service. The plug-in must not time out when the web service has issues or is slow to respond.\n\nYou need to create the plug-in.\n\nWhat should you do?\n\nOPTIONS:',
+    text: 'A company requires a plug-in that makes multiple requests to an external web service. The plug-in must not time out when the web service has issues or is slow to respond.\n\nYou need to create the plug-in.\n\nWhat should you do?',
     type: 'single',
     choices: [
       'Send requests to use multiple threads.',
@@ -690,7 +690,7 @@ var pl400Questions3 = [
   },
   {
     id: 3314,
-    text: 'A company requires a plug-in that makes multiple requests to an external web service. The plug-in must not time out when the web service has issues or is slow to respond.\n\nYou need to create the plug-in.\n\nWhat should you do?\n\nOPTIONS:',
+    text: 'A company requires a plug-in that makes multiple requests to an external web service. The plug-in must not time out when the web service has issues or is slow to respond.\n\nYou need to create the plug-in.\n\nWhat should you do?',
     type: 'single',
     choices: [
       'Register the plug-in to run synchronously.',
@@ -765,7 +765,7 @@ var pl400Questions3 = [
   },
   {
     id: 3347,
-    text: 'The communication department for a company plans to add a publicly accessible survey page to the company\'s public website.\n\nYou must add the new survey page to the company\'s public website and capture data from the page to a Microsoft Dataverse environment.\n\nExplicit user credentials must not be required to write survey data to Dataverse.\n\nYou need to implement authentication.\n\nWhich authentication mechanism should you implement?\n\nOPTIONS:',
+    text: 'The communication department for a company plans to add a publicly accessible survey page to the company\'s public website.\n\nYou must add the new survey page to the company\'s public website and capture data from the page to a Microsoft Dataverse environment.\n\nExplicit user credentials must not be required to write survey data to Dataverse.\n\nYou need to implement authentication.\n\nWhich authentication mechanism should you implement?',
     type: 'single',
     choices: [
       'Azure AD Conditional Access',
@@ -794,7 +794,7 @@ var pl400Questions3 = [
   },
   {
     id: 3357,
-    text: 'You are creating a plug-in that connects to a third-party REST API.\n\nThe API credentials must be secured so they are visible only to system administrators. The API credentials must not interfere with other system functionality.\n\nYou need to store the credentials.\n\nWhich method should you use?\n\nOPTIONS:',
+    text: 'You are creating a plug-in that connects to a third-party REST API.\n\nThe API credentials must be secured so they are visible only to system administrators. The API credentials must not interfere with other system functionality.\n\nYou need to store the credentials.\n\nWhich method should you use?',
     type: 'single',
     choices: [
       'Plug-in secure configuration',
@@ -807,7 +807,7 @@ var pl400Questions3 = [
   },
   {
     id: 3359,
-    text: 'A company requires a plug-in that makes multiple requests to an external web service. The plug-in must not time out when the web service has issues or is slow to respond.\n\nYou need to create the plug-in.\n\nWhat should you do?\n\nOPTIONS:',
+    text: 'A company requires a plug-in that makes multiple requests to an external web service. The plug-in must not time out when the web service has issues or is slow to respond.\n\nYou need to create the plug-in.\n\nWhat should you do?',
     type: 'single',
     choices: [
       'Assign the IOrganizationService object to a member variable.',
@@ -820,7 +820,7 @@ var pl400Questions3 = [
   },
   {
     id: 3362,
-    text: 'CONTEXT / QUESTION:\nYou are designing an integration that sends created records from a custom Dataverse table to an exposed REST API.\n\nWhen the REST API is unavailable, you must be able to retry if the response status code is 500.\n\nSolution: Register a service endpoint for an Azure Service Bus queue. Use an Azure Function to process messages from the queue and forward them to the REST API. Redirect failed messages to the dead-letter queue.\n\nDoes the solution meet the goal?\n\nOPTIONS:',
+    text: 'CONTEXT / QUESTION:\nYou are designing an integration that sends created records from a custom Dataverse table to an exposed REST API.\n\nWhen the REST API is unavailable, you must be able to retry if the response status code is 500.\n\nSolution: Register a service endpoint for an Azure Service Bus queue. Use an Azure Function to process messages from the queue and forward them to the REST API. Redirect failed messages to the dead-letter queue.\n\nDoes the solution meet the goal?',
     type: 'single',
     choices: [
       'Yes',

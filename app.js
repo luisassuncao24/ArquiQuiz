@@ -2995,7 +2995,7 @@
 
   // ── Access control / password gate ───────────────────────────────────────
   const AUTH_KEY    = _prefix + "_authenticated";
-  const ACCESS_PASS = _cfg.accessPass || "B(&I;y2s%=U;w3%nsc7&7-bf]=2U&'xc}'_N~nlsm(Eg9aLqdV";
+  const ACCESS_PASS = _cfg.accessPass || "ArquiQuiz2026";
 
   function isAuthenticated() {
     try { return localStorage.getItem(AUTH_KEY) === "1"; } catch (e) { return false; }

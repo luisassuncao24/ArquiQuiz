@@ -159,7 +159,7 @@ var pl400Questions = [
   },
   {
     id: 1124,
-    text: 'A company uses a model-driven app to record details of laboratory tests.\n\nYou are asked to create a custom component that makes it easier to capture multiple values from lab test results on mobile devices.\n\nYou need to create the interface for the dataset in case the mobile devices lose connection to the network.\n\nWhich method should you use?\n\nOPTIONS:',
+    text: 'A company uses a model-driven app to record details of laboratory tests.\n\nYou are asked to create a custom component that makes it easier to capture multiple values from lab test results on mobile devices.\n\nYou need to create the interface for the dataset in case the mobile devices lose connection to the network.\n\nWhich method should you use?',
     type: 'single',
     choices: [
       'saveData',
@@ -185,7 +185,7 @@ var pl400Questions = [
   },
   {
     id: 1128,
-    text: 'You fix a bug in the code of your application, which is currently on version 10.0.2.1.\n\nYou need to publish an updated version of the solution.\n\nWhich version identifier should you use?\n\nOPTIONS:',
+    text: 'You fix a bug in the code of your application, which is currently on version 10.0.2.1.\n\nYou need to publish an updated version of the solution.\n\nWhich version identifier should you use?',
     type: 'single',
     choices: [
       '10.0.3.1',
@@ -198,7 +198,7 @@ var pl400Questions = [
   },
   {
     id: 1131,
-    text: 'An organization uses Dynamics 365 Sales. The organization has accounting and customer service departments.\n\nYou must restrict users in customer service from being able to change the value of the balance field on the Contact records. The accounting team must be the only team able to edit this field.\n\nYou need to create the appropriate solution without any customizations.\n\nWhat should you do first?\n\nOPTIONS:',
+    text: 'An organization uses Dynamics 365 Sales. The organization has accounting and customer service departments.\n\nYou must restrict users in customer service from being able to change the value of the balance field on the Contact records. The accounting team must be the only team able to edit this field.\n\nYou need to create the appropriate solution without any customizations.\n\nWhat should you do first?',
     type: 'single',
     choices: [
       'Enable field security for the balance field and grant the customer service team read and update permissions.',
@@ -211,7 +211,7 @@ var pl400Questions = [
   },
   {
     id: 1133,
-    text: 'A travel company plans to track the address of places their clients visit in an entity named Destination.\n\nClient information is captured as contact records. Client records include links to the places that clients visit.\n\nThe company must be able to link multiple rating records to the new address record.\n\nYou need to expand the Rating entity to include contact, address, and rating information in one place.\n\nWhich three actions should you perform?\n\nOPTIONS:',
+    text: 'A travel company plans to track the address of places their clients visit in an entity named Destination.\n\nClient information is captured as contact records. Client records include links to the places that clients visit.\n\nThe company must be able to link multiple rating records to the new address record.\n\nYou need to expand the Rating entity to include contact, address, and rating information in one place.\n\nWhich three actions should you perform?',
     type: 'multiple',
     choices: [
       'Create a 1:N relationship between the Contact system entity and the Address system entity named Destination.',
@@ -252,7 +252,7 @@ var pl400Questions = [
   },
   {
     id: 1138,
-    text: 'You create a Power Apps app that integrates with Dynamics 365 Customer Service.\n\nYou update the app and run Solution checker on the original solution. You receive an error stating that Solution checker cannot export the solution.\n\nYou need to determine the primary cause for the issue.\n\nWhat is the primary cause?\n\nOPTIONS:',
+    text: 'You create a Power Apps app that integrates with Dynamics 365 Customer Service.\n\nYou update the app and run Solution checker on the original solution. You receive an error stating that Solution checker cannot export the solution.\n\nYou need to determine the primary cause for the issue.\n\nWhat is the primary cause?',
     type: 'single',
     choices: [
       'The original solution is locked because there is a dependent patch.',
@@ -278,7 +278,7 @@ var pl400Questions = [
   },
   {
     id: 1151,
-    text: 'A canvas app loads multiple collections and is slow when users navigate between screens.\n\nYou need to improve performance.\n\nWhat should you do?\n\nOPTIONS:',
+    text: 'A canvas app loads multiple collections and is slow when users navigate between screens.\n\nYou need to improve performance.\n\nWhat should you do?',
     type: 'single',
     choices: [
       'Replace all instances of the ClearCollect method with the Connect method.',
@@ -291,7 +291,7 @@ var pl400Questions = [
   },
   {
     id: 1155,
-    text: 'You are developing a model-driven app for a company that sells sporting goods. You add a button to a page that displays information for a product.\n\nThe button must copy information for the selected product and create a record in the data source. You add the following code to the button. (Line numbers are included for reference only.)\n\n```powerfx\n01 ?\n02 Products,\n03 Defaults(Products),\n04 {\n05   Name: Self.Selected.Item.Name,\n06   Description: Self.Selected.Item.Description,\n07   Type: Self.Selected.Item.Type,\n08   Price: Self.Selected.Item.Price\n09 }\n10 )\n```\n\nYou need to complete the code.\n\nWhich function should you insert at line 01?\n\nOPTIONS:',
+    text: 'You are developing a model-driven app for a company that sells sporting goods. You add a button to a page that displays information for a product.\n\nThe button must copy information for the selected product and create a record in the data source. You add the following code to the button. (Line numbers are included for reference only.)\n\n```powerfx\n01 ?\n02 Products,\n03 Defaults(Products),\n04 {\n05   Name: Self.Selected.Item.Name,\n06   Description: Self.Selected.Item.Description,\n07   Type: Self.Selected.Item.Type,\n08   Price: Self.Selected.Item.Price\n09 }\n10 )\n```\n\nYou need to complete the code.\n\nWhich function should you insert at line 01?',
     type: 'single',
     choices: [
       'UpdateContext(',
@@ -305,7 +305,7 @@ var pl400Questions = [
   },
   {
     id: 1164,
-    text: 'An organization uses Dynamics 365 Sales. The organization has accounting and customer service departments.\n\nYou must restrict users in customer service from being able to change the value of the balance field on the Contact records. The accounting team must be the only team able to edit this field.\n\nYou need to create the appropriate solution without any customizations.\n\nWhat should you do?\n\nOPTIONS:',
+    text: 'An organization uses Dynamics 365 Sales. The organization has accounting and customer service departments.\n\nYou must restrict users in customer service from being able to change the value of the balance field on the Contact records. The accounting team must be the only team able to edit this field.\n\nYou need to create the appropriate solution without any customizations.\n\nWhat should you do?',
     type: 'single',
     choices: [
       'Enable field security for the balance field and grant the customer service team read and update permissions.',
@@ -331,7 +331,7 @@ var pl400Questions = [
   },
   {
     id: 1167,
-    text: 'An organization uses Dynamics 365 Sales. The organization has accounting and customer service departments.\n\nYou must restrict users in customer service from being able to change the value of the balance field on the Contact records. The accounting team must be the only team able to edit this field.\n\nYou need to create the appropriate solution without any customizations.\n\nWhat should you do first?\n\nOPTIONS:',
+    text: 'An organization uses Dynamics 365 Sales. The organization has accounting and customer service departments.\n\nYou must restrict users in customer service from being able to change the value of the balance field on the Contact records. The accounting team must be the only team able to edit this field.\n\nYou need to create the appropriate solution without any customizations.\n\nWhat should you do first?',
     type: 'single',
     choices: [
       'Enable field security for the balance field and grant the customer service team read permissions.',
@@ -344,7 +344,7 @@ var pl400Questions = [
   },
   {
     id: 1172,
-    text: 'You are writing C# code to create an alternate key in a table for two columns: Order ID and Order Date.\n\nThe table has thousands of records.\n\nYou use the CreateEntityKey message to create the key. When you retrieve EntityKeyMetadata.EntityKeyIndexStatus, it returns a value of Failed.\n\nYou need to resolve the issue with the index creation.\n\nWhat should you do first?\n\nOPTIONS:',
+    text: 'You are writing C# code to create an alternate key in a table for two columns: Order ID and Order Date.\n\nThe table has thousands of records.\n\nYou use the CreateEntityKey message to create the key. When you retrieve EntityKeyMetadata.EntityKeyIndexStatus, it returns a value of Failed.\n\nYou need to resolve the issue with the index creation.\n\nWhat should you do first?',
     type: 'single',
     choices: [
       'Use the ReactivateEntityKey action.',
@@ -357,7 +357,7 @@ var pl400Questions = [
   },
   {
     id: 1174,
-    text: 'You have two tables, account and contact, with a parent-child relationship. Records in the account table can be created in the UI or from an external system integrated with Dataverse.\n\nWhen a user creates a record in the account table, a default record in the contact table must be created automatically.\n\nYou need to implement a process to create the contact records.\n\nSolution: Create a plug-in that runs when the account record is created. Use the Organization service to create the contact record.\n\nDoes the solution meet the goal?\n\nOPTIONS:',
+    text: 'You have two tables, account and contact, with a parent-child relationship. Records in the account table can be created in the UI or from an external system integrated with Dataverse.\n\nWhen a user creates a record in the account table, a default record in the contact table must be created automatically.\n\nYou need to implement a process to create the contact records.\n\nSolution: Create a plug-in that runs when the account record is created. Use the Organization service to create the contact record.\n\nDoes the solution meet the goal?',
     type: 'single',
     choices: [
       'Yes',
@@ -368,7 +368,7 @@ var pl400Questions = [
   },
   {
     id: 1176,
-    text: 'You have two tables, account and contact, with a parent-child relationship. Records in the account table can be created in the UI or from an external system integrated with Dataverse.\n\nWhen a user creates a record in the account table, a default record in the contact table must be created automatically.\n\nYou need to implement a process to create the contact records.\n\nSolution: Create a cloud flow that runs when the account record is created. Use the Dataverse connector to create the contact record.\n\nDoes the solution meet the goal?\n\nOPTIONS:',
+    text: 'You have two tables, account and contact, with a parent-child relationship. Records in the account table can be created in the UI or from an external system integrated with Dataverse.\n\nWhen a user creates a record in the account table, a default record in the contact table must be created automatically.\n\nYou need to implement a process to create the contact records.\n\nSolution: Create a cloud flow that runs when the account record is created. Use the Dataverse connector to create the contact record.\n\nDoes the solution meet the goal?',
     type: 'single',
     choices: [
       'Yes',
@@ -379,7 +379,7 @@ var pl400Questions = [
   },
   {
     id: 1187,
-    text: 'An organization implements Dynamics 365 Sales.\n\nYou want to trigger a business rule when the main form is saved.\n\nWhat should you do?\n\nOPTIONS:',
+    text: 'An organization implements Dynamics 365 Sales.\n\nYou want to trigger a business rule when the main form is saved.\n\nWhat should you do?',
     type: 'single',
     choices: [
       'Write a business rule to trigger on a change of the ModifiedOn field.',
@@ -392,7 +392,7 @@ var pl400Questions = [
   },
   {
     id: 1188,
-    text: 'A company implements Dynamics 365 Sales.\n\nAn email notification must be sent automatically to the sales manager when a business process completes.\n\nYou need to ensure that email is sent.\n\nWhat should you create on the process completed trigger?\n\nOPTIONS:',
+    text: 'A company implements Dynamics 365 Sales.\n\nAn email notification must be sent automatically to the sales manager when a business process completes.\n\nYou need to ensure that email is sent.\n\nWhat should you create on the process completed trigger?',
     type: 'single',
     choices: [
       'A workflow',
@@ -405,7 +405,7 @@ var pl400Questions = [
   },
   {
     id: 1190,
-    text: 'A customer wants to design a complex business process flow that includes six custom entities and four stages for each entity. One of the stages will have 15 steps.\n\nYou need to explain the flaw in this design to the customer.\n\nWhat is the flaw in this design?\n\nOPTIONS:',
+    text: 'A customer wants to design a complex business process flow that includes six custom entities and four stages for each entity. One of the stages will have 15 steps.\n\nYou need to explain the flaw in this design to the customer.\n\nWhat is the flaw in this design?',
     type: 'single',
     choices: [
       'The maximum number of custom entities has been exceeded.',
@@ -419,7 +419,7 @@ var pl400Questions = [
   },
   {
     id: 1198,
-    text: 'An organization implements Dynamics 365 Supply Chain Management.\n\nYou need to create a Microsoft Flow that runs daily.\n\nWhat are two possible ways to achieve this goal? Each correct answer presents a complete solution.\n\nOPTIONS:',
+    text: 'An organization implements Dynamics 365 Supply Chain Management.\n\nYou need to create a Microsoft Flow that runs daily.\n\nWhat are two possible ways to achieve this goal? Each correct answer presents a complete solution.',
     type: 'multiple',
     choices: [
       'Create the flow and set the flow frequency to daily and the interval to 1.',
@@ -432,7 +432,7 @@ var pl400Questions = [
   },
   {
     id: 1201,
-    text: 'You create a cloud flow to process a list of records by using a loop.\n\nYou need to determine when to initialize a variable that is used to process the records.\n\nOPTIONS:',
+    text: 'You create a cloud flow to process a list of records by using a loop.\n\nYou need to determine when to initialize a variable that is used to process the records.',
     type: 'single',
     choices: [
       'After the loop',
@@ -445,7 +445,7 @@ var pl400Questions = [
   },
   {
     id: 1202,
-    text: 'You are configuring a Microsoft Power Virtual Agents chatbot to use the authenticate option for Microsoft Teams only.\n\nYou need to select the variables that return information about the logged-in user.\n\nOPTIONS:',
+    text: 'You are configuring a Microsoft Power Virtual Agents chatbot to use the authenticate option for Microsoft Teams only.\n\nYou need to select the variables that return information about the logged-in user.',
     type: 'multiple',
     choices: [
       'authToken',
@@ -458,7 +458,7 @@ var pl400Questions = [
   },
   {
     id: 1224,
-    text: 'You are developing a model-driven app for a company.\n\nWhen you create a new Account record, you must automatically display a form to collect data that is needed to create a Contact record. The form must switch to the appropriate form layout based on the contact type.\n\nYou open the Contact form by using JavaScript. You pass the contact type information to the form by using the Xrm.Navigation.openForm function. An OnLoad event handler in the Contact form processes the data and shows only the appropriate sections of the form for the given contact type.\n\nYou need to configure the receiving form to accept the data parameter.\n\nSolution: In the form editor, add an event handler for the data parameter.\n\nDoes the solution meet the goal?\n\nOPTIONS:',
+    text: 'You are developing a model-driven app for a company.\n\nWhen you create a new Account record, you must automatically display a form to collect data that is needed to create a Contact record. The form must switch to the appropriate form layout based on the contact type.\n\nYou open the Contact form by using JavaScript. You pass the contact type information to the form by using the Xrm.Navigation.openForm function. An OnLoad event handler in the Contact form processes the data and shows only the appropriate sections of the form for the given contact type.\n\nYou need to configure the receiving form to accept the data parameter.\n\nSolution: In the form editor, add an event handler for the data parameter.\n\nDoes the solution meet the goal?',
     type: 'single',
     choices: [
       'Yes',
@@ -469,7 +469,7 @@ var pl400Questions = [
   },
   {
     id: 1225,
-    text: 'You are developing a model-driven app for a company.\n\nWhen you create a new Account record, you must automatically display a form to collect data that is needed to create a Contact record. The form must switch to the appropriate form layout based on the contact type.\n\nYou open the Contact form by using JavaScript. You pass the contact type information to the form by using the Xrm.Navigation.openForm function. An OnLoad event handler in the Contact form processes the data and shows only the appropriate sections of the form for the given contact type.\n\nYou need to configure the receiving form to accept the data parameter.\n\nSolution: In the form editor, add a web resource that sets formContext.data attributes.\n\nDoes the solution meet the goal?\n\nOPTIONS:',
+    text: 'You are developing a model-driven app for a company.\n\nWhen you create a new Account record, you must automatically display a form to collect data that is needed to create a Contact record. The form must switch to the appropriate form layout based on the contact type.\n\nYou open the Contact form by using JavaScript. You pass the contact type information to the form by using the Xrm.Navigation.openForm function. An OnLoad event handler in the Contact form processes the data and shows only the appropriate sections of the form for the given contact type.\n\nYou need to configure the receiving form to accept the data parameter.\n\nSolution: In the form editor, add a web resource that sets formContext.data attributes.\n\nDoes the solution meet the goal?',
     type: 'single',
     choices: [
       'Yes',
@@ -480,7 +480,7 @@ var pl400Questions = [
   },
   {
     id: 1231,
-    text: 'You are developing a model-driven app for a company.\n\nWhen you create a new Account record, you must automatically display a form to collect data that is needed to create a Contact record. The form must switch to the appropriate form layout based on the contact type.\n\nYou open the Contact form by using JavaScript. You pass the contact type information to the form by using the Xrm.Navigation.openForm function. An OnLoad event handler in the Contact form processes the data and shows only the appropriate sections of the form for the given contact type.\n\nYou need to configure the receiving form to accept the data parameter.\n\nSolution: In the form editor, add a query string parameter for the data parameter.\n\nDoes the solution meet the goal?\n\nOPTIONS:',
+    text: 'You are developing a model-driven app for a company.\n\nWhen you create a new Account record, you must automatically display a form to collect data that is needed to create a Contact record. The form must switch to the appropriate form layout based on the contact type.\n\nYou open the Contact form by using JavaScript. You pass the contact type information to the form by using the Xrm.Navigation.openForm function. An OnLoad event handler in the Contact form processes the data and shows only the appropriate sections of the form for the given contact type.\n\nYou need to configure the receiving form to accept the data parameter.\n\nSolution: In the form editor, add a query string parameter for the data parameter.\n\nDoes the solution meet the goal?',
     type: 'single',
     choices: [
       'Yes',
@@ -491,7 +491,7 @@ var pl400Questions = [
   },
   {
     id: 1241,
-    text: 'You are creating a model-driven app. You create JavaScript code to display a message when a record is saved.\n\nYou need to configure the associated JavaScript web resource name when adding the event handler to the form.\n\nWhich field should you use?\n\nOPTIONS:',
+    text: 'You are creating a model-driven app. You create JavaScript code to display a message when a record is saved.\n\nYou need to configure the associated JavaScript web resource name when adding the event handler to the form.\n\nWhich field should you use?',
     type: 'single',
     choices: [
       'Event Type',
@@ -517,7 +517,7 @@ var pl400Questions = [
   },
   {
     id: 1256,
-    text: 'You are developing a model-driven app by using JavaScript.\n\nYou need to configure the app to display a dialog box when a form is opened or when a grid on a form is sorted.\n\nWhat should you use?\n\nOPTIONS:',
+    text: 'You are developing a model-driven app by using JavaScript.\n\nYou need to configure the app to display a dialog box when a form is opened or when a grid on a form is sorted.\n\nWhat should you use?',
     type: 'single',
     choices: [
       'Grid OnSave',
@@ -530,7 +530,7 @@ var pl400Questions = [
   },
   {
     id: 1266,
-    text: 'You develop a model-driven app in which client-side scripts are used extensively.\n\nUsers report that forms load quickly but become unresponsive.\n\nYou need to investigate the form issues before optimizing the forms.\n\nWhat should you do first?\n\nOPTIONS:',
+    text: 'You develop a model-driven app in which client-side scripts are used extensively.\n\nUsers report that forms load quickly but become unresponsive.\n\nYou need to investigate the form issues before optimizing the forms.\n\nWhat should you do first?',
     type: 'single',
     choices: [
       'Use a Quick View form.',
@@ -562,7 +562,7 @@ var pl400Questions = [
   },
   {
     id: 1285,
-    text: 'A company needs to illustrate the relationships of the entities in Dynamics 365 Sales.\n\nYou need to select the appropriate tool to show this graphic.\n\nWhich tool should you select?\n\nOPTIONS:',
+    text: 'A company needs to illustrate the relationships of the entities in Dynamics 365 Sales.\n\nYou need to select the appropriate tool to show this graphic.\n\nWhich tool should you select?',
     type: 'single',
     choices: [
       'Metadata diagram',
@@ -588,7 +588,7 @@ var pl400Questions = [
   },
   {
     id: 1296,
-    text: 'You are creating a plug-in for an app that helps government employees get a proof of vaccination card.\n\nYou must add the following information to a vaccination record before a proof of vaccination card is created:\n- Vaccination type\n- Date of vaccination\n- Name of person administering the vaccine\n\nYou need to register the plug-in.\n\nIn which stage should you register the plug-in?\n\nOPTIONS:',
+    text: 'You are creating a plug-in for an app that helps government employees get a proof of vaccination card.\n\nYou must add the following information to a vaccination record before a proof of vaccination card is created:\n- Vaccination type\n- Date of vaccination\n- Name of person administering the vaccine\n\nYou need to register the plug-in.\n\nIn which stage should you register the plug-in?',
     type: 'single',
     choices: [
       'PreValidation',
@@ -601,7 +601,7 @@ var pl400Questions = [
   },
   {
     id: 1317,
-    text: 'You are designing an integration that sends created records from a custom Dataverse table to an exposed REST API.\n\nWhen the REST API is unavailable, you must be able to retry if the response status code is 500.\n\nSolution: Register a webhook by using the REST API as the endpoint. Wait for the webhook to automatically retry when a failure occurs.\n\nDoes the solution meet the goal?\n\nOPTIONS:',
+    text: 'You are designing an integration that sends created records from a custom Dataverse table to an exposed REST API.\n\nWhen the REST API is unavailable, you must be able to retry if the response status code is 500.\n\nSolution: Register a webhook by using the REST API as the endpoint. Wait for the webhook to automatically retry when a failure occurs.\n\nDoes the solution meet the goal?',
     type: 'single',
     choices: [
       'Yes',
@@ -630,7 +630,7 @@ var pl400Questions = [
   },
   {
     id: 1334,
-    text: 'A company plans to replicate a Dynamics 365 Sales database into an Azure SQL\nDatabase instance for reporting purposes. The Data Export Service solution has\nbeen installed.\n\nYou need to configure the Data Export Service.\n\nWhich three actions should you perform? Each correct answer presents part of the\nsolution.\n\nOPTIONS:',
+    text: 'A company plans to replicate a Dynamics 365 Sales database into an Azure SQL\nDatabase instance for reporting purposes. The Data Export Service solution has\nbeen installed.\n\nYou need to configure the Data Export Service.\n\nWhich three actions should you perform? Each correct answer presents part of the\nsolution.',
     type: 'multiple',
     choices: [
       'Enable auditing for all entities that must be replicated to Azure SQL Database.',
@@ -644,7 +644,7 @@ var pl400Questions = [
   },
   {
     id: 1336,
-    text: 'You are creating a Power Automate flow.\n\nYou create an Azure Service Bus listener app that receives requests from a\nthird-party application.\n\nWhen the flow calls the message queue, it must delete the message as soon as it\nis read.\n\nYou need to ensure that the queue is cleared properly.\n\nWhich method or class should you use?\n\nOPTIONS:',
+    text: 'You are creating a Power Automate flow.\n\nYou create an Azure Service Bus listener app that receives requests from a\nthird-party application.\n\nWhen the flow calls the message queue, it must delete the message as soon as it\nis read.\n\nYou need to ensure that the queue is cleared properly.\n\nWhich method or class should you use?',
     type: 'single',
     choices: [
       'ReceiveMode',
@@ -657,7 +657,7 @@ var pl400Questions = [
   },
   {
     id: 1337,
-    text: 'As part of the month-end financial closing process, a company uses a batch job to\ncopy all orders into a staging database.\n\nThe staging database is used to calculate any outstanding amounts owed by\nclients, and must process all historical data.\n\nYou need to ensure that only the data affected during the month is included in\nthe integration process.\n\nWhat are two possible ways to achieve this goal? Each correct answer presents a\ncomplete solution.\n\nOPTIONS:',
+    text: 'As part of the month-end financial closing process, a company uses a batch job to\ncopy all orders into a staging database.\n\nThe staging database is used to calculate any outstanding amounts owed by\nclients, and must process all historical data.\n\nYou need to ensure that only the data affected during the month is included in\nthe integration process.\n\nWhat are two possible ways to achieve this goal? Each correct answer presents a\ncomplete solution.',
     type: 'multiple',
     choices: [
       'Use change tracking on the orders and run the integration to retrieve new',
@@ -670,7 +670,7 @@ var pl400Questions = [
   },
   {
     id: 1344,
-    text: 'The communication department for a company plans to add a publicly accessible survey page to the company\'s public website.\n\nYou must add the new survey page to the company\'s public website and capture data from the page to a Microsoft Dataverse environment.\n\nExplicit user credentials must not be required to write survey data to Dataverse.\n\nYou need to implement authentication.\n\nWhich authentication mechanism should you implement?\n\nOPTIONS:',
+    text: 'The communication department for a company plans to add a publicly accessible survey page to the company\'s public website.\n\nYou must add the new survey page to the company\'s public website and capture data from the page to a Microsoft Dataverse environment.\n\nExplicit user credentials must not be required to write survey data to Dataverse.\n\nYou need to implement authentication.\n\nWhich authentication mechanism should you implement?',
     type: 'single',
     choices: [
       'Claims based',
@@ -683,7 +683,7 @@ var pl400Questions = [
   },
   {
     id: 1350,
-    text: 'A company requires custom validation when users save form records that use a synchronous plug-in.\n\nIf validation fails, a message that explains how to resolve the issue must be displayed on the form to the user.\n\nYou need to implement the custom validation.\n\nSolution: Include the message in the output parameters of the plug-in.\n\nDoes the solution meet the goal?\n\nOPTIONS:',
+    text: 'A company requires custom validation when users save form records that use a synchronous plug-in.\n\nIf validation fails, a message that explains how to resolve the issue must be displayed on the form to the user.\n\nYou need to implement the custom validation.\n\nSolution: Include the message in the output parameters of the plug-in.\n\nDoes the solution meet the goal?',
     type: 'single',
     choices: [
       'Yes',
@@ -694,7 +694,7 @@ var pl400Questions = [
   },
   {
     id: 1351,
-    text: 'A company requires custom validation when users save form records that use a synchronous plug-in.\n\nIf validation fails, a message that explains how to resolve the issue must be displayed on the form to the user.\n\nYou need to implement the custom validation.\n\nSolution: Use the tracing service to log the message.\n\nDoes the solution meet the goal?\n\nOPTIONS:',
+    text: 'A company requires custom validation when users save form records that use a synchronous plug-in.\n\nIf validation fails, a message that explains how to resolve the issue must be displayed on the form to the user.\n\nYou need to implement the custom validation.\n\nSolution: Use the tracing service to log the message.\n\nDoes the solution meet the goal?',
     type: 'single',
     choices: [
       'Yes',
@@ -705,7 +705,7 @@ var pl400Questions = [
   },
   {
     id: 1352,
-    text: 'A company requires custom validation when users save form records that use a synchronous plug-in.\n\nIf validation fails, a message that explains how to resolve the issue must be displayed on the form to the user.\n\nYou need to implement the custom validation.\n\nSolution: Throw a custom exception with the message.\n\nDoes the solution meet the goal?\n\nOPTIONS:',
+    text: 'A company requires custom validation when users save form records that use a synchronous plug-in.\n\nIf validation fails, a message that explains how to resolve the issue must be displayed on the form to the user.\n\nYou need to implement the custom validation.\n\nSolution: Throw a custom exception with the message.\n\nDoes the solution meet the goal?',
     type: 'single',
     choices: [
       'Yes',
@@ -716,7 +716,7 @@ var pl400Questions = [
   },
   {
     id: 1353,
-    text: 'You develop code that will perform an update to existing records in a table.\n\nThe update must occur based on the alternate key configured for the table.\n\nYou need to perform the update.\n\nWhich two requests should you use? Each correct answer presents a complete solution.\n\nOPTIONS:',
+    text: 'You develop code that will perform an update to existing records in a table.\n\nThe update must occur based on the alternate key configured for the table.\n\nYou need to perform the update.\n\nWhich two requests should you use? Each correct answer presents a complete solution.',
     type: 'multiple',
     choices: [
       'UpdateRequest',
@@ -729,7 +729,7 @@ var pl400Questions = [
   },
   {
     id: 1366,
-    text: 'CONTEXT / QUESTION:\nA company has a new implementation that will use Dynamics 365 Field Service.\n\nA developer adds two custom tables to the solution in a development environment. The custom tables have lookup columns to Field Service tables.\n\nThe developer creates a new test environment and imports the solution. The developer receives an error that states dependencies are missing.\n\nWhat should you recommend?\n\nOPTIONS:',
+    text: 'CONTEXT / QUESTION:\nA company has a new implementation that will use Dynamics 365 Field Service.\n\nA developer adds two custom tables to the solution in a development environment. The custom tables have lookup columns to Field Service tables.\n\nThe developer creates a new test environment and imports the solution. The developer receives an error that states dependencies are missing.\n\nWhat should you recommend?',
     type: 'single',
     choices: [
       'Add the Field Service tables to the solution.',
@@ -742,7 +742,7 @@ var pl400Questions = [
   },
   {
     id: 1370,
-    text: 'CONTEXT / QUESTION:\nA university implements Dynamics 365 Sales. Several departments use opportunity records to bid for funding for projects within their own departments. You configure the system to ensure that each department can only work on their own records.\n\nEmployees in multiple departments often need to work together on an opportunity. Employees report that they are not able to see opportunities from other departments.\n\nSolution: Share the individual opportunity that members of one department are working on with all members of the second department, and give those members the appropriate permissions.\n\nDoes the solution meet the goal?\n\nOPTIONS:',
+    text: 'CONTEXT / QUESTION:\nA university implements Dynamics 365 Sales. Several departments use opportunity records to bid for funding for projects within their own departments. You configure the system to ensure that each department can only work on their own records.\n\nEmployees in multiple departments often need to work together on an opportunity. Employees report that they are not able to see opportunities from other departments.\n\nSolution: Share the individual opportunity that members of one department are working on with all members of the second department, and give those members the appropriate permissions.\n\nDoes the solution meet the goal?',
     type: 'single',
     choices: [
       'Yes',
@@ -753,7 +753,7 @@ var pl400Questions = [
   },
   {
     id: 1380,
-    text: 'CONTEXT / QUESTION:\nYou are troubleshooting a new canvas app.\n\nUsers report the app loads slowly. You use the Monitor tool to view various events being performed in the app. Events performed in the app do not have formula details.\n\nYou need to enable formulas to be included with the Monitor tool events.\n\nWhat should you do?\n\nOPTIONS:',
+    text: 'CONTEXT / QUESTION:\nYou are troubleshooting a new canvas app.\n\nUsers report the app loads slowly. You use the Monitor tool to view various events being performed in the app. Events performed in the app do not have formula details.\n\nYou need to enable formulas to be included with the Monitor tool events.\n\nWhat should you do?',
     type: 'single',
     choices: [
       'Add the Microsoft Azure Application Insights data source to the canvas app.',

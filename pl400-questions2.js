@@ -291,7 +291,7 @@ var pl400Questions2 = [
   },
   {
     id: 2122,
-    text: 'You create a model-driven app. You run Solution checker. The tool displays the following error:\n\n"Solution checker fails to export solutions with model-driven app components."\n\nYou need to resolve the issue.\n\nWhat should you do?\n\nOPTIONS:',
+    text: 'You create a model-driven app. You run Solution checker. The tool displays the following error:\n\n"Solution checker fails to export solutions with model-driven app components."\n\nYou need to resolve the issue.\n\nWhat should you do?',
     type: 'single',
     choices: [
       'Manually export the solution before running Solution checker.',
@@ -334,7 +334,7 @@ var pl400Questions2 = [
   },
   {
     id: 2135,
-    text: 'A bank uses a Common Data Service solution to manage clients.\n\nBank representatives perform client credit checks while the client is present. Credit checks may take up to five minutes to complete.\n\nBank policy dictates that the bank representative\'s app must stay blocked until credit checks are complete.\n\nYou need to display a model-driven app dialog while credit checks run to ask the bank representative and client to wait for the credit check to complete.\n\nWhich function should you use?\n\nOPTIONS:',
+    text: 'A bank uses a Common Data Service solution to manage clients.\n\nBank representatives perform client credit checks while the client is present. Credit checks may take up to five minutes to complete.\n\nBank policy dictates that the bank representative\'s app must stay blocked until credit checks are complete.\n\nYou need to display a model-driven app dialog while credit checks run to ask the bank representative and client to wait for the credit check to complete.\n\nWhich function should you use?',
     type: 'single',
     choices: [
       'Xrm.Navigation.openWebResource("prefix_myPoliteMessage.htm")',
@@ -391,7 +391,7 @@ var pl400Questions2 = [
   },
   {
     id: 2144,
-    text: 'An organization uses Dynamics 365 Sales.\n\nYou plan to use a JavaScript web resource file in the Accounts form. The file has a dependency on two image web resource files and on the custom field `new_placeofbirth` in the Account entity.\n\nYou need to add the dependencies for the JavaScript file.\n\nWhich three actions should you perform? Each correct answer presents part of the solution.\n\nOPTIONS:',
+    text: 'An organization uses Dynamics 365 Sales.\n\nYou plan to use a JavaScript web resource file in the Accounts form. The file has a dependency on two image web resource files and on the custom field `new_placeofbirth` in the Account entity.\n\nYou need to add the dependencies for the JavaScript file.\n\nWhich three actions should you perform? Each correct answer presents part of the solution.',
     type: 'multiple',
     choices: [
       'Open the web resource file, add the two image web resources to the dependency list, and then add the custom field `new_placeofbirth` to the dependency list.',
@@ -418,7 +418,7 @@ var pl400Questions2 = [
   },
   {
     id: 2146,
-    text: 'You need to add a button by using Ribbon Workbench.\n\nIn which three areas can you add a button for the Account entity? Each correct answer presents a complete solution.\n\nOPTIONS:',
+    text: 'You need to add a button by using Ribbon Workbench.\n\nIn which three areas can you add a button for the Account entity? Each correct answer presents a complete solution.',
     type: 'multiple',
     choices: [
       'In the home area for Accounts.',
@@ -445,7 +445,7 @@ var pl400Questions2 = [
   },
   {
     id: 2149,
-    text: 'You are developing a new Power Platform app.\n\nThe checker fails with an error due to missing security roles.\n\nYou need to add security roles to the Power Apps Checker application user.\n\nWhich two security roles should you add? Each correct answer presents part of the solution.\n\nOPTIONS:',
+    text: 'You are developing a new Power Platform app.\n\nThe checker fails with an error due to missing security roles.\n\nYou need to add security roles to the Power Apps Checker application user.\n\nWhich two security roles should you add? Each correct answer presents part of the solution.',
     type: 'multiple',
     choices: [
       'Global Discovery Service Role',
@@ -459,7 +459,7 @@ var pl400Questions2 = [
   },
   {
     id: 2150,
-    text: 'You are creating a Power Apps app.\n\nThe app must retrieve data from an API that requires two-factor authentication.\n\nYou need to configure authentication.\n\nWhich type of authentication should you implement?\n\nOPTIONS:',
+    text: 'You are creating a Power Apps app.\n\nThe app must retrieve data from an API that requires two-factor authentication.\n\nYou need to configure authentication.\n\nWhich type of authentication should you implement?',
     type: 'single',
     choices: [
       'Server-to-server',
@@ -503,7 +503,7 @@ var pl400Questions2 = [
   },
   {
     id: 2182,
-    text: 'A manufacturing company uses a Common Data Service (CDS) environment to manage parts inventory across two warehouses modeled as business units named WH1 and WH2.\n\nData from the two warehouses is processed separately for each part that has inventory quantity updates. The company must automate this process by pushing inventory updates from orders submitted to the warehouses.\n\nYou need to build the automation by using Power Automate flows against the CDS database and achieve the goal with the least amount of administrative effort.\n\nWhich flow or flows should you recommend?\n\nOPTIONS:',
+    text: 'A manufacturing company uses a Common Data Service (CDS) environment to manage parts inventory across two warehouses modeled as business units named WH1 and WH2.\n\nData from the two warehouses is processed separately for each part that has inventory quantity updates. The company must automate this process by pushing inventory updates from orders submitted to the warehouses.\n\nYou need to build the automation by using Power Automate flows against the CDS database and achieve the goal with the least amount of administrative effort.\n\nWhich flow or flows should you recommend?',
     type: 'single',
     choices: [
       'Two automated flows with scope Business Unit, with triggers on Create/Update/Delete on orders.',
@@ -520,7 +520,7 @@ var pl400Questions2 = [
   },
   {
     id: 2189,
-    text: 'You create a Power Virtual Agents chatbot in an environment named Environment1. A colleague creates a Power Automate flow in the default solution in the default environment.\n\nThe chatbot in Environment1 does not recognize the flow in the default environment.\n\nYou need to ensure the chatbot can access the flow.\n\nWhich two actions should you perform? Each correct answer presents part of the solution.\n\nOPTIONS:',
+    text: 'You create a Power Virtual Agents chatbot in an environment named Environment1. A colleague creates a Power Automate flow in the default solution in the default environment.\n\nThe chatbot in Environment1 does not recognize the flow in the default environment.\n\nYou need to ensure the chatbot can access the flow.\n\nWhich two actions should you perform? Each correct answer presents part of the solution.',
     type: 'multiple',
     choices: [
       'Add the Power Automate flow to a solution in Environment1.',
@@ -547,7 +547,7 @@ var pl400Questions2 = [
   },
   {
     id: 2197,
-    text: 'You must move an API key between environments by using a solution. You must use an environment variable with a data type of Secret.\n\nYou need to create the environment variable.\n\nWhat must you create first?\n\nOPTIONS:',
+    text: 'You must move an API key between environments by using a solution. You must use an environment variable with a data type of Secret.\n\nYou need to create the environment variable.\n\nWhat must you create first?',
     type: 'single',
     choices: [
       'Application user',
@@ -560,7 +560,7 @@ var pl400Questions2 = [
   },
   {
     id: 2205,
-    text: 'You are creating an asynchronous automation that targets an external API.\n\nThe automation must retrieve a stored API key to connect to the API. The API key must be rotatable regularly by business users, without the need for dedicated tooling. The connector is already available for the external API.\n\nWhat should you use?\n\nOPTIONS:',
+    text: 'You are creating an asynchronous automation that targets an external API.\n\nThe automation must retrieve a stored API key to connect to the API. The API key must be rotatable regularly by business users, without the need for dedicated tooling. The connector is already available for the external API.\n\nWhat should you use?',
     type: 'single',
     choices: [
       'Unsecure config',
@@ -586,7 +586,7 @@ var pl400Questions2 = [
   },
   {
     id: 2229,
-    text: 'You are creating a canvas app for a bank. Consumers will enter information into the app when they apply for a loan.\n\nThe input form for the app must contain fields to prompt the consumer for their first name, last name, address, and the requested loan amount.\n\nImmediately after a consumer enters a value for the LoanAmount field, the background color for the field must change. The background color for the field must turn red after a consumer enters a value of more than $5,000 and must turn green for values less than or equal to $5,000.\n\nYou need to implement the required behavior.\n\nWhich option should you use?\n\nOPTIONS:',
+    text: 'You are creating a canvas app for a bank. Consumers will enter information into the app when they apply for a loan.\n\nThe input form for the app must contain fields to prompt the consumer for their first name, last name, address, and the requested loan amount.\n\nImmediately after a consumer enters a value for the LoanAmount field, the background color for the field must change. The background color for the field must turn red after a consumer enters a value of more than $5,000 and must turn green for values less than or equal to $5,000.\n\nYou need to implement the required behavior.\n\nWhich option should you use?',
     type: 'single',
     choices: [
       'Create a Power Automate flow.',
@@ -612,7 +612,7 @@ var pl400Questions2 = [
   },
   {
     id: 2232,
-    text: 'You are developing a model-driven app for a company.\n\nWhen you create a new Account record, you must automatically display a form to collect data that is needed to create a Contact record. The form must switch to the appropriate form layout based on the contact type.\n\nYou open the Contact form by using JavaScript. You pass the contact type information to the form by using the Xrm.Navigation.openForm function. An OnLoad event handler in the Contact form processes the data and shows only the appropriate sections of the form for the given contact type.\n\nYou need to configure the receiving form to accept the data parameter.\n\nSolution: Export the solution, edit the customizations.xml, and add a querystringparameter element to the XML.\n\nDoes the solution meet the goal?\n\nOPTIONS:',
+    text: 'You are developing a model-driven app for a company.\n\nWhen you create a new Account record, you must automatically display a form to collect data that is needed to create a Contact record. The form must switch to the appropriate form layout based on the contact type.\n\nYou open the Contact form by using JavaScript. You pass the contact type information to the form by using the Xrm.Navigation.openForm function. An OnLoad event handler in the Contact form processes the data and shows only the appropriate sections of the form for the given contact type.\n\nYou need to configure the receiving form to accept the data parameter.\n\nSolution: Export the solution, edit the customizations.xml, and add a querystringparameter element to the XML.\n\nDoes the solution meet the goal?',
     type: 'single',
     choices: [
       'Yes',
@@ -623,7 +623,7 @@ var pl400Questions2 = [
   },
   {
     id: 2236,
-    text: 'You are creating a custom connector in Power Apps to connect to a third-party application.\n\nThe definition in the connector must be set so that it is not visible to the end user.\n\nWhich visibility parameter should you use?\n\nOPTIONS:',
+    text: 'You are creating a custom connector in Power Apps to connect to a third-party application.\n\nThe definition in the connector must be set so that it is not visible to the end user.\n\nWhich visibility parameter should you use?',
     type: 'single',
     choices: [
       'important',
@@ -650,7 +650,7 @@ var pl400Questions2 = [
   },
   {
     id: 2264,
-    text: 'You are developing custom pages for a model-driven app.\n\nThe app must display a timer control within a menu and include a mixture of buttons and icons. If a change is made to any of these elements, the changes must cascade automatically to all custom pages.\n\nYou need to implement a solution.\n\nWhat should you implement?\n\nOPTIONS:',
+    text: 'You are developing custom pages for a model-driven app.\n\nThe app must display a timer control within a menu and include a mixture of buttons and icons. If a change is made to any of these elements, the changes must cascade automatically to all custom pages.\n\nYou need to implement a solution.\n\nWhat should you implement?',
     type: 'single',
     choices: [
       'PCF control',
@@ -678,7 +678,7 @@ var pl400Questions2 = [
   },
   {
     id: 2276,
-    text: 'The communication department for a company plans to add a publicly accessible survey page to the company\'s public website.\n\nYou must add the new survey page to the company\'s public website and capture data from the page to a Common Data Service environment.\n\nExplicit user credentials must not be required to write survey data to Common Data Service.\n\nYou need to implement authentication.\n\nWhich authentication mechanism should you implement?\n\nOPTIONS:',
+    text: 'The communication department for a company plans to add a publicly accessible survey page to the company\'s public website.\n\nYou must add the new survey page to the company\'s public website and capture data from the page to a Common Data Service environment.\n\nExplicit user credentials must not be required to write survey data to Common Data Service.\n\nYou need to implement authentication.\n\nWhich authentication mechanism should you implement?',
     type: 'single',
     choices: [
       'AD FS',
@@ -691,7 +691,7 @@ var pl400Questions2 = [
   },
   {
     id: 2278,
-    text: 'The communication department for a company plans to add a publicly accessible survey page to the company\'s public website.\n\nYou must add the new survey page to the company\'s public website and capture data from the page to a Common Data Service environment.\n\nExplicit user credentials must not be required to write survey data to Common Data Service.\n\nYou need to implement authentication.\n\nWhich authentication mechanism should you implement?\n\nOPTIONS:',
+    text: 'The communication department for a company plans to add a publicly accessible survey page to the company\'s public website.\n\nYou must add the new survey page to the company\'s public website and capture data from the page to a Common Data Service environment.\n\nExplicit user credentials must not be required to write survey data to Common Data Service.\n\nYou need to implement authentication.\n\nWhich authentication mechanism should you implement?',
     type: 'single',
     choices: [
       'Microsoft 365',
@@ -734,7 +734,7 @@ var pl400Questions2 = [
   },
   {
     id: 2291,
-    text: 'You create a plug-in to validate data.\n\nUsers report that validation is not working as expected.\n\nYou need to debug the plug-in.\n\nWhich tool should you use?\n\nOPTIONS:',
+    text: 'You create a plug-in to validate data.\n\nUsers report that validation is not working as expected.\n\nYou need to debug the plug-in.\n\nWhich tool should you use?',
     type: 'single',
     choices: [
       'Plug-in profiler',
@@ -773,7 +773,7 @@ var pl400Questions2 = [
   },
   {
     id: 2313,
-    text: 'A company requires a plug-in that makes multiple requests to an external web service. The plug-in must not time out when the web service has issues or is slow to respond.\n\nYou need to create the plug-in.\n\nWhat should you do?\n\nOPTIONS:',
+    text: 'A company requires a plug-in that makes multiple requests to an external web service. The plug-in must not time out when the web service has issues or is slow to respond.\n\nYou need to create the plug-in.\n\nWhat should you do?',
     type: 'single',
     choices: [
       'Register the plug-in to run synchronously.',
@@ -786,7 +786,7 @@ var pl400Questions2 = [
   },
   {
     id: 2315,
-    text: 'You are creating a canvas app that will create rows in a Dataverse table.\n\nWhen a row is created, additional business logic must be performed on a related row. A cloud flow triggered by the canvas app must perform the business logic.\n\nYou need to create the cloud flow.\n\nWhich trigger should you use?\n\nOPTIONS:',
+    text: 'You are creating a canvas app that will create rows in a Dataverse table.\n\nWhen a row is created, additional business logic must be performed on a related row. A cloud flow triggered by the canvas app must perform the business logic.\n\nYou need to create the cloud flow.\n\nWhich trigger should you use?',
     type: 'single',
     choices: [
       'Dataverse - When an action is performed',
@@ -799,7 +799,7 @@ var pl400Questions2 = [
   },
   {
     id: 2321,
-    text: 'You have a model-driven app form that uses Xrm.WebApi.updateRecord during the\nOnSave event to update a related record.\n\nDuring testing, you observe that the related record does not always update when it\nshould.\n\nYou need to ensure that the current record is saved and the related record is\nupdated consistently.\n\nWhich two actions should you perform? Each correct answer presents part of the\nsolution.\n\nOPTIONS:',
+    text: 'You have a model-driven app form that uses Xrm.WebApi.updateRecord during the\nOnSave event to update a related record.\n\nDuring testing, you observe that the related record does not always update when it\nshould.\n\nYou need to ensure that the current record is saved and the related record is\nupdated consistently.\n\nWhich two actions should you perform? Each correct answer presents part of the\nsolution.',
     type: 'multiple',
     choices: [
       'Add logic before the update to ensure that the request is made only when the value has changed.',
@@ -813,7 +813,7 @@ var pl400Questions2 = [
   },
   {
     id: 2325,
-    text: 'You are designing a one-way integration from Microsoft Dataverse to another system.\n\nRequirements:\n- Use an Azure Function to update the other system.\n- Send only newly created records.\n- Support scenarios where a component of the integration is unavailable for more\n  than a few seconds without data loss.\n\nProposed solution:\nRegister a webhook in Dataverse that connects to the Azure Function. Register a\nstep on the webhook that runs synchronously on the record\'s Create message in the\npost-operation stage.\n\nDoes the solution meet the goal?\n\nOPTIONS:',
+    text: 'You are designing a one-way integration from Microsoft Dataverse to another system.\n\nRequirements:\n- Use an Azure Function to update the other system.\n- Send only newly created records.\n- Support scenarios where a component of the integration is unavailable for more\n  than a few seconds without data loss.\n\nProposed solution:\nRegister a webhook in Dataverse that connects to the Azure Function. Register a\nstep on the webhook that runs synchronously on the record\'s Create message in the\npost-operation stage.\n\nDoes the solution meet the goal?',
     type: 'single',
     choices: [
       'Yes',
@@ -824,7 +824,7 @@ var pl400Questions2 = [
   },
   {
     id: 2327,
-    text: 'You are designing a one-way integration from Microsoft Dataverse to another system.\n\nRequirements:\n- Use an Azure Function to update the other system.\n- Send only newly created records.\n- Support scenarios where a component of the integration is unavailable for more\n  than a few seconds without data loss.\n\nProposed solution:\nConfigure the Azure Function with a timer trigger that runs every five minutes.\nThe function queries Dataverse and processes records created in the last five\nminutes.\n\nDoes the solution meet the goal?\n\nOPTIONS:',
+    text: 'You are designing a one-way integration from Microsoft Dataverse to another system.\n\nRequirements:\n- Use an Azure Function to update the other system.\n- Send only newly created records.\n- Support scenarios where a component of the integration is unavailable for more\n  than a few seconds without data loss.\n\nProposed solution:\nConfigure the Azure Function with a timer trigger that runs every five minutes.\nThe function queries Dataverse and processes records created in the last five\nminutes.\n\nDoes the solution meet the goal?',
     type: 'single',
     choices: [
       'Yes',
@@ -861,7 +861,7 @@ var pl400Questions2 = [
   },
   {
     id: 2363,
-    text: 'CONTEXT / QUESTION:\nA company creates a custom connector for its cloud-based ERP system.\n\nThe company requires an authentication method that can be consumed by the custom connector.\n\nWhich authentication method should you use?\n\nOPTIONS:',
+    text: 'CONTEXT / QUESTION:\nA company creates a custom connector for its cloud-based ERP system.\n\nThe company requires an authentication method that can be consumed by the custom connector.\n\nWhich authentication method should you use?',
     type: 'single',
     choices: [
       'basic authentication',
@@ -874,7 +874,7 @@ var pl400Questions2 = [
   },
   {
     id: 2365,
-    text: 'CONTEXT / QUESTION:\nA company creates a custom connector for its cloud-based ERP system.\n\nThe company requires an authentication method that can be consumed by the custom connector.\n\nWhich authentication method should you use?\n\nOPTIONS:',
+    text: 'CONTEXT / QUESTION:\nA company creates a custom connector for its cloud-based ERP system.\n\nThe company requires an authentication method that can be consumed by the custom connector.\n\nWhich authentication method should you use?',
     type: 'single',
     choices: [
       'basic authentication',
@@ -887,7 +887,7 @@ var pl400Questions2 = [
   },
   {
     id: 2374,
-    text: 'CONTEXT / QUESTION:\nYou are implementing business logic for a model-driven app form by using multiple JavaScript web resources.\n\nThe business logic, number of JavaScript files, and the columns that the business logic requires are expected to change frequently. Some form fields will not be visible. Occasionally, non-developers will also make changes to the form.\n\nYou need to prevent columns referenced by the JavaScript from accidentally being removed from the form based.\n\nWhat should you do?\n\nOPTIONS:',
+    text: 'CONTEXT / QUESTION:\nYou are implementing business logic for a model-driven app form by using multiple JavaScript web resources.\n\nThe business logic, number of JavaScript files, and the columns that the business logic requires are expected to change frequently. Some form fields will not be visible. Occasionally, non-developers will also make changes to the form.\n\nYou need to prevent columns referenced by the JavaScript from accidentally being removed from the form based.\n\nWhat should you do?',
     type: 'single',
     choices: [
       'Hide columns that should not be displayed.',
@@ -900,7 +900,7 @@ var pl400Questions2 = [
   },
   {
     id: 2375,
-    text: 'CONTEXT / QUESTION:\nYou are creating a model-driven app for Contoso, Ltd. You add a button to the account page. The button must send a text message to the company\'s account team when a user selects the button.\n\nThe account team reports that they are not receiving messages when users select the button.\n\nYou are troubleshooting the app by using a hyperlink that includes the parameter: ribbondebug=true\n\nWhat is the purpose of the hyperlink?\n\nOPTIONS:',
+    text: 'CONTEXT / QUESTION:\nYou are creating a model-driven app for Contoso, Ltd. You add a button to the account page. The button must send a text message to the company\'s account team when a user selects the button.\n\nThe account team reports that they are not receiving messages when users select the button.\n\nYou are troubleshooting the app by using a hyperlink that includes the parameter: ribbondebug=true\n\nWhat is the purpose of the hyperlink?',
     type: 'single',
     choices: [
       'Run Command Checker for all buttons on the page.',
@@ -913,7 +913,7 @@ var pl400Questions2 = [
   },
   {
     id: 2377,
-    text: 'CONTEXT / QUESTION:\nYou are developing a Power Platform app.\n\nThe app must implement a two-way listener to an on-premises system by using Microsoft Azure Service Bus. You create an Azure Service Bus namespace and messaging entity. You must add the shared access policies.\n\nYou need to select the permissions for the messaging entity. Which two permissions should you use?\n\nOPTIONS:',
+    text: 'CONTEXT / QUESTION:\nYou are developing a Power Platform app.\n\nThe app must implement a two-way listener to an on-premises system by using Microsoft Azure Service Bus. You create an Azure Service Bus namespace and messaging entity. You must add the shared access policies.\n\nYou need to select the permissions for the messaging entity. Which two permissions should you use?',
     type: 'multiple',
     choices: [
       'System customizer',
