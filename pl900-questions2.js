@@ -1422,7 +1422,7 @@ var pl900Questions2 = [
     "type": "single",
     "choices": [
       "Copilot",
-      "Connector MOST VCIED,",
+      "Connector",
       "Al Builder",
       "Power BI"
     ],

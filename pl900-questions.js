@@ -518,7 +518,7 @@ var pl900Questions = [
   },
   {
     "id": 9034,
-    "text": "'A company uses Microsoft 365 and Dynamics 365 Sales. The company does not have any developers on its staff. You need to explain to the executives the benefits of using Power Platform apps. What are two benefits? Each correct answer presents a complete solution. addresses. and Dynamics 365 Sales.",
+    "text": "A company uses Microsoft 365 and Dynamics 365 Sales. The company does not have any developers on its staff. You need to explain to the executives the benefits of using Power Platform apps. What are two benefits? Each correct answer presents a complete solution. addresses. and Dynamics 365 Sales.",
     "type": "multiple",
     "choices": [
       "Users can send emails from Dynamics 365 Sales to their personal email",

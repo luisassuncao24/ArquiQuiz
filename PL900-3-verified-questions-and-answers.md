@@ -6690,7 +6690,7 @@ Source: **PL900 3.pdf**, 237 pages, numbered through question 369.
 >
 > A. Copilot
 >
-> B. Connector MOST VCIED,
+> B. Connector
 >
 > C. Al Builder
 >
