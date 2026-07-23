@@ -297,7 +297,8 @@ var pl900Questions = [
   },
   {
     "id": 9020,
-    "text": "An organization plans to create Power Platform solutions and is evaluating Microsoft Dataverse. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select\n\nWhich of the following statements are TRUE? Select all that apply.",
+    "text": "An organization plans to create Power Platform solutions and is evaluating Microsoft Dataverse. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.
+\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
       "Virtual table data is stored in Microsoft Dataverse.",
@@ -311,7 +312,8 @@ var pl900Questions = [
   },
   {
     "id": 9021,
-    "text": "Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select\n\nWhich of the following statements are TRUE? Select all that apply.",
+    "text": "Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.
+\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
       "Managed solutions can be used to group multiple Power Platform components together during solution development.",
@@ -389,7 +391,8 @@ var pl900Questions = [
   },
   {
     "id": 9026,
-    "text": "A company creates the following Microsoft Power Platform environments to manage a custom model- driven app: Development Production You have been granted the System Administrator security role to the development environment and a custom security role named Project Team Member to the production environment. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select\n\nWhich of the following statements are TRUE? Select all that apply.",
+    "text": "A company creates the following Microsoft Power Platform environments to manage a custom model- driven app: Development Production You have been granted the System Administrator security role to the development environment and a custom security role named Project Team Member to the production environment. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.
+\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
       "You will not be able to access the app until the System Administrator security role is assigned to the app in the development environment.",
@@ -860,7 +863,8 @@ var pl900Questions = [
   },
   {
     "id": 9056,
-    "text": "A company is evaluating Al Builder. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select\n\nWhich of the following statements are TRUE? Select all that apply.",
+    "text": "A company is evaluating Al Builder. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.
+\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
       "Prebuilt Al Builder models are pretrained and are ready to interpret business data immediately.",
@@ -921,7 +925,7 @@ var pl900Questions = [
   },
   {
     "id": 9060,
-    "text": "You are a sales representative. You create a Power Bl report to visualize data from a Microsoft Excel workbook. Users need to be able to view and share the report. Which two actions should you perform? Each correct answer presents part of the solution. C Publish the dashboard.",
+    "text": "You are a sales representative. You create a Power BI report to visualize data from a Microsoft Excel workbook. Users need to be able to view and share the report. Which two actions should you perform? Each correct answer presents part of the solution. C Publish the dashboard.",
     "type": "multiple",
     "choices": [
       "Pin the report to a dashboard.",
@@ -984,7 +988,7 @@ var pl900Questions = [
   },
   {
     "id": 9064,
-    "text": "You create a Power Bl dashboard that displays data from Dynamics 365 Customer Engagement. You need to share the Power BI dashboard with coworkers. What are three possible ways to achieve the goal? Each correct answer presents a complete solution. . Export the data into Common Data Service for others to manipulate in Power BI. D. Export the data to Microsoft Excel for coworkers to import and view in Power Bi.\n\nSelect the option that correctly matches all requirements in the order listed.",
+    "text": "You create a Power BI dashboard that displays data from Dynamics 365 Customer Engagement. You need to share the Power BI dashboard with coworkers. What are three possible ways to achieve the goal? Each correct answer presents a complete solution. . Export the data into Common Data Service for others to manipulate in Power BI. D. Export the data to Microsoft Excel for coworkers to import and view in Power Bi.\n\nSelect the option that correctly matches all requirements in the order listed.",
     "type": "single",
     "choices": [
       "1. Publish as an app | 2. Embed reports | 3. Workspace",
@@ -1029,7 +1033,7 @@ var pl900Questions = [
   },
   {
     "id": 9067,
-    "text": "You are a district manager for a large retail organization. You train each store manager to use Power Bl to track sales and daily sales targets. A store manager remembers learning about the Analyze in Excel option but cannot find the option in their Power BI dashboard. You need to help the user resolve the issue. How should you advise the user? . Subscribe to the dashboard and follow the email link.",
+    "text": "You are a district manager for a large retail organization. You train each store manager to use Power BI to track sales and daily sales targets. A store manager remembers learning about the Analyze in Excel option but cannot find the option in their Power BI dashboard. You need to help the user resolve the issue. How should you advise the user? . Subscribe to the dashboard and follow the email link.",
     "type": "single",
     "choices": [
       "Install the Power BI Desktop app.",
@@ -1151,7 +1155,7 @@ var pl900Questions = [
   },
   {
     "id": 9076,
-    "text": "A company runs a call center to handle customer support inquiries. The company tracks metrics including the number of incoming calls and call resolution rates. The company wants to display the metrics on a shared screen that is visible to all call center staff. You need to recommend a visualization solution for the company. Which Power Platform feature should you recommend? ~ D. Power Bl",
+    "text": "A company runs a call center to handle customer support inquiries. The company tracks metrics including the number of incoming calls and call resolution rates. The company wants to display the metrics on a shared screen that is visible to all call center staff. You need to recommend a visualization solution for the company. Which Power Platform feature should you recommend? ~ D. Power BI",
     "type": "single",
     "choices": [
       "Al Builder",
@@ -1255,7 +1259,7 @@ var pl900Questions = [
   },
   {
     "id": 9082,
-    "text": "A company plans to implement Power BI to analyze retail operations data. You need to recommend solutions for the company. Which Power BI components should the company use? To answer, drag the appropriate Power Bl components to the correct requirements. Each Power BI component may be used once, more than once, or not at all. You may need to drag the split bar between panes or scroll to view content. Power BI components Answer Area\n\nSelect the option that correctly matches all requirements in the order listed.",
+    "text": "A company plans to implement Power BI to analyze retail operations data. You need to recommend solutions for the company. Which Power BI components should the company use? To answer, drag the appropriate Power BI components to the correct requirements. Each Power BI component may be used once, more than once, or not at all. You may need to drag the split bar between panes or scroll to view content. Power BI components Answer Area\n\nSelect the option that correctly matches all requirements in the order listed.",
     "type": "single",
     "choices": [
       "1. Requirement Power BI component | 2. Requirement Power BI component",
@@ -1290,11 +1294,11 @@ var pl900Questions = [
     "text": "A company is using Power BI. The company wants to see which data connectors are available for building dashboards. You need to evaluate the available connectors. What should you use to see all the available connectors?",
     "type": "single",
     "choices": [
-      "Power Bl Workspace",
+      "Power BI Workspace",
       "Common Data Service",
       "Power BI Dataflows",
-      "Power Platform admin center _ -",
-      "Power Bl Desktop ]"
+      "Power Platform admin center",
+      "Power BI Desktop ]"
     ],
     "correct": [
       4
@@ -1333,11 +1337,11 @@ var pl900Questions = [
   },
   {
     "id": 9087,
-    "text": "You are creating visuals in Power Bl. You create area charts, pie charts, and donut charts that use your company's data. You need to display the charts to others at the company. Which two objects can you add the charts to? Each correct answer presents a complete solution. [ ~_ D. Power BI dashboards",
+    "text": "You are creating visuals in Power BI. You create area charts, pie charts, and donut charts that use your company's data. You need to display the charts to others at the company. Which two objects can you add the charts to? Each correct answer presents a complete solution.",
     "type": "multiple",
     "choices": [
       "Power BI service",
-      "Power BI reports |",
+      "Power BI reports",
       "Power BI desktop",
       "dashboards"
     ],
@@ -1462,7 +1466,7 @@ var pl900Questions = [
       "User3 is running an out-of-date version of Power BI and must upgrade to",
       "User2 is signed in to the dashboard and must sign out before User3 can sign",
       "Forwarding the email does not share the dashboard with User3. \"",
-      "User1 is signed in using the wrong organizational account for Power Bl."
+      "User1 is signed in using the wrong organizational account for Power BI."
     ],
     "correct": [
       2
@@ -1471,7 +1475,8 @@ var pl900Questions = [
   },
   {
     "id": 9096,
-    "text": "A company plans to implement Power Bl. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select\n\nWhich of the following statements are TRUE? Select all that apply.",
+    "text": "A company plans to implement Power BI. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.
+\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
       "Power BI Report Builder is the only tool used to create reports to be published to the Power BI service.",
@@ -1528,7 +1533,7 @@ var pl900Questions = [
   },
   {
     "id": 9100,
-    "text": "A company is using Power BI to build visualizations. The company's IT support team needs to know when to install Power BI Desktop on users' computers and where the Power Bl Service is enough to perform tasks. You need to recommend solutions for the company. What should you recommend? To answer, drag the appropriate components to the correct requirements Each component may be used once, more than once, or not at all. You may need to drag the split bar between panes or scroll to view content.\n\nSelect the option that correctly matches all requirements in the order listed.",
+    "text": "A company is using Power BI to build visualizations. The company's IT support team needs to know when to install Power BI Desktop on users' computers and where the Power BI Service is enough to perform tasks. You need to recommend solutions for the company. What should you recommend? To answer, drag the appropriate components to the correct requirements Each component may be used once, more than once, or not at all. You may need to drag the split bar between panes or scroll to view content.\n\nSelect the option that correctly matches all requirements in the order listed.",
     "type": "single",
     "choices": [
       "1. Power BI service only | 2. Desktop or service | 3. Power BI Desktop only | 4. Desktop or service | 5. Power BI service only",
@@ -1575,7 +1580,8 @@ var pl900Questions = [
   },
   {
     "id": 9103,
-    "text": "Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select\n\nWhich of the following statements are TRUE? Select all that apply.",
+    "text": "Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.
+\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
       "You can connect to external resources with Power BI Desktop but not with the Power BI service.",
@@ -1609,7 +1615,7 @@ var pl900Questions = [
     "type": "multiple",
     "choices": [
       "You must use standard templates for building portals.",
-      "You can test portals in non-prodcution environments and then migrate the portals into production environments.",
+      "You can test portals in non-production environments and then migrate the portals into production environments.",
       "When transitioning to the new version of a portal, you can display a customizable maintenance page until the new portal is ready to be used."
     ],
     "correct": [
@@ -1637,18 +1643,18 @@ var pl900Questions = [
   },
   {
     "id": 9107,
-    "text": "Which of the following statements are TRUE? Select all that apply.",
+    "text": "A user is trying to understand the differences between the various ways apps can be built by using Power Apps. For each of the following statements, select Yes if the statement is true. Otherwise, select No.\n\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
-      "Requirement Collaboratively onboard new suppliers and distributors.",
-      "Publish a blog post announcing new suppliers.",
-      "partner portal community portal A user is trying to understand the differences between the various ways apps can be built by using Power Apps."
+      "You can embed canvas apps in model-driven apps.",
+      "A Power Apps portal can use only one data source.",
+      "You must use Power BI to create reports in model-driven apps."
     ],
     "correct": [
       0
     ],
     "ordered": true,
-    "explanation": ""
+    "explanation": "Canvas apps can be embedded in model-driven apps. Power Apps portals can connect to multiple data sources. Power BI is not required to create reports in model-driven apps — model-driven apps have built-in reporting capabilities."
   },
   {
     "id": 9108,
@@ -1684,7 +1690,7 @@ var pl900Questions = [
   },
   {
     "id": 9110,
-    "text": "A company uses Dynamics 365 Supply Chain Management. The company wants to build customer user interfaces that add additional functionality. You need to recommend a solution for the company. What should you recommend? O AlBuilder",
+    "text": "A company uses Dynamics 365 Supply Chain Management. The company wants to build customer user interfaces that add additional functionality. You need to recommend a solution for the company. What should you recommend?",
     "type": "single",
     "choices": [
       "Power BI",
@@ -1698,7 +1704,7 @@ var pl900Questions = [
   },
   {
     "id": 9111,
-    "text": "A company's customer-facing applications must comply with Global Data Protection Regulations (GDPR) regulations. You need to recommend actions to help ensure GDPR compliance. Which two features should the company use? Each correct answer presents part of the solution. . Block users who are identified as minors. im",
+    "text": "A company's customer-facing applications must comply with Global Data Protection Regulations (GDPR) regulations. You need to recommend actions to help ensure GDPR compliance. Which two features should the company use? Each correct answer presents part of the solution.",
     "type": "multiple",
     "choices": [
       "Force a user to update security questions after a specific amount of time.",

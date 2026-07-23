@@ -140,7 +140,8 @@ var pl900Questions2 = [
   },
   {
     "id": 9130,
-    "text": "Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select\n\nWhich of the following statements are TRUE? Select all that apply.",
+    "text": "Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.
+\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
       "You can customize buttons and menu items in canvas apps but cannot reorder the screens.",
@@ -239,7 +240,7 @@ var pl900Questions2 = [
     "type": "single",
     "choices": [
       "Power Automate flows",
-      "Power Bl",
+      "Power BI",
       "Customer Service Insights",
       "Copilot Studio copilots ee)"
     ],
@@ -250,7 +251,8 @@ var pl900Questions2 = [
   },
   {
     "id": 9138,
-    "text": "A tutoring company has developed and deployed a model-driven app for the administration staff and a canvas app for teachers. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select\n\nWhich of the following statements are TRUE? Select all that apply.",
+    "text": "A tutoring company has developed and deployed a model-driven app for the administration staff and a canvas app for teachers. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.
+\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
       "te) Teachers can access the canvas app by using desktops and mobile devices.",
@@ -294,7 +296,8 @@ var pl900Questions2 = [
   },
   {
     "id": 9141,
-    "text": "A company plans to implement Power Platform solutions. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select\n\nWhich of the following statements are TRUE? Select all that apply.",
+    "text": "A company plans to implement Power Platform solutions. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.
+\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
       "Users can interact with canvas apps directly in Microsoft SharePoint and Teams.",
@@ -308,13 +311,13 @@ var pl900Questions2 = [
   },
   {
     "id": 9142,
-    "text": "A company is considering implementing Power Platform. The company must minimize development costs. For which three scenarios should you consider implementing Power Apps Portals? Each correct answer presents a complete solution. support for document uploads blogs support corporate network E, an internal website for employees with limited access to Dynamics 365 Finance data",
+    "text": "A company is considering implementing Power Platform. The company must minimize development costs. For which three scenarios should you consider implementing Power Apps Portals? Each correct answer presents a complete solution.",
     "type": "multiple",
     "choices": [
-      "acustomer support website that includes knowledgebase search and as Tara",
-      "a public website that supports multilingual communities with forums and",
-      "a secure website for mobile users that is available only by using a VPN into the",
-      "asecure website for vendors accessing data stored in Common Data Service ]"
+      "A customer support website that includes knowledgebase search",
+      "A public website that supports multilingual communities with forums",
+      "A secure website for mobile users that is available only by using a VPN",
+      "A secure website for vendors accessing data stored in Common Data Service"
     ],
     "correct": [
       0,
@@ -521,7 +524,8 @@ var pl900Questions2 = [
   },
   {
     "id": 9156,
-    "text": "You are creating a Power Automate approval flow. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select\n\nWhich of the following statements are TRUE? Select all that apply.",
+    "text": "You are creating a Power Automate approval flow. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.
+\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
       "The addition of an expense report to a Microsoft OneDrive folder can initiate an approval flow.",
@@ -629,7 +633,7 @@ var pl900Questions2 = [
     "text": "A company builds and sells residential apartments. The company uses Dynamics 365 Sales to manage sales opportunities. Management must receive notifications on their mobile devices when sales opportunities are created. You need to recommend the appropriate Microsoft Power Platform components to address the requirements. Which two components should you recommend to invoke the notification process? Each correct answer presents part of the solution.",
     "type": "single",
     "choices": [
-      "AlBuilder",
+      "AI Builder",
       "Power BI",
       "Power Automate with the Dataverse connector"
     ],
@@ -832,7 +836,8 @@ var pl900Questions2 = [
   },
   {
     "id": 9177,
-    "text": "A company plans to implement Power Automate. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select\n\nWhich of the following statements are TRUE? Select all that apply.",
+    "text": "A company plans to implement Power Automate. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.
+\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
       "Business Process Flows are considered automatic flows.",
@@ -1126,7 +1131,8 @@ var pl900Questions2 = [
   },
   {
     "id": 9197,
-    "text": "A tutoring company has developed and deployed a model-driven app for the administration staff and a canvas app for teachers. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select\n\nWhich of the following statements are TRUE? Select all that apply.",
+    "text": "A tutoring company has developed and deployed a model-driven app for the administration staff and a canvas app for teachers. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.
+\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
       "Teachers can access the canvas app by using a browser or a 1@) mobile app.",
@@ -1156,11 +1162,11 @@ var pl900Questions2 = [
   },
   {
     "id": 9199,
-    "text": "You are creating a canvas app that uses one connector. Which two objects are provided by the connector? Each correct answer presents a complete solution f Y C tables",
+    "text": "You are creating a canvas app that uses one connector. Which two objects are provided by the connector? Each correct answer presents a complete solution.",
     "type": "multiple",
     "choices": [
       "customizations",
-      "actions Se oT ]",
+      "actions",
       "triggers"
     ],
     "correct": [
@@ -1171,11 +1177,11 @@ var pl900Questions2 = [
   },
   {
     "id": 9200,
-    "text": "An organization is considering using Power Platform to improve business processes. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select You can add a custom Microsoft Dataverse entity to the Dynamics 365 Sales Hub navigation. You can embed a Power Platform canvas app in your organization's Microsoft Teams channel.\n\nWhich of the following statements are TRUE? Select all that apply.",
+    "text": "An organization is considering using Power Platform to improve business processes. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.\n\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
-      "An organization is considering using Power Platform to improve business processes.",
-      "Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select You can add a custom Microsoft Dataverse entity to the Dynamics Sales Hub navigation."
+      "You can add a custom Microsoft Dataverse entity to the Dynamics 365 Sales Hub navigation.",
+      "You can embed a Power Platform canvas app in your organization's Microsoft Teams channel."
     ],
     "correct": [
       0,
@@ -1186,10 +1192,10 @@ var pl900Questions2 = [
   },
   {
     "id": 9201,
-    "text": "A company plans to move an on-premises customer service data management system to a cloud- managed solution. The customer service application must be replaced by a model-driven application. The company uses Microsoft SQL Server Integration Services (SSIS) packages to move data from the on-premises database system to a third-party enterprise resource planning (ERP) system. You need to replace the SSIS packages for data transfer. What should the conppany use in place of the packages to move the data? ( a owt nrton ramanae so",
+    "text": "A company plans to move an on-premises customer service data management system to a cloud-managed solution. The customer service application must be replaced by a model-driven application. The company uses Microsoft SQL Server Integration Services (SSIS) packages to move data from the on-premises database system to a third-party enterprise resource planning (ERP) system. You need to replace the SSIS packages for data transfer. What should the company use in place of the packages to move the data?",
     "type": "single",
     "choices": [
-      "r Platform connector",
+      "Power Platform connector",
       "Microsoft Azure Data Lake",
       "Power Virtual Agents"
     ],
@@ -1387,7 +1393,7 @@ var pl900Questions2 = [
   },
   {
     "id": 9214,
-    "text": "You are creating a report in a Power Bl service by using a dataset. You need to add a visual. In which two ways can you add the visual? Each correct answer presents a complete solution.",
+    "text": "You are creating a report in a Power BI service by using a dataset. You need to add a visual. In which two ways can you add the visual? Each correct answer presents a complete solution.",
     "type": "multiple",
     "choices": [
       "Use Power BI Q&A.",
@@ -1453,7 +1459,7 @@ var pl900Questions2 = [
     "choices": [
       "Power Automate flows",
       "Customer Service Insights",
-      "Power Bl",
+      "Power BI",
       "Copilot Studio"
     ],
     "correct": [
@@ -1463,7 +1469,7 @@ var pl900Questions2 = [
   },
   {
     "id": 9221,
-    "text": "You are developing a Microsoft Power Platform solution. The solution uses data stored in Microsoft Excel, a Microsoft Dataverse database, and an Azure SQL database. You must create several visuals to enable the data to display on a screen without moving the data out its source location. You need to create the visuals. Which tool should you use? [ ~_ D. Power Bl OS TNCIED",
+    "text": "You are developing a Microsoft Power Platform solution. The solution uses data stored in Microsoft Excel, a Microsoft Dataverse database, and an Azure SQL database. You must create several visuals to enable the data to display on a screen without moving the data out its source location. You need to create the visuals. Which tool should you use?",
     "type": "single",
     "choices": [
       "Power Automate",
@@ -1493,7 +1499,8 @@ var pl900Questions2 = [
   },
   {
     "id": 9223,
-    "text": "Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select\n\nWhich of the following statements are TRUE? Select all that apply.",
+    "text": "Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.
+\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
       "A Power Automate cloud flow can be added to a solution by using the Power Automate mobile app.",
