@@ -297,8 +297,7 @@ var pl900Questions = [
   },
   {
     "id": 9020,
-    "text": "An organization plans to create Power Platform solutions and is evaluating Microsoft Dataverse. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.
-\nWhich of the following statements are TRUE? Select all that apply.",
+    "text": "An organization plans to create Power Platform solutions and is evaluating Microsoft Dataverse. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.\n\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
       "Virtual table data is stored in Microsoft Dataverse.",
@@ -312,8 +311,7 @@ var pl900Questions = [
   },
   {
     "id": 9021,
-    "text": "Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.
-\nWhich of the following statements are TRUE? Select all that apply.",
+    "text": "Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.\n\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
       "Managed solutions can be used to group multiple Power Platform components together during solution development.",
@@ -391,8 +389,7 @@ var pl900Questions = [
   },
   {
     "id": 9026,
-    "text": "A company creates the following Microsoft Power Platform environments to manage a custom model- driven app: Development Production You have been granted the System Administrator security role to the development environment and a custom security role named Project Team Member to the production environment. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.
-\nWhich of the following statements are TRUE? Select all that apply.",
+    "text": "A company creates the following Microsoft Power Platform environments to manage a custom model- driven app: Development Production You have been granted the System Administrator security role to the development environment and a custom security role named Project Team Member to the production environment. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.\n\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
       "You will not be able to access the app until the System Administrator security role is assigned to the app in the development environment.",
@@ -863,8 +860,7 @@ var pl900Questions = [
   },
   {
     "id": 9056,
-    "text": "A company is evaluating Al Builder. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.
-\nWhich of the following statements are TRUE? Select all that apply.",
+    "text": "A company is evaluating Al Builder. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.\n\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
       "Prebuilt Al Builder models are pretrained and are ready to interpret business data immediately.",
@@ -1475,8 +1471,7 @@ var pl900Questions = [
   },
   {
     "id": 9096,
-    "text": "A company plans to implement Power BI. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.
-\nWhich of the following statements are TRUE? Select all that apply.",
+    "text": "A company plans to implement Power BI. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.\n\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
       "Power BI Report Builder is the only tool used to create reports to be published to the Power BI service.",
@@ -1580,8 +1575,7 @@ var pl900Questions = [
   },
   {
     "id": 9103,
-    "text": "Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.
-\nWhich of the following statements are TRUE? Select all that apply.",
+    "text": "Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.\n\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
       "You can connect to external resources with Power BI Desktop but not with the Power BI service.",
