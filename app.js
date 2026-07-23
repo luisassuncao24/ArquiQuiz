@@ -613,7 +613,7 @@
       const _keyPrefix = _prefix + "_";
       for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
-        if (key && key.startsWith(_keyPrefix) && key !== AUTH_KEY) {
+        if (key && key.startsWith(_keyPrefix) && !key.endsWith("_authenticated")) {
           data[key] = localStorage.getItem(key);
         }
       }
@@ -642,7 +642,7 @@
         const _keyPrefix = _prefix + "_";
         let count = 0;
         Object.keys(data).forEach(function (key) {
-          if (key.startsWith(_keyPrefix) && key !== AUTH_KEY) {
+          if (key.startsWith(_keyPrefix) && !key.endsWith("_authenticated")) {
             localStorage.setItem(key, data[key]);
             count++;
           }
@@ -2994,51 +2994,6 @@
   }
 
   // ── Access control / password gate ───────────────────────────────────────
-  const AUTH_KEY    = _prefix + "_authenticated";
-  const ACCESS_PASS = _cfg.accessPass || "ArquiQuiz2026";
-
-  function isAuthenticated() {
-    try { return localStorage.getItem(AUTH_KEY) === "1"; } catch (e) { return false; }
-  }
-
-  function setAuthenticated() {
-    try { localStorage.setItem(AUTH_KEY, "1"); } catch (e) { /* ignore */ }
-  }
-
-  function showMathOverlay() {
-    document.getElementById("math-overlay").style.display = "flex";
-    document.getElementById("quiz-container").style.display = "none";
-  }
-
-  function hideMathOverlay() {
-    document.getElementById("math-overlay").style.display = "none";
-    document.getElementById("quiz-container").style.display = "";
-  }
-
-  function setupMathGate(onSuccess) {
-    var submitBtn = document.getElementById("math-submit-btn");
-    var inputEl   = document.getElementById("math-input");
-    var errorEl   = document.getElementById("math-error");
-
-    function attempt() {
-      if (inputEl.value === ACCESS_PASS) {
-        setAuthenticated();
-        hideMathOverlay();
-        onSuccess();
-      } else {
-        errorEl.style.display = "block";
-        inputEl.value = "";
-        inputEl.focus();
-      }
-    }
-
-    submitBtn.addEventListener("click", attempt);
-    inputEl.addEventListener("keydown", function (e) {
-      if (e.key === "Enter") attempt();
-    });
-    inputEl.focus();
-  }
-
   // ── Boot ─────────────────────────────────────────────────────────────────
   // Migrate any legacy progress keys from the old "set1"/"set2" format.
   // Then check for saved in-progress state; if exactly one set has progress, prompt resume.
@@ -3074,12 +3029,6 @@
       }
     }
 
-    if (isAuthenticated()) {
-      hideMathOverlay();
-      startApp();
-    } else {
-      showMathOverlay();
-      setupMathGate(startApp);
-    }
+    startApp();
   })();
 })();

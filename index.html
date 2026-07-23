@@ -10,7 +10,7 @@
             background: #1e293b;
             border-radius: 16px;
             width: 100%;
-            max-width: 780px;
+            max-width: 1180px;
             padding: 2.5rem 2.5rem 3rem;
             box-shadow: 0 25px 60px rgba(0, 0, 0, .5);
         }
@@ -35,7 +35,7 @@
 
         .hub-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 1.5rem;
         }
 
@@ -170,10 +170,38 @@
             color: #94a3b8;
             text-decoration: underline;
         }
+
+        .hub-version {
+            margin-top: 0.45rem;
+            color: #64748b;
+            font-variant-numeric: tabular-nums;
+        }
+
+        @media (max-width: 960px) {
+            .hub-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hub-container {
+                padding: 2rem 1.25rem 2.5rem;
+            }
+        }
     </style>
 </head>
 <body>
-    <div class="hub-container">
+    <div id="math-overlay" style="display:flex;">
+        <div id="math-card">
+            <h2>&#128274; Access Restricted</h2>
+            <p>Enter the password to access the Exam Quiz Hub.</p>
+            <input type="password" id="math-input" placeholder="Password" autocomplete="current-password" />
+            <p id="math-error" style="display:none;">Incorrect password. Please try again.</p>
+            <button id="math-submit-btn">Enter</button>
+        </div>
+    </div>
+
+    <div id="hub-container" class="hub-container" style="display:none;">
         <div class="hub-header">
             <h1>&#127891; Exam Quiz Hub</h1>
             <p>Select an exam to start practicing. Track your progress and prepare with confidence.</p>
@@ -237,7 +265,56 @@
         <div class="hub-footer">
             <a href="user-guide.html" target="_blank">&#128214; User Guide</a>
             &nbsp;&middot;&nbsp; Progress is saved per exam in your browser
+            <div id="hub-version" class="hub-version"></div>
         </div>
     </div>
+    <script>
+      (function () {
+        "use strict";
+
+        // Release policy: increment this version for every deployed change.
+        var APP_VERSION = "1.0.0";
+        var HUB_AUTH_KEY = "quiz_hub_authenticated";
+        var HUB_PASSWORD = "Arqui.123";
+
+        var overlay = document.getElementById("math-overlay");
+        var hub = document.getElementById("hub-container");
+        var input = document.getElementById("math-input");
+        var error = document.getElementById("math-error");
+        var submit = document.getElementById("math-submit-btn");
+
+        document.getElementById("hub-version").textContent = "Version " + APP_VERSION;
+
+        function unlockHub() {
+          overlay.style.display = "none";
+          hub.style.display = "";
+        }
+
+        function attemptLogin() {
+          if (input.value === HUB_PASSWORD) {
+            try { localStorage.setItem(HUB_AUTH_KEY, "1"); } catch (e) { /* ignore */ }
+            unlockHub();
+            return;
+          }
+
+          error.style.display = "block";
+          input.value = "";
+          input.focus();
+        }
+
+        var authenticated = false;
+        try { authenticated = localStorage.getItem(HUB_AUTH_KEY) === "1"; } catch (e) { /* ignore */ }
+
+        if (authenticated) {
+          unlockHub();
+        } else {
+          submit.addEventListener("click", attemptLogin);
+          input.addEventListener("keydown", function (event) {
+            if (event.key === "Enter") attemptLogin();
+          });
+          input.focus();
+        }
+      })();
+    </script>
 </body>
 </html>

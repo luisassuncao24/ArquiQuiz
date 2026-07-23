@@ -137,6 +137,11 @@ var PL900_TEXT_REVISIONS = {
 };
 
 var PL900_DATA_REVISIONS = {
+  9002: {
+    text: "A company uses the browser-based Dynamics 365 Sales Hub app. Which app should users install to access Dynamics 365 data from mobile devices?",
+    choices: ["Dynamics 365 Remote Assist", "Dynamics 365 Finance", "Dynamics 365 for Phones"],
+    correct: [2]
+  },
   9003: {
     choices: ["Dynamics 365 connector", "Microsoft SharePoint", "Microsoft Azure Storage", "Microsoft Dataverse"],
     correct: [3]
@@ -149,6 +154,14 @@ var PL900_DATA_REVISIONS = {
     text: "A company is creating a canvas app to track and analyze customer visits at its retail stores. The visit data is stored on-premises at each store. The app must make that data available when users launch it. Which tool should you use?",
     choices: ["Connector", "Microsoft Dataverse", "Data source", "Power Automate", "On-premises data gateway"],
     correct: [4]
+  },
+  9027: {
+    text: "A company wants to extend Dynamics 365 Sales with Microsoft Power Platform. Which application should it use for each requirement?"
+  },
+  9033: {
+    text: "A company plans to use AI Builder to improve business performance. Which three AI Builder model types can the company use? Select all that apply.",
+    choices: ["Linear regression", "Prediction", "Object detection", "Anomaly detection", "Text classification"],
+    correct: [1, 2, 4]
   },
   9037: {
     text: "What is a benefit of deploying Microsoft 365 and Dynamics 365 apps in the same tenant?",
@@ -176,6 +189,16 @@ var PL900_DATA_REVISIONS = {
   9049: {
     choices: ["Demo website", "Live production website", "Test chat feature"],
     correct: [0]
+  },
+  9052: {
+    text: "A Contact-table business rule requires a telephone number, fax number, or email address when a record is created. You must remove the fax-number condition. Which two approaches correctly update the rule? Select all that apply.",
+    choices: [
+      "Save a copy, change the copy, and deactivate or delete the original rule.",
+      "Deactivate the rule, change its condition, and reactivate it.",
+      "Take a snapshot of the rule and change the snapshot.",
+      "Change the active rule without activating the updated version."
+    ],
+    correct: [0, 1]
   },
   9056: {
     text: "A company is evaluating AI Builder. Which statements about prebuilt AI Builder models are true? Select all that apply.",
@@ -290,6 +313,12 @@ var PL900_DATA_REVISIONS = {
     ],
     correct: [0, 1]
   },
+  9179: {
+    text: "A company uses weekly project status reports that can include escalation requests. Which Power Automate components should it use?"
+  },
+  9181: {
+    text: "A company is creating a project health-check solution with Power Apps and Power Automate. Which four actions should it perform in sequence?"
+  },
   9191: {
     choices: [
       "Create a custom connector.",
@@ -323,6 +352,16 @@ var PL900_DATA_REVISIONS = {
     ],
     correct: [0, 1]
   },
+  9215: {
+    text: "You add a Microsoft Teams action to an existing Power Automate cloud flow. The flow must run tomorrow and post messages both to a central-office channel and to your direct chat. What should you do next?",
+    choices: [
+      "Add parameters to the action.",
+      "Turn the flow on.",
+      "Create a connection.",
+      "Save the flow."
+    ],
+    correct: [3]
+  },
   9223: {
     text: "Which statements about Power Automate are true? Select all that apply.",
     choices: [
@@ -340,6 +379,21 @@ var PL900_DATA_REVISIONS = {
     ],
     correct: [0]
   },
+  9234: {
+    text: "A canvas app uses an Excel spreadsheet containing pet records. Users must be able to enter the pet's attributes and save a new record. What is the minimum number of controls required?",
+    choices: [
+      "One control: an edit form.",
+      "Two controls: an edit form and a button.",
+      "Three controls: a text input, a date picker, and a combo box.",
+      "Four controls: a text input, a date picker, a combo box, and a button."
+    ],
+    correct: [1]
+  },
+  9235: {
+    text: "A user creates a canvas app from a data source. Which three screens are generated? Select all that apply.",
+    choices: ["Welcome screen", "Edit/create screen", "Browse screen", "Details screen", "Delete screen"],
+    correct: [1, 2, 3]
+  },
   9242: {
     text: "You test a business process flow in a sandbox environment. After testing, you must copy only the business process flow to a production environment, without data or unrelated modifications. What should you do?",
     choices: [
@@ -349,6 +403,59 @@ var PL900_DATA_REVISIONS = {
       "Export the form that contains the business process flow to a separate solution."
     ],
     correct: [2]
+  },
+  9251: {
+    text: "An airline wants to use Power Apps for its lost-luggage desk. Which two questions help determine whether to build a canvas app or a model-driven app? Select all that apply.",
+    type: "multiple",
+    choices: [
+      "Which data sources will be used?",
+      "Which Microsoft Entra ID users or groups will use the app?",
+      "Will the app be used on mobile or tablet devices?",
+      "Does the app require a specific layout?",
+      "Will the app builders have coding skills?"
+    ],
+    correct: [0, 3]
+  },
+  9256: {
+    text: "A company is assigning Power Platform solutions to departments. Facilities technicians must photograph warehouse equipment with mobile devices and record its condition. Which department's requirement should be implemented with a canvas app?",
+    choices: ["Facilities", "Finance", "Customer service", "Marketing"],
+    correct: [0]
+  },
+  9276: {
+    text: "You create a canvas app from a spreadsheet by using Start from data. Customer records appear in a list on the Browse screen. You need to modify a property of the control that displays the records. Which control should you modify?",
+    choices: ["Display form", "Icon", "Search", "Gallery"],
+    correct: [3]
+  },
+  9294: {
+    text: "A company uses a model-driven app to record customer orders. Each new Dataverse customer record must include a manually entered alphanumeric customer identification number. Which Dataverse component should you add to the Customer table?",
+    choices: ["Column", "Relationship", "Dataflow", "Table"],
+    correct: [0]
+  },
+  9293: {
+    text: "A canvas app collects weekly project status reports. The solution must send escalation texts immediately and remind non-submitters every Sunday. Which flow types should it use?"
+  },
+  9295: {
+    text: "A company records trade-show leads, maintains converted customers in SharePoint, and reports conversion rates. Which tools should it use?"
+  },
+  9309: {
+    text: "Workers submit automobile defect sheets for manager review, but required information is often missing. Which Power Platform service should create a digital defect sheet with validation rules that require completion before submission?",
+    choices: ["AI Builder model", "Power Apps app", "Power Automate cloud flow", "Power BI report"],
+    correct: [1]
+  },
+  9310: {
+    text: "Business users need natural-language assistance when creating Power Platform apps and automations. Which feature should they use?",
+    choices: ["Copilot", "AI Builder", "Microsoft 365", "Power Automate"],
+    correct: [0]
+  },
+  9319: {
+    text: "You create a canvas app from a spreadsheet by using Start from data. Customer records appear in a list on the Browse screen. You need to filter the control that displays the records. Which control should you modify?",
+    choices: ["Display form", "Icon", "Search", "Gallery"],
+    correct: [3]
+  },
+  9327: {
+    text: "A manufacturer uses an on-premises ERP application with SQL Server and an outdated web interface. It needs a modern interface that allows users to read and write ERP data. The data must remain in the ERP application, and costs must be minimized. Which two Power Platform features should you recommend? Select all that apply.",
+    choices: ["Dataverse", "Connector", "Power BI report", "Power Apps", "Dataflow"],
+    correct: [1, 3]
   },
   9259: {
     text: "A company uses a model-driven app to manage its sales process. You are creating a Power Automate cloud flow that sends a Teams message when a new order is recorded in Dataverse. Which flow component determines when the flow starts?",
@@ -386,6 +493,9 @@ var PL900_DATA_REVISIONS = {
     text: "A company plans to implement a ticketing application using Microsoft Dataverse. Customers must be able to sign in through an external website and view details about their open cases. Which Microsoft Power Platform solution should the company use?",
     choices: ["Power Pages site", "Model-driven app", "Canvas app"],
     correct: [0]
+  },
+  9343: {
+    text: "You are creating a canvas app to organize a SharePoint list of spices. Which controls should you use for each requirement?"
   },
   9331: {
     text: "An environmental agency uses Specimen and Species tables in Microsoft Dataverse. The Specimen table has a Species lookup, Owner columns, a Name primary-name column, and a Specimen GUID column. Which statements are true? Select all that apply.",
@@ -580,6 +690,45 @@ var PL900_MISSING_QUESTIONS = [
     return value;
   }
 
+  function capitalizeInitial(value) {
+    if (typeof value !== "string") return value;
+    return value.replace(/^(\s*(?:\d+\.\s*)?[^A-Za-z0-9]*)([a-z])/, function (_, prefix, letter) {
+      return prefix + letter.toUpperCase();
+    });
+  }
+
+  function cleanChoiceText(value) {
+    value = normalizeImportedText(value);
+    if (typeof value !== "string") return value;
+
+    value = value.replace(/^\s*\|\s*/, "");
+    value = value
+      .replace(/\s*["'â€œâ€,;:]*\|\s*$/, "")
+      .trim();
+
+    return capitalizeInitial(value);
+  }
+
+  function cleanPromptSuffix(value) {
+    if (typeof value !== "string") return value;
+
+    var questionMark = value.lastIndexOf("?");
+    if (questionMark < 0) return value;
+
+    var suffix = value.slice(questionMark + 1).trim();
+    if (!suffix) return value;
+    if (/^Requirements\/scenarios in order:/i.test(suffix)) return value;
+    if (/^Select all that apply\.?$/i.test(suffix)) return value;
+
+    var validInstruction = suffix.match(/^Each correct answer presents (?:a complete solution|part of the solution)/i);
+    if (validInstruction) {
+      return value.slice(0, questionMark + 1) + " " +
+        validInstruction[0].replace(/\s+$/, "") + ".";
+    }
+
+    return value.slice(0, questionMark + 1);
+  }
+
   PL900_MISSING_QUESTIONS.forEach(function (question) {
     var exists = banks.some(function (bank) {
       return bank.some(function (candidate) {
@@ -605,11 +754,12 @@ var PL900_MISSING_QUESTIONS = [
       if (dataRevision.correct) question.correct = dataRevision.correct;
       if (dataRevision.type) question.type = dataRevision.type;
 
-      question.text = question.text
+      question.text = cleanPromptSuffix(question.text)
         .replace(/(?:Instructions:\s*)?For each of the following statements,\s*select Yes (?:if|it) the statement is true[.,]?\s*/gi, "")
         .replace(/Otherwise,?\s*select No[.,]?\s*/gi, "")
         .trim();
-      question.choices = question.choices.map(normalizeImportedText);
+      question.text = capitalizeInitial(question.text);
+      question.choices = question.choices.map(cleanChoiceText);
       question.explanation = normalizeImportedText(question.explanation);
 
       if (question.id === 9019) {
@@ -640,6 +790,25 @@ var PL900_MISSING_QUESTIONS = [
       var importedAnswerArea = baseText.search(/\b(?:To answer|Answer Area|Hot Area|Select and Place)\b/i);
       if (importedAnswerArea >= 0) {
         baseText = baseText.slice(0, importedAnswerArea).trim();
+      }
+
+      var duplicatedDetails = baseText.search(
+        /\b(?:The|You|A)[^.]{0,180}\bfollowing (?:requirements|information|configuration|actions)\s*:/i
+      );
+      if (duplicatedDetails >= 40) {
+        baseText = baseText.slice(0, duplicatedDetails).trim();
+      }
+
+      var duplicatedUseCases = baseText.search(
+        /\bThe company needs to identify solutions for three use cases\s*:/i
+      );
+      if (duplicatedUseCases >= 40) {
+        baseText = baseText.slice(0, duplicatedUseCases).trim();
+      }
+
+      var graphicInstructions = baseText.search(/\bUse the drop-down menus\b/i);
+      if (graphicInstructions >= 40) {
+        baseText = baseText.slice(0, graphicInstructions).trim();
       }
 
       question.text = baseText +
