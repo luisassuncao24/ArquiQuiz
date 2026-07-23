@@ -23,13 +23,13 @@ var PL400_TEST_CASES = [
         text: 'You need to implement the Suitability Assessment Tool.\n\nWhat should you use?',
         type: 'single',
         choices: [
-          'Power App Component Framework (PCF) control',
+          'Power Apps Component Framework (PCF) control',
           'view',
           'component library',
           'form',
         ],
-        correct: [2],
-        explanation: 'A component library is correct because the Suitability Assessment Tool needs to be a reusable, shareable set of components that can be embedded across multiple canvas apps within City Power & Light. Component libraries package custom components so they can be distributed and updated centrally. A PCF control is a single custom control for a field or view, not a multi-component tool. A view displays a list of records. A form is for viewing or editing a single record.',
+        correct: [0],
+        explanation: 'A Power Apps Component Framework (PCF) control is correct because the scenario explicitly states that the Suitability Assessment Tool is implemented as a PCF component. PCF is used to build custom controls for model-driven and canvas app experiences. A component library is used to share reusable canvas components, but it is not the same implementation model as a PCF control. A view displays records, and a form is used to view or edit a single record.',
       },
       {
         id: 9038,
@@ -166,7 +166,7 @@ var PL400_TEST_CASES = [
     questions: [
       {
         id: 9025,
-        text: 'You need to create an application to deploy to other pharmacies.\n\nWhat should you do?',
+        text: 'You need to create a managed solution that can be imported into other pharmacies.\n\nWhat should you do?',
         type: 'single',
         choices: [
           'Navigate to Customize the System and export everything to a managed solution.',
@@ -201,7 +201,7 @@ var PL400_TEST_CASES = [
           'Navigate to Customize the System and export everything to a managed solution.',
         ],
         correct: [3],
-        explanation: 'Navigate to Customize the System and export everything to a managed solution is correct in this variant of the question. Exporting as a managed solution creates a deployable package that locks down customisations in the target environment, preventing modifications by pharmacy users. While Package Deployer (option B) is also a valid deployment approach, this question\'s answer set identifies the direct managed solution export as the correct approach. Cloning the solution creates a copy within the same environment and is not a deployment mechanism. Recreating customisations manually is time-consuming and not repeatable across many pharmacies.',
+        explanation: 'Navigate to Customize the System and export everything to a managed solution is correct because the requirement is specifically to produce a managed solution that other pharmacies can import. Exporting as managed locks the customisations in the target environment and prevents unauthorised edits. Cloning the solution creates a copy in the same environment, and recreating customisations manually is not a deployment mechanism.',
       },
       {
         id: 9091,

@@ -925,7 +925,7 @@ const questionsOfficial = [
   },
   {
     id: 569,
-    text: "You are exporting item data with an XMLport. Requirements: (1) Show filters for export on the request page. (2) Export the data in comma-separated format. You need to complete the XMLport configuration. Which two values should you configure? (Select TWO — one per requirement)",
+    text: "You are exporting item data with an XMLport. Requirements: (1) Show filters for export on the request page. (2) Export the data in comma-separated format. You need to complete the XMLport configuration. Which two configuration selections should you use? (Select TWO)",
     type: "multiple",
     choices: [
       "Direction = Export — to show filters for export on the request page",
@@ -935,8 +935,8 @@ const questionsOfficial = [
       "FieldSeparator = ';' — to export data in comma-separated format",
       "Format = VariableText and FieldSeparator = ',' — to export data in comma-separated format"
     ],
-    correct: [1, 5],
-    explanation: "Setting Direction to Both allows the XMLport to be used for both import and export, which enables the request page filter options to appear for export operations (Direction = Export alone may not show all filter options). Setting Format to VariableText changes the XMLport output to text format, and setting FieldSeparator to ',' produces comma-separated (CSV) output. These two settings together fulfill both requirements."
+    correct: [0, 5],
+    explanation: "Direction = Export is the correct setting when the XMLport is intended for export and you want export filters on the request page. For CSV output, the XMLport must use text output with a comma separator, so the combined selection 'Format = VariableText and FieldSeparator = ',' ' is the correct choice. Direction = Import is incorrect, and Direction = Both is unnecessary for an export-only requirement."
   },
   {
     id: 570,

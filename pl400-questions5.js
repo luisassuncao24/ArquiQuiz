@@ -393,8 +393,8 @@ var pl400Questions5 = [
     choices: [
       'CSS file order -> 1',
       'HTML file order -> 1',
-      'first blank -> this.context.webAPI',
-      'second blank -> this._container',
+      'CSS file order -> 2',
+      'HTML file order -> 2',
     ],
     correct: [0, 1],
     explanation: 'In PCF manifest resources, the order attribute determines loading sequence. Both CSS and HTML files should have order="1" to load first before the control code executes. This ensures styles are applied and HTML templates are available when the control initializes. Higher order numbers (2, 3) would delay loading until after other resources. Setting both to 1 allows parallel loading of these essential resources needed for control rendering.',
@@ -722,7 +722,7 @@ var pl400Questions5 = [
       'Configure WebhookKey authentication.',
     ],
     correct: [0, 1, 2, 3],
-    explanation: 'For environment-specific webhook endpoints: (1) Create an environment variable for the URL - this allows different values per environment, (2) Open Plug-in Registration tool to register the webhook, (3) Select Register New Web Hook, (4) Configure WebhookKey authentication (Azure Functions use function keys for authentication). The environment variable approach avoids manual reconfiguration after deployment. HttpHeader is also valid but WebhookKey is more specific for Azure Functions.',
+    explanation: 'For environment-specific webhook endpoints: (1) Create an environment variable for the URL so each environment can hold its own endpoint value, (2) open the Plug-in Registration tool, (3) select Register New Web Hook, and (4) configure WebhookKey authentication because Azure Functions expose function keys in the generated function URL. This approach avoids manual webhook reconfiguration after deployment.',
   },
   {
     id: 5328,
