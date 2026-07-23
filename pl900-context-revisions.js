@@ -661,6 +661,1450 @@ var PL900_MISSING_QUESTIONS = [
   }
 ];
 
+/*
+ * Final integrity pass. These corrections were verified against PL900.pdf and
+ * the question-by-question verification record. They intentionally run after
+ * the earlier import repairs so that no OCR fragment can overwrite them.
+ */
+var PL900_FINAL_REVISIONS = {
+  9001: {
+    text: "You publish a new version of a Power Apps app and then restore the previous version. How many versions are displayed on the app's Versions tab?",
+    choices: ["One version", "Two versions", "Three versions", "Four versions"],
+    correct: [2]
+  },
+  9008: {
+    choices: [
+      "Dynamics 365 Sales and Microsoft 365 must be in the same tenant to allow single sign-on (SSO).",
+      "You must install an AppSource product to enable SSO between Dynamics 365 Sales and Microsoft 365."
+    ],
+    correct: [0]
+  },
+  9012: {
+    choices: [
+      "1. Microsoft Entra admin center | 2. Microsoft Entra admin center",
+      "1. Power Platform admin center | 2. Microsoft Entra admin center",
+      "1. Microsoft Entra admin center | 2. Power Platform admin center",
+      "1. Power BI admin portal | 2. Power Platform admin center"
+    ],
+    correct: [2]
+  },
+  9013: {
+    text: "A rapidly growing company provides Microsoft 365 licenses to all employees. The company wants users to build apps, automate business processes, and analyze data without requiring IT expertise or professional development skills. Which tools should you recommend?"
+  },
+  9016: {
+    choices: [
+      "1. Security group | 2. Environment",
+      "1. Environment | 2. Environment",
+      "1. Environment | 2. SharePoint library",
+      "1. Security group | 2. SharePoint library"
+    ],
+    correct: [1]
+  },
+  9021: {
+    text: "A company is evaluating managed and unmanaged Power Platform solutions. Which statements about managed solutions are true? Select all that apply."
+  },
+  9024: {
+    text: "Which statement about Dataverse security roles is true?",
+    choices: [
+      "Security roles are modified in the Microsoft Entra admin center.",
+      "A separate security role must be assigned to every Dataverse table.",
+      "Neither statement is true."
+    ],
+    correct: [2]
+  },
+  9030: {
+    text: "A company plans to use standard and custom connectors with industry-standard and proprietary data sources. Which statement is true?"
+  },
+  9034: {
+    choices: [
+      "Users can send messages from Dynamics 365 Sales to personal email accounts without restrictions.",
+      "Business users can create Power Apps for the needs of different departments.",
+      "Business users can use Power Automate to automate processes across Microsoft 365 and Dynamics 365.",
+      "Power Platform requires the company to standardize all mobile devices on one vendor."
+    ],
+    correct: [1, 2]
+  },
+  9044: {
+    choices: [
+      "1. Power Automate | 2. Power Automate | 3. Power Apps",
+      "1. Power Apps | 2. Power Automate | 3. Power Automate",
+      "1. Power Automate | 2. Power Apps | 3. Power Automate",
+      "1. Power Apps | 2. Power Apps | 3. Power Automate"
+    ],
+    correct: [0]
+  },
+  9050: {
+    text: "You plan to use the Business Card Reader and Sentiment Analysis prebuilt AI Builder models. Which statement is true?",
+    choices: [
+      "The Business Card Reader model can be used with both Power Automate and Power Apps.",
+      "The Sentiment Analysis model can be used only with Power Automate."
+    ],
+    correct: [0]
+  },
+  9051: {
+    choices: [
+      "1. Power BI | 2. Power Automate",
+      "1. Copilot Studio | 2. Power Automate",
+      "1. Power Automate | 2. Copilot Studio",
+      "1. Azure Data Lake | 2. Custom connector"
+    ],
+    correct: [2]
+  },
+  9054: {
+    text: "A coworker is creating a Power Apps app that must synchronize data automatically from an external source. No suitable Microsoft-approved connector is available. What should you recommend?",
+    choices: [
+      "Create a custom connector.",
+      "Ask the external system owner to send the data once a week.",
+      "Use Power Automate without a connector.",
+      "Request that Microsoft create a new connector.",
+      "Use Azure Service Bus without defining a connector."
+    ],
+    correct: [0]
+  },
+  9061: {
+    text: "You publish a Power BI app and give team members permission to view its reports. Which statement about the published app is true?",
+    choices: [
+      "The published app is stored in the team's SharePoint site for users to install.",
+      "Changes that a consumer makes to an installed dashboard automatically update the original published app.",
+      "Neither statement is true."
+    ],
+    correct: [2]
+  },
+  9064: {
+    text: "You create a Power BI dashboard that displays data from Dynamics 365 Customer Engagement. Which three methods can you use to share or expose the dashboard to coworkers? Select all that apply.",
+    type: "multiple",
+    ordered: false,
+    choices: [
+      "Give coworkers access through a Power BI workspace.",
+      "Publish the content as a Power BI app.",
+      "Embed the relevant Power BI reports for coworkers.",
+      "Export the data to Dataverse and require coworkers to rebuild the dashboard.",
+      "Export the data to Excel and require coworkers to import it into Power BI."
+    ],
+    correct: [0, 1, 2]
+  },
+  9068: {
+    choices: [
+      "1. Power BI Desktop only | 2. Power BI service only",
+      "1. Power BI service only | 2. Power BI service only",
+      "1. Power BI Desktop only | 2. Power BI Desktop only",
+      "1. Power BI service only | 2. Power BI Desktop only"
+    ],
+    correct: [1]
+  },
+  9071: {
+    text: "You create a Power BI dashboard that displays Common Data Model data. Which two methods can give coworkers access and support collaboration? Select all that apply.",
+    type: "multiple",
+    ordered: false,
+    choices: [
+      "Give coworkers access through a Power BI workspace.",
+      "Publish the content as a Power BI app.",
+      "Export the data to Excel and reimport it after every change.",
+      "Use a flow to export the data to SQL Server."
+    ],
+    correct: [0, 1]
+  },
+  9072: {
+    text: "A Power BI report must combine the City and State columns from Dynamics 365 Sales into one column. What should you do?",
+    choices: ["Use Power Query Editor to merge the columns.", "Import the data.", "Export the data to Excel.", "Create a view."],
+    correct: [0]
+  },
+  9077: {
+    text: "A regional sales manager uses Power BI reports and dashboards. Which feature should be used for each requirement?\n\nRequirements/scenarios in order:\n1. Email report or dashboard updates to sales associates on a schedule.\n2. Measure whether the sales associates use the reports and dashboards.\n\nSelect the answer option that correctly matches every numbered item.",
+    choices: [
+      "1. Subscribe | 2. Usage metrics",
+      "1. Export | 2. Favorites",
+      "1. Usage metrics | 2. Subscribe",
+      "1. Publish to web | 2. Performance Analyzer"
+    ],
+    correct: [0]
+  },
+  9081: {
+    text: "A Power BI report page named RevReceived shows gross revenue. You need an almost identical page that shows net revenue. What should you do?",
+    choices: [
+      "Modify the existing RevReceived page.",
+      "Import the RevReceived page into the same report.",
+      "Copy each visual manually to a blank page.",
+      "Duplicate the page and then update the duplicate."
+    ],
+    correct: [3]
+  },
+  9082: {
+    choices: [
+      "1. Reports | 2. Dashboards",
+      "1. Dashboards | 2. Reports",
+      "1. Dashboards | 2. Dashboards",
+      "1. Reports | 2. Reports"
+    ],
+    correct: [1]
+  },
+  9083: {
+    choices: [
+      "1. Report | 2. Dashboard",
+      "1. Power BI service | 2. Dashboard",
+      "1. Dashboard | 2. Report",
+      "1. Dashboard | 2. Power BI service"
+    ],
+    correct: [2]
+  },
+  9084: {
+    choices: ["Power BI workspace", "Microsoft Dataverse", "Power BI dataflows", "Power Platform admin center", "Power BI Desktop"],
+    correct: [4]
+  },
+  9085: {
+    text: "A company analyzes many large datasets in Power BI and must reduce their performance impact. Which feature should be used for each requirement?",
+    choices: [
+      "1. Import | 2. Aggregations",
+      "1. DirectQuery | 2. DirectQuery",
+      "1. Import | 2. Import",
+      "1. Aggregations | 2. Import"
+    ],
+    correct: [3]
+  },
+  9090: {
+    text: "A Power BI report must combine the City and State columns from Dynamics 365 Sales into one column. Which Power Query operation should you use?",
+    choices: ["Import data", "Create a view", "Merge columns"],
+    correct: [2]
+  },
+  9103: {
+    text: "Which statement about creating and distributing Power BI reports is true?"
+  },
+  9106: {
+    choices: [
+      "1. Community portal | 2. Partner portal",
+      "1. Partner portal | 2. Customer self-service portal",
+      "1. Customer self-service portal | 2. Community portal",
+      "1. Partner portal | 2. Community portal"
+    ],
+    correct: [3]
+  },
+  9113: {
+    text: "A user cannot find a canvas app under Apps > Can edit in Power Apps Studio. Which three conditions can explain why the editable app is missing? Select all that apply.",
+    type: "multiple",
+    ordered: false,
+    choices: [
+      "The user selected the wrong environment.",
+      "The user is not a co-owner of the app.",
+      "The app was not shared with the user as a co-owner.",
+      "The environment does not contain a Dataverse database."
+    ],
+    correct: [0, 1, 2]
+  },
+  9117: {
+    text: "A model-driven app's sitemap must contain an Administration area, a Sales Log group, and a Customers subarea. Which option correctly identifies each sitemap component type?"
+  },
+  9120: {
+    text: "Which statement about running Power Apps apps is true?",
+    choices: [
+      "Power Apps apps can run only on mobile devices.",
+      "Power Apps apps can run only with Dynamics 365 products.",
+      "An app automatically grants access to every data source that it uses.",
+      "None of these statements is true."
+    ],
+    correct: [3]
+  },
+  9124: {
+    text: "A company creates canvas apps and cloud flows. What is the minimum number of connectors required for each scenario?",
+    choices: [
+      "1. Three | 2. One | 3. One",
+      "1. One | 2. Three | 3. One",
+      "1. Three | 2. Three | 3. Three",
+      "1. One | 2. One | 3. Three"
+    ],
+    correct: [0]
+  },
+  9127: {
+    text: "Licensed users have not been assigned permissions to another environment but can create and edit Power Apps canvas apps. In which environment are they working?",
+    choices: ["Production environment", "Default environment", "Sandbox environment"],
+    correct: [1]
+  },
+  9128: {
+    text: "A company must change the default filter and sort order of a model-driven app view. In which three maker locations can the changes be made? Select all that apply.",
+    type: "multiple",
+    ordered: false,
+    choices: [
+      "Power Apps maker portal",
+      "Solution Explorer",
+      "App Designer",
+      "Azure DevOps",
+      "Visual Studio"
+    ],
+    correct: [0, 1, 2]
+  },
+  9129: {
+    text: "Which statement about embedding a canvas app is true?",
+    choices: [
+      "A canvas app can be embedded in a Microsoft Forms form.",
+      "A canvas app can be embedded directly in an Excel worksheet.",
+      "A canvas app can be embedded in a model-driven app."
+    ],
+    correct: [2]
+  },
+  9130: {
+    text: "Which statement about customizing a canvas app is true?"
+  },
+  9134: {
+    choices: [
+      "1. AI Builder | 2. Canvas app",
+      "1. Model-driven app | 2. Power Automate",
+      "1. Canvas app | 2. AI Builder",
+      "1. Power Pages | 2. Canvas app"
+    ],
+    correct: [2]
+  },
+  9135: {
+    text: "A Power Apps developer can create apps, connections, and flows but cannot access company data. Which predefined Dataverse security role should you assign so the developer can use company data in an app?",
+    choices: ["Environment Maker", "System Customizer", "Delegate", "Basic User"],
+    correct: [3]
+  },
+  9136: {
+    text: "You create a model-driven app for a department. Which two actions make the app available to department members? Select all that apply.",
+    choices: [
+      "Publish the app to AppSource.",
+      "Deploy the app to each user's environment by using PowerShell.",
+      "Share the app.",
+      "Assign the required security role."
+    ],
+    correct: [2, 3]
+  },
+  9141: {
+    text: "Which statement about embedding Power Apps in Microsoft SharePoint and Teams is true?",
+    choices: [
+      "Users can interact with canvas apps directly in Microsoft SharePoint and Teams.",
+      "Users can interact with model-driven apps directly in both Microsoft SharePoint and Teams."
+    ],
+    correct: [0]
+  },
+  9149: {
+    text: "You overwrite a Power Automate flow by editing and saving it. Which two options can preserve a separate version that you can return to? Select all that apply.",
+    type: "multiple",
+    ordered: false,
+    choices: ["Export", "Rename", "Save As", "Share"],
+    correct: [0, 2]
+  },
+  9151: {
+    text: "Which three services or event sources can trigger a Power Automate flow? Select all that apply.",
+    type: "multiple",
+    ordered: false,
+    choices: [
+      "Microsoft Dataverse",
+      "Outlook or Microsoft 365",
+      "A Windows desktop event",
+      "Lifecycle Services",
+      "Microsoft 365 admin center"
+    ],
+    correct: [0, 1, 2]
+  },
+  9157: {
+    text: "A service manager must approve each new work order before a worker is dispatched. Which type of flow should you create?",
+    choices: ["Plug-in", "Approval flow", "Business rule", "Team flow", "Scheduled flow"],
+    correct: [1]
+  },
+  9163: {
+    text: "Management must receive a mobile notification whenever a sales opportunity is created in Dynamics 365 Sales. Which two components should invoke the notification process? Select all that apply.",
+    type: "multiple",
+    ordered: false,
+    choices: ["AI Builder", "Power BI", "Power Automate", "Microsoft Dataverse connector"],
+    correct: [2, 3]
+  },
+  9164: {
+    text: "A company uses Microsoft 365, SharePoint Online, and Dynamics 365 Sales. It must synchronize data daily from an external SQL Server instance, send reports automatically to executives, and route high-value opportunities to a sales manager for approval. Which two tools or components should you recommend? Select all that apply."
+  },
+  9166: {
+    text: "A Power Automate flow emails each new Dynamics 365 Sales opportunity to a sales manager who has left the company. How should you update the flow for the new sales manager?",
+    choices: [
+      "Give the new manager access to the former manager's mailbox.",
+      "Prompt a user to enter an email address every time the flow runs.",
+      "Create another flow that forwards the former manager's messages.",
+      "Change the recipient in the existing flow's To field."
+    ],
+    correct: [3]
+  },
+  9187: {
+    choices: ["AI Builder", "Power Apps", "Business events", "Power Automate", "Microsoft Dataverse"],
+    correct: [2, 3]
+  },
+  9188: {
+    text: "A company uses email for approvals and manually copies operational data into Excel. Which solution should be used for each requirement?\n\nRequirements/scenarios in order:\n1. Create an approval workflow.\n2. Use the same data as Dynamics 365 Field Service for charts and reports.\n\nSelect the answer option that correctly matches every numbered item.",
+    choices: [
+      "1. Power Automate | 2. Dataverse and Power BI",
+      "1. Dynamics 365 workflow notifications | 2. Excel",
+      "1. Outlook rules | 2. A flat-file integration",
+      "1. AI Builder | 2. An AppSource add-on"
+    ],
+    correct: [0]
+  },
+  9193: {
+    choices: ["Power Automate mobile app", "Web browser", "Desktop recorder", "Dynamics 365"],
+    correct: [0, 1]
+  },
+  9196: {
+    text: "A Contact-table business rule hides the State/Province column only when City equals London. Which option correctly describes the rule's behavior and scope?\n\nRequirements/scenarios in order:\n1. Type of app that can use the rule.\n2. Result when City is New York.\n3. Form on which the Contact-table rule is enforced.\n\nSelect the answer option that correctly matches every numbered item."
+  },
+  9198: {
+    text: "A company must connect Power Apps and Power Automate to custom services for which no standard connectors exist. Which statement is true?",
+    choices: [
+      "Every organization-only custom connector requires Microsoft certification.",
+      "A custom connector can be built once and reused by Power Apps and Power Automate.",
+      "A connector can be published for every Power Platform customer without Microsoft certification."
+    ],
+    correct: [1]
+  },
+  9205: {
+    text: "A company plans to use premium connectors in canvas apps and Power Automate cloud flows. Which statements are true? Select all that apply.",
+    choices: [
+      "An appropriate Power Apps or Power Automate license is required to create solutions that use premium connectors.",
+      "Makers must create premium connectors before they can use an existing premium connector.",
+      "Premium connectors can be used in both canvas apps and Power Automate cloud flows."
+    ],
+    correct: [0, 2]
+  },
+  9212: {
+    text: "Which statement about a Copilot Studio agent's greeting and live-agent handoff is true?",
+    choices: [
+      "A customer must always restate all previously collected information after a live-agent handoff.",
+      "The greeting topic can be customized for an agent."
+    ],
+    correct: [1]
+  },
+  9216: {
+    text: "A Power Automate flow sends text messages automatically when a receptionist receives a shipment email. Which component connects to the email service and supplies the event that starts the flow?"
+  },
+  9217: {
+    text: "Which statement about Power Platform environments and Dataverse is true?"
+  },
+  9237: {
+    choices: [
+      "1. View | 2. Form",
+      "1. Form | 2. View",
+      "1. Table | 2. Form",
+      "1. Column | 2. Table"
+    ],
+    correct: [1]
+  },
+  9228: {
+    choices: [
+      "1. Trigger | 2. Action",
+      "1. Action | 2. Action",
+      "1. Action | 2. Trigger",
+      "1. Trigger | 2. Trigger"
+    ],
+    correct: [1]
+  },
+  9227: {
+    choices: [
+      "1. AppSource | 2. Microsoft partner directory",
+      "1. AppSource | 2. Azure Marketplace",
+      "1. Azure Marketplace | 2. AppSource",
+      "1. Lifecycle Services | 2. AppSource"
+    ],
+    correct: [1]
+  },
+  9241: {
+    text: "Which statement about sharing Power Apps apps and views is true?",
+    choices: [
+      "Sharing either a model-driven app or a canvas app always sends every user an email containing the app link.",
+      "Canvas apps, model-driven apps, and shared apps use identical security-role and permission assignment.",
+      "Both personal views and system views must be published before any user can use them.",
+      "None of these statements is true."
+    ],
+    correct: [3]
+  },
+  9253: {
+    choices: [
+      "1. Edit the existing column | 2. Create a new Choice column | 3. Create a new date column",
+      "1. Create a new text column | 2. Edit the existing column | 3. Create a new date column",
+      "1. Create a new Choice column | 2. Edit the existing column | 3. Edit the existing column",
+      "1. Edit the existing column | 2. Edit the existing column | 3. Create a new Choice column"
+    ],
+    correct: [2]
+  },
+  9262: {
+    text: "Which two capabilities does Power Pages provide? Select all that apply.",
+    type: "multiple",
+    ordered: false,
+    choices: [
+      "Support for multilingual websites",
+      "Low-code websites hosted as a service",
+      "OData feeds as the only supported data source",
+      "A different custom style generated automatically for every user"
+    ],
+    correct: [0, 1]
+  },
+  9263: {
+    text: "You create a Power Pages site that shares Microsoft Dataverse data with authenticated external customers. Which component should you use for each requirement?"
+  },
+  9277: {
+    text: "Which statement about Power Automate flow triggers and sharing is true?"
+  },
+  9278: {
+    text: "A company uses dataflows to import data into Microsoft Dataverse. Which statements are true? Select all that apply.",
+    choices: [
+      "Every Power Automate connector is automatically available as a dataflow connector.",
+      "Power Query can shape and transform data in a dataflow.",
+      "A dataflow can run on a schedule to refresh data in Dataverse."
+    ],
+    correct: [1, 2]
+  },
+  9285: {
+    text: "A Copilot Studio agent helps employees check vacation balances and answer policy questions. Which statement is true?",
+    choices: [
+      "The agent can use an action to retrieve a user's vacation balance.",
+      "Topics represent entities such as the name of an office.",
+      "A user must enter an exact trigger phrase for the agent to respond."
+    ],
+    correct: [0]
+  },
+  9289: {
+    choices: [
+      "1. Power Automate | 2. Sentiment analysis",
+      "1. Sentiment analysis | 2. Power Automate",
+      "1. Object detection | 2. Power BI",
+      "1. Text recognition | 2. Copilot Studio"
+    ],
+    correct: [1]
+  },
+  9292: {
+    choices: [
+      "1. Report | 2. Dashboard",
+      "1. Dashboard | 2. Report",
+      "1. Dataset | 2. Dashboard",
+      "1. Dashboard | 2. Dataset"
+    ],
+    correct: [1]
+  },
+  9298: {
+    text: "A company needs a mobile-friendly, PCI-compliant experience where customers can register and prepay for a seminar. Which component should be used for each requirement?",
+    choices: [
+      "1. Canvas app | 2. Power Pages",
+      "1. Power Pages | 2. Canvas app",
+      "1. Model-driven app | 2. Power Pages",
+      "1. Power Pages | 2. Power Pages"
+    ],
+    correct: [3]
+  },
+  9300: {
+    text: "A canvas app contains a Company Holidays gallery. Which option correctly identifies the controls or settings for each requirement?\n\nRequirements/scenarios in order:\n1. Identify the selected gallery control.\n2. Choose the Power Apps Studio command used to test the app.\n3. Identify what must change to display dates as DD/MM/YYYY.\n\nSelect the answer option that correctly matches every numbered item."
+  },
+  9312: {
+    text: "A Power Automate cloud flow starts from a Microsoft Forms submission. Which step meets each requirement?\n\nRequirements/scenarios in order:\n1. Identify the trigger step.\n2. Identify the other step that uses the same connector as Get response details.\n\nSelect the answer option that correctly matches every numbered item.",
+    choices: [
+      "1. When a new response is submitted | 2. When a new response is submitted",
+      "1. Get response details | 2. Start an approval",
+      "1. Start an approval | 2. Send an email for approval",
+      "1. Send an email for approval | 2. Get response details"
+    ],
+    correct: [0]
+  },
+  9317: {
+    text: "A Power Pages site lets customers track existing support requests and create new ones. Which data source should store the support requests?",
+    choices: ["SharePoint", "Microsoft Dataverse", "SQL Server", "Excel"],
+    correct: [1]
+  },
+  9318: {
+    text: "Which statement about Microsoft Dataverse capabilities is true?",
+    choices: [
+      "Dataverse can be hosted either in the cloud or on-premises.",
+      "Dataverse includes a common schema of business objects by default.",
+      "Every Dataverse instance supports up to 8 TB of storage."
+    ],
+    correct: [1]
+  },
+  9322: {
+    choices: [
+      "1. Canvas app | 2. Canvas app",
+      "1. Model-driven app | 2. Canvas app",
+      "1. Canvas app | 2. Model-driven app",
+      "1. Model-driven app | 2. Model-driven app"
+    ],
+    correct: [2]
+  },
+  9328: {
+    choices: [
+      "1. Run | 2. Recorder",
+      "1. Recorder | 2. Run",
+      "1. Recorder | 2. Subflow",
+      "1. Subflow | 2. Run"
+    ],
+    correct: [1]
+  },
+  9346: {
+    text: "A company uses Dynamics 365 Sales and needs a low-configuration interface for back-office staff. Existing custom tables must be visible, the experience must resemble Dynamics 365 Sales, and users must be able to create and edit data. Which capability should you recommend?"
+  },
+  9347: {
+    text: "A canvas app must start a complex, multistep workflow whenever a user selects a custom button. Which Power Platform service should the app use?"
+  },
+  9359: {
+    text: "An office manager must send employees an SMS reminder on the night before each scheduled all-hands meeting. Which type of Power Automate cloud flow should be created?",
+    choices: ["Automated cloud flow", "Instant cloud flow", "Scheduled cloud flow"],
+    correct: [2]
+  },
+  9362: {
+    text: "A company has no professional developers. Which two Power Platform benefits should executives understand? Select all that apply.",
+    type: "multiple",
+    ordered: false,
+    choices: [
+      "Business users can create custom applications with Power Apps.",
+      "Business users can automate repetitive Microsoft 365 processes with Power Automate.",
+      "Power Platform permits unrestricted forwarding to personal email accounts.",
+      "Power Platform requires every mobile device to use the same vendor."
+    ],
+    correct: [0, 1]
+  },
+  9365: {
+    text: "Which three site properties can Copilot for Power Pages derive from a natural-language site-creation prompt? Select all that apply.",
+    type: "multiple",
+    ordered: false,
+    choices: ["Site name", "Web address or URL", "Home page", "Forms", "Lists"],
+    correct: [0, 1, 2]
+  },
+  9366: {
+    text: "A company needs a proof-of-concept website for external vendors to access warranty information. The team has described the desired site in natural language. Which feature should create the site quickly?",
+    choices: ["Visual Studio Code", "Copilot for site creation", "Power Apps maker portal", "Power Pages design studio"],
+    correct: [1]
+  }
+};
+
+var PL900_AUDIT_REVISIONS = {
+  9005: {
+    text: "You need to explain the major components of the Common Data Model and their functions. Match each term to its definition."
+  },
+  9007: {
+    text: "You manage support at a rapidly growing company. Customers and technicians need a better experience when logging and responding to support requests. You also need weekly visibility into technicians' work. Which tools meet the company's needs?",
+    explanation: "Power Pages lets external customers submit requests, Dataverse stores them, Power Automate notifies technicians, and a canvas app supports mobile status entry."
+  },
+  9010: {
+    text: "A company plans to implement Power Platform applications without development tools or plug-ins. Which actions can users perform? Select all that apply."
+  },
+  9014: {
+    choices: [
+      "1. Canvas app | 2. Model-driven app | 3. Power Pages site",
+      "1. Model-driven app | 2. Canvas app | 3. Power Pages site",
+      "1. Model-driven app | 2. Power Pages site | 3. Canvas app",
+      "1. Power Pages site | 2. Model-driven app | 3. Canvas app"
+    ],
+    correct: [0]
+  },
+  9019: {
+    text: "A company must prevent inappropriate sharing of customer data and block connections to data sources unless users have explicit access. Which two DLP policy scopes should you recommend? Select all that apply.",
+    choices: [
+      "Office cloud policy",
+      "Group Policy Object",
+      "Tenant-level DLP policy",
+      "Preset security policy",
+      "Environment-level DLP policy"
+    ],
+    correct: [2, 4]
+  },
+  9022: {
+    choices: [
+      "1. One per environment | 2. One per user",
+      "1. One per user | 2. One per environment",
+      "1. One per tenant | 2. One per user",
+      "1. One per tenant | 2. One per environment"
+    ],
+    correct: [1]
+  },
+  9024: {
+    text: "Which statement about Dataverse security roles is true?",
+    choices: [
+      "Security roles are modified in the Microsoft Entra admin center.",
+      "A separate security role must be assigned to every Dataverse table.",
+      "Security roles define table privileges and are assigned to users or teams."
+    ],
+    correct: [2]
+  },
+  9028: {
+    choices: [
+      "Power BI reports can display both aggregated and detailed data.",
+      "A Power BI report can combine related data from multiple sources."
+    ],
+    correct: [0, 1]
+  },
+  9029: {
+    choices: [
+      "Send emails to every subscriber without evaluating message content.",
+      "Synchronize an external database without a connector.",
+      "Collect data from several sources and display trends without applying an AI model.",
+      "Interpret images and perform an action based on the image.",
+      "Detect patterns in data and predict outcomes."
+    ],
+    correct: [3, 4]
+  },
+  9030: {
+    text: "A company plans to use standard and custom connectors with industry-standard and proprietary data sources. Which statement is true?",
+    choices: [
+      "A custom connector cannot be used when a standard connector exists.",
+      "Custom connectors are supported only in instant flows.",
+      "Standard and custom connectors cannot be used in the same flow or app.",
+      "Custom connectors can be used alongside standard connectors in flows and apps."
+    ],
+    correct: [3]
+  },
+  9035: {
+    choices: [
+      "1. Power Apps | 2. Power Automate | 3. Power Apps",
+      "1. Power Apps | 2. Power Apps | 3. Power Automate",
+      "1. Power Automate | 2. Power Automate | 3. Power Apps",
+      "1. Power Automate | 2. Power Apps | 3. Power Apps"
+    ],
+    correct: [3]
+  },
+  9036: {
+    text: "A company uses Dynamics 365 Supply Chain Management and Dynamics 365 Finance. Business data must be synchronized between the systems and stored in one shared location. What should you use?",
+    choices: ["Azure IoT Central", "Microsoft Entra ID", "SQL Server", "Microsoft Dataverse"],
+    correct: [3]
+  },
+  9041: {
+    choices: [
+      "1. Prediction | 2. Form processing",
+      "1. Object detection | 2. Prediction",
+      "1. Object detection | 2. Object detection",
+      "1. Prediction | 2. Object detection"
+    ],
+    correct: [1]
+  },
+  9042: {
+    text: "A rapidly growing support team needs a better way to log, store, and respond to support requests. Which tools meet the company's needs?"
+  },
+  9043: {
+    text: "A business is evaluating AI Builder and related Power Platform integrations. Which actions are supported? Select all that apply.",
+    choices: [
+      "Use text classification alone to perform sentiment analysis for ServiceNow incidents.",
+      "Tag Instagram posts that mention a new product.",
+      "Send the number of product mentions to Power BI for a dashboard."
+    ],
+    correct: [1, 2]
+  },
+  9045: {
+    text: "A retail director publishes weekly videos about new initiatives and goals. The company needs an internal Power Apps application that streams the videos. Which objects should you use?",
+    explanation: "A canvas app provides the customizable layout, a media control streams the videos, and a theme applies consistent company colors."
+  },
+  9052: {
+    explanation: "To change an active business rule safely, either save a modified copy and retire the original rule, or deactivate the rule, modify it, and reactivate it."
+  },
+  9048: {
+    text: "A Power Apps application must display purchase information from a legacy point-of-sale system. The purchases must be linked to customer accounts and product sales in Dynamics 365 Commerce. Which component should you use?"
+  },
+  9053: {
+    choices: [
+      "1. Power Automate flow | 2. Connector",
+      "1. Connector | 2. Power Automate flow",
+      "1. Power Automate flow | 2. Power Automate flow",
+      "1. Connector | 2. Connector"
+    ],
+    correct: [0]
+  },
+  9055: {
+    text: "A toy company uses an AI Builder text-classification model to monitor customer feedback for specific keywords. Which two components can initiate engineering reviews and schedule worker training when negative feedback is received? Select all that apply.",
+    choices: ["Copilot Studio", "Common Data Model", "Canvas app", "Power Automate"],
+    correct: [2, 3]
+  },
+  9057: {
+    text: "An animal hospital must store owner details, pet details, and the relationship between each pet and owner in Dataverse while minimizing customization. Which component should it use for each requirement?"
+  },
+  9058: {
+    choices: [
+      "1. Dataverse | 2. Dataverse for Teams",
+      "1. Dataverse for Teams | 2. Dataverse",
+      "1. Dataverse for Teams | 2. Dataverse for Teams",
+      "1. Dataverse | 2. Dataverse"
+    ],
+    correct: [1]
+  },
+  9061: {
+    text: "You publish a Power BI app and give team members permission to view its reports. Which statement about the published app is true?",
+    choices: [
+      "The published app is stored in the team's SharePoint site for users to install.",
+      "Changes that a consumer makes to an installed dashboard automatically update the original published app.",
+      "Workspace changes appear in the published app only after the app is updated and republished."
+    ],
+    correct: [2]
+  },
+  9062: {
+    choices: [
+      "1. Report | 2. Dashboard | 3. Report",
+      "1. Dashboard | 2. Report | 3. Report",
+      "1. Report | 2. Report | 3. Dashboard",
+      "1. Dashboard | 2. Dashboard | 3. Report"
+    ],
+    correct: [0]
+  },
+  9066: {
+    choices: [
+      "Uninstall the application and reinstall a previously exported package.",
+      "Delete the application and recreate it manually.",
+      "Restore the previous application version."
+    ],
+    correct: [2]
+  },
+  9073: {
+    choices: [
+      "1. Canvas app | 2. Model-driven app",
+      "1. Model-driven app | 2. Model-driven app",
+      "1. Model-driven app | 2. Canvas app",
+      "1. Canvas app | 2. Canvas app"
+    ],
+    correct: [2]
+  },
+  9080: {
+    text: "A manufacturing company uses Internet of Things (IoT) devices to monitor warehouse temperatures. Which Power BI feature should display the readings on a near-real-time dashboard?",
+    choices: ["Scheduled-refresh dataset", "Streaming dataset", "Content-pack dataset", "Power BI dataflow", "Quick Insights"],
+    correct: [1]
+  },
+  9086: {
+    choices: ["Custom data connector", "Published Power BI app", "Power Automate flow"],
+    correct: [1]
+  },
+  9093: {
+    text: "A multi-page Power BI report must show each salesperson only the data for that person's sales region. Which security feature should you use?"
+  },
+  9097: {
+    text: "A company needs one page of visualizations containing:\n- Invoices from a third-party ERP system.\n- Client-call counts from Microsoft Dataverse.\n- Data from an Excel file.\n\nWhich Power BI component should you use?"
+  },
+  9102: {
+    choices: [
+      "1. Scheduled refresh has not run | 2. Dataset permissions",
+      "1. Dataset permissions | 2. Dataset permissions",
+      "1. Dataset permissions | 2. Scheduled refresh has not run",
+      "1. Scheduled refresh has not run | 2. Scheduled refresh has not run"
+    ],
+    correct: [2]
+  },
+  9104: {
+    text: "A user receives a \"User not found\" error when signing in to a Power Pages site, even though the sign-in information is correct. What should you do to expose the detailed cause?",
+    choices: ["Disable custom error messages.", "Create a custom error message.", "Enable Lifecycle Services diagnostics.", "Enable maintenance mode."],
+    correct: [0]
+  },
+  9111: {
+    text: "A company's customer-facing applications must comply with the General Data Protection Regulation (GDPR). Which two features help meet the requirements? Select all that apply.",
+    choices: ["Force periodic changes to security questions.", "Capture dated consent.", "Block identified minors."],
+    correct: [1, 2]
+  },
+  9113: {
+    text: "A user cannot find a canvas app under Apps > Can edit in Power Apps Studio. Which three conditions can explain why the editable app is missing? Select all that apply.",
+    type: "multiple",
+    ordered: false,
+    choices: [
+      "The user selected the wrong environment.",
+      "The user has not been assigned the System Customizer role.",
+      "The user is not a co-owner of the app.",
+      "The app has not been shared with the user.",
+      "The environment does not contain a Dataverse database."
+    ],
+    correct: [0, 2, 3]
+  },
+  9115: {
+    choices: [
+      "Tables are added by dragging them onto an app canvas.",
+      "A view definition is created in the components area of the app designer.",
+      "You must save, validate, and publish the app before others can see the changes."
+    ],
+    correct: [2]
+  }
+};
+
+var PL900_ADVANCED_AUDIT_REVISIONS = {
+  9254: {
+    choices: [
+      "1. Model-driven app | 2. Canvas app",
+      "1. Model-driven app | 2. Model-driven app",
+      "1. Canvas app | 2. Canvas app",
+      "1. Canvas app | 2. Model-driven app"
+    ],
+    correct: [2]
+  },
+  9250: {
+    explanation: "A Power Automate cloud flow can read the SharePoint data and write it to Dataverse by using the corresponding connectors."
+  },
+  9255: {
+    text: "A company creates canvas apps that use a data source from its sales team. To meet company device policies, you must determine the available canvas-app formats. Which two app formats should you select? Select all that apply.",
+    choices: ["Android", "iOS", "Mobile", "Desktop", "Tablet"],
+    correct: [2, 4]
+  },
+  9256: {
+    text: "A company is undergoing a digital transformation by using Microsoft Power Platform. Customer service needs an external support site for unlicensed customers. Facilities technicians need to photograph warehouse equipment with mobile devices and record its condition. Finance needs to copy invoice details from a shared mailbox into the finance system. Marketing needs to identify keywords and phrases in customer feedback. For which department should you develop a canvas app?",
+    choices: ["Facilities", "Finance", "Customer service", "Marketing"],
+    correct: [0]
+  },
+  9257: {
+    text: "A user requests the removal of the Fax column from the standard Account form shown in a model-driven app. Which form should you open in the app designer?",
+    choices: ["Account", "Information", "Summary"],
+    correct: [1]
+  },
+  9260: {
+    text: "A company uses Dynamics 365 Supply Chain Management. When a sales order is created for a customer managed by a specific user, an Outlook task must remind the user to perform any required follow-up activities. Which feature should you use?"
+  },
+  9265: {
+    choices: ["Forums", "Home page", "Summary", "Search results", "Contact us"],
+    correct: [1, 3, 4]
+  },
+  9271: {
+    choices: [
+      "Prediction",
+      "Object detection",
+      "Anomaly detection",
+      "Conversational language understanding",
+      "Category classification"
+    ],
+    correct: [0, 1, 4]
+  },
+  9272: {
+    choices: [
+      "Power Virtual Agents",
+      "Microsoft Azure Cognitive Services",
+      "AI Builder Language Detection model",
+      "Microsoft Dynamics 365 Remote Assist for mobile"
+    ],
+    correct: [1, 2]
+  },
+  9274: {
+    text: "A company uses a cloud app built by the IT department. The app has a publicly available API for managing employee availability. You are creating an automated Power Automate cloud flow that sends an email to an employee's manager when the employee is recorded as sick in the app. Which type of connector should you use?",
+    choices: ["Custom", "Premium", "Standard"],
+    correct: [0]
+  },
+  9275: {
+    text: "A company uses Power BI and wants to use AI Insights to make data-driven decisions. Which insight type should you use for each requirement?"
+  },
+  9284: {
+    text: "A company creates a new Microsoft Dataverse instance to store customer information. Customer service agents require a simple, three-screen canvas app to interact with the Dataverse data. Which four actions should you perform in sequence?"
+  },
+  9287: {
+    choices: [
+      "1. Canvas app | 2. Canvas app | 3. Model-driven app",
+      "1. Canvas app | 2. Model-driven app | 3. Canvas app",
+      "1. Model-driven app | 2. Canvas app | 3. Canvas app",
+      "1. Model-driven app | 2. Model-driven app | 3. Canvas app"
+    ],
+    correct: [1]
+  },
+  9288: {
+    text: "You save and publish a view named My USA Accounts. The view is sorted by Address 1: City, filters Address 1: Country/Region to the United States, and filters Owner to the current user. Which statement is true?",
+    choices: [
+      "When you create a new account in the city of Boston, it will be shown as the second row.",
+      "All users will see the same number of rows in this view.",
+      "To switch to this view, users should choose Accounts with USA addresses from the dropdown list.",
+      "None of the above statements are true."
+    ],
+    correct: [3]
+  },
+  9290: {
+    text: "You are building a canvas app that allows users to record expenses. The app will also support screen readers for users with visual impairments. You need a tool that identifies potential accessibility issues and suggests app changes. Which tool should you use?"
+  },
+  9293: {
+    choices: [
+      "1. Automated cloud flow | 2. Automated cloud flow",
+      "1. Scheduled cloud flow | 2. Scheduled cloud flow",
+      "1. Scheduled cloud flow | 2. Automated cloud flow",
+      "1. Automated cloud flow | 2. Scheduled cloud flow"
+    ],
+    correct: [3]
+  },
+  9295: {
+    choices: [
+      "1. Power Apps | 2. Power BI | 3. Power Apps",
+      "1. Power BI | 2. Power Apps | 3. Power Apps",
+      "1. Power Apps | 2. Power Apps | 3. Power BI",
+      "1. Power BI | 2. Power BI | 3. Power Apps"
+    ],
+    correct: [2]
+  },
+  9296: {
+    text: "A company uses an AI Builder prebuilt model to enhance its data. The model does not provide good results for the company's unique data. How should you increase prediction accuracy?",
+    choices: [
+      "Add more data to the prebuilt model.",
+      "Add Microsoft Dataverse to the environment.",
+      "Build a custom AI Builder model.",
+      "Insert the prebuilt model's AI Builder control into a canvas app."
+    ],
+    correct: [2]
+  },
+  9300: {
+    text: "A canvas app contains a Company Holidays gallery. Which option correctly identifies the control or setting for each requirement?"
+  },
+  9301: {
+    text: "A tutoring company has deployed a model-driven app for administration staff and a canvas app for teachers. Which statements are true? Select all that apply."
+  },
+  9304: {
+    text: "You review a Power BI report about a company's sales data. An insight notification shows that one store's sales value exceeded its target in the previous quarter. Which insight is shown?"
+  },
+  9305: {
+    text: "A company uses a model-driven app for its sales team. The sales manager wants each team member to modify a view without affecting other users. The IT manager wants to publish a view update for all users. Which view type meets each requirement?",
+    choices: [
+      "1. Personal view | 2. Public view",
+      "1. Personal view | 2. Personal view",
+      "1. Public view | 2. Personal view",
+      "1. Public view | 2. Public view"
+    ],
+    correct: [0]
+  },
+  9308: {
+    choices: ["Power BI", "Power Pages", "Canvas app", "Model-driven app"],
+    correct: [1]
+  },
+  9312: {
+    text: "A Power Automate cloud flow starts from a Microsoft Forms submission. Which step meets each requirement?"
+  },
+  9315: {
+    choices: [
+      "Power Pages design studio",
+      "Visual Studio Code",
+      "Portal Management app",
+      "Power Automate maker portal"
+    ],
+    correct: [0]
+  },
+  9318: {
+    text: "Which statement about Microsoft Dataverse capabilities is true?",
+    type: "single",
+    ordered: false,
+    choices: [
+      "Dataverse can be hosted in the cloud and on-premises.",
+      "Dataverse includes a common schema of business objects by default.",
+      "Dataverse can support up to 8 TB of storage per instance."
+    ],
+    correct: [1]
+  },
+  9331: {
+    text: "An environmental agency uses Specimen and Species tables in Microsoft Dataverse. The Specimen table has a Species lookup, an Owner column, a Name primary-name column, and a Specimen GUID column. Which statement is true?"
+  },
+  9334: {
+    text: "A company shares a Power BI dashboard with you. You need to add a visual by using Power BI Q&A. What should you use to create the visual?"
+  },
+  9339: {
+    text: "An enterprise company is evaluating the Microsoft Power Platform security model. What is the lowest level at which authorization can be applied?",
+    choices: ["Tenant", "Row", "Environment", "Column"],
+    correct: [3]
+  },
+  9341: {
+    text: "You are using Microsoft Copilot Studio to create an agent for your Power Pages site. The agent must restart the conversation when user input is unrecognized. What should you configure?",
+    choices: ["Trigger", "Fallback topic", "AI features", "Error message"],
+    correct: [1]
+  },
+  9342: {
+    text: "You plan to deploy a Power Pages site for common customer requests. You want Copilot to add a conversational experience for site users and create the site's interface from a short description. Which two features meet the requirements? Select all that apply.",
+    explanation: "A webchat interface provides the conversational experience, and description-based site creation generates the requested interface."
+  },
+  9352: {
+    text: "You manage the support team at a rapidly growing company. Support technicians need a better experience when logging and responding to support requests. Which tools should you recommend to meet the company's needs?"
+  },
+  9355: {
+    text: "You are building a Power Pages site. Microsoft Entra ID authentication is already configured. You add a page that is visible to all users. The page must display coupon information relating only to the company of the user who is signed in. Which security feature should you recommend?"
+  },
+  9357: {
+    text: "You are creating a data model in Dataverse for an event-planning company. Individuals can register for multiple events during a cycle. When planners create an event, the individuals' details must copy to the new event automatically. Organizations must be blocked from registering. You create the Events table. Which Dataverse component should you use to complete the model?"
+  },
+  9361: {
+    choices: ["Input", "Gallery", "List box", "Combo box"],
+    correct: [1]
+  }
+};
+
+var PL900_WORKLOAD_AUDIT_REVISIONS = {
+  9123: {
+    choices: [
+      "1. Power Automate | 2. Microsoft Azure",
+      "1. Custom connector | 2. Azure Function",
+      "1. Custom connector | 2. Custom connector",
+      "1. Microsoft Azure | 2. Power Automate"
+    ],
+    correct: [3]
+  },
+  9126: {
+    choices: [
+      "Send the URL for the app to coworkers.",
+      "Publish the app.",
+      "Create a flow for the app.",
+      "Share the app."
+    ],
+    correct: [3]
+  },
+  9128: {
+    choices: [
+      "Power Apps maker portal",
+      "Solution Explorer",
+      "Microsoft Azure DevOps",
+      "App Designer",
+      "Microsoft Visual Studio"
+    ],
+    correct: [0, 1, 3]
+  },
+  9129: {
+    explanation: "Canvas apps can be embedded in model-driven app forms; Microsoft Forms and Excel worksheets do not provide the same direct canvas-app embedding."
+  },
+  9130: {
+    choices: [
+      "You can customize buttons and menu items in canvas apps but cannot reorder the screens.",
+      "You can add sections to your canvas app forms at any time.",
+      "Screens can be added only when the canvas app is created.",
+      "You can edit buttons in a Power Apps app only by using a third-party application.",
+      "None of the above statements are true."
+    ],
+    correct: [4]
+  },
+  9132: {
+    choices: ["Customizations", "Data sources", "Actions", "Tables", "Triggers"],
+    correct: [2, 4]
+  },
+  9133: {
+    text: "A company is considering implementing Power Apps to help manage business processes. Users need to understand the purposes and benefits of Power Apps components. Match each benefit to its tool."
+  },
+  9137: {
+    choices: ["Power Automate flows", "Power BI", "Customer Service Insights", "Copilot Studio agents"],
+    correct: [3]
+  },
+  9139: {
+    choices: [
+      "Add the app to a solution.",
+      "Publish the app.",
+      "Share the app.",
+      "Add a Power Apps component framework (PCF) control to the app."
+    ],
+    correct: [1]
+  },
+  9140: {
+    choices: ["Formula", "Gallery", "Connector", "Calculated column"],
+    correct: [0]
+  },
+  9142: {
+    text: "A company is considering implementing Power Platform and must minimize development costs. For which three scenarios should you consider implementing Power Pages? Select all that apply.",
+    choices: [
+      "A customer support website that includes knowledge-base search",
+      "A public website that supports multilingual communities with forums",
+      "A secure website for mobile users that is available only by using a VPN",
+      "A secure website for vendors accessing data stored in Dataverse"
+    ]
+  },
+  9145: {
+    text: "A company publishes e-books for independent authors. The company wants to implement a Power Pages site to announce upcoming books to the general public. Which features should you use?"
+  },
+  9146: {
+    text: "A company is building a Power Pages site. Which page component should you use for each requirement?"
+  },
+  9150: {
+    text: "A Power Automate flow sends an email to a project manager when a team member marks a task as complete. Project leads must validate task completion before the email is sent. Which component should you add to the flow?",
+    choices: ["Process argument", "Condition", "Expression", "Trigger", "Solution"],
+    correct: [1]
+  },
+  9151: {
+    choices: [
+      "Lifecycle Services",
+      "Microsoft 365 admin center",
+      "Microsoft Dataverse",
+      "Microsoft 365 Outlook",
+      "Windows desktop"
+    ],
+    correct: [2, 3, 4]
+  },
+  9153: {
+    choices: ["Power Apps", "For a selected row", "Manually trigger a flow"],
+    correct: [0]
+  },
+  9154: {
+    choices: ["Microsoft Excel", "Microsoft Dataverse", "Office 365 Users"],
+    correct: [1]
+  },
+  9158: {
+    text: "You plan to use Power Automate to monitor what people say about your company's products and store the feedback for research and development. Which component should you use for each requirement?"
+  },
+  9162: {
+    choices: ["Task flow", "Dynamics 365 workflow", "Business process flow", "Power Automate"],
+    correct: [3]
+  },
+  9166: {
+    choices: [
+      "Modify the flow and list the new manager in the From field.",
+      "Modify the flow and list the new manager in the To field.",
+      "Grant the new manager access to the departed manager's inbox.",
+      "Modify the flow to prompt for an email address in the To field.",
+      "Create another flow that forwards the opportunity emails."
+    ],
+    correct: [1]
+  },
+  9173: {
+    choices: [
+      "1. Power Apps | 2. Manually trigger a flow",
+      "1. For a selected file (OneDrive for Business) | 2. Power Apps",
+      "1. Manually trigger a flow | 2. For a selected file (OneDrive for Business)",
+      "1. Manually trigger a flow | 2. Power Apps"
+    ],
+    correct: [0]
+  },
+  9174: {
+    choices: [
+      "Common Data Service",
+      "Dynamics 365",
+      "Dynamics 365 Finance and Operations",
+      "Dynamic Signal"
+    ],
+    correct: [2]
+  },
+  9175: {
+    choices: ["Business process flow", "AI Builder", "Business rule", "Virtual Agent"],
+    correct: [0]
+  },
+  9176: {
+    choices: [
+      "Navigate to the Power Automate admin center and view the projects.",
+      "Navigate to the Action Items section of the Power Automate portal.",
+      "Enable Repair Tips for the flow.",
+      "Navigate to the flow and view its run history.",
+      "Navigate to the Power Automate portal and view notifications."
+    ]
+  },
+  9178: {
+    text: "You plan to create a model-driven app for a company that sells plants and garden supplies.",
+    choices: [
+      "1. Automated cloud flow | 2. Scheduled cloud flow",
+      "1. Business process flow | 2. Automated cloud flow",
+      "1. Automated cloud flow | 2. Business process flow",
+      "1. Scheduled cloud flow | 2. Business process flow"
+    ],
+    correct: [2]
+  },
+  9179: {
+    text: "A company collects weekly project status reports. Which Power Automate component should implement each requirement?",
+    choices: [
+      "1. Trigger | 2. Condition",
+      "1. Condition | 2. Trigger",
+      "1. Action | 2. Condition",
+      "1. Trigger | 2. Action"
+    ],
+    correct: [0]
+  },
+  9180: {
+    text: "You are creating a Power Automate solution. Which control action should you use for each function in the flow?"
+  },
+  9182: {
+    text: "You are building a Power Automate flow to manage sales. The sales team saves quotes as PDF files in a OneDrive folder. You create a SharePoint list to manage follow-ups to quotes. The flow must copy the customer name, phone number, and potential-sale amount from each quote into the list. Which AI Builder model should you use?"
+  },
+  9183: {
+    explanation: "AI Builder and connected Power Platform services can classify text, tag relevant social posts, and publish the resulting metrics to Power BI."
+  },
+  9186: {
+    choices: [
+      "When a record is displayed in a view",
+      "When a record is deleted",
+      "When a record is created",
+      "When a record is updated",
+      "When a record is read"
+    ],
+    correct: [1, 2, 3]
+  },
+  9187: {
+    text: "A company uses Dynamics 365 Supply Chain Management. When a sales order is created for a customer managed by a specific user, an Outlook task must remind the user to perform any required follow-up activities. Which two features should you use? Select all that apply.",
+    choices: ["AI Builder", "Power Apps", "Business events", "Power Automate", "Microsoft Dataverse"],
+    correct: [2, 3]
+  },
+  9188: {
+    text: "A company uses email for approvals and manually copies operational data into Excel. Which solution should be used for each requirement?",
+    choices: [
+      "1. Power Automate | 2. Microsoft Dataverse and Power BI",
+      "1. Dynamics 365 workflow | 2. Microsoft Excel",
+      "1. Outlook rules | 2. Microsoft Dataverse",
+      "1. AI Builder | 2. Power BI"
+    ],
+    correct: [0]
+  },
+  9189: {
+    text: "Service representatives must schedule a customer's next six-month checkup while leaving the client site. The flow must be started from the service-call screen on a phone. Which type of flow should replace the proposed business process flow?",
+    choices: ["Business process flow", "Scheduled cloud flow", "Action", "Instant cloud flow"],
+    correct: [3]
+  },
+  9190: {
+    choices: [
+      "1. Flow Checker | 2. Test | 3. Test",
+      "1. Test | 2. Flow Checker | 3. Test",
+      "1. Test | 2. Test | 3. Flow Checker",
+      "1. Flow Checker | 2. Flow Checker | 3. Test"
+    ],
+    correct: [0]
+  },
+  9191: {
+    text: "You are implementing Power Apps for a company. Data from a proprietary online accounting system must update Microsoft Dataverse automatically every four hours without creating duplicates. Only changed data must be added, and thousands of records are added each hour. What should you do?"
+  },
+  9194: {
+    choices: [
+      "1. Push trigger | 2. Push trigger",
+      "1. Polling trigger | 2. Push trigger",
+      "1. Push trigger | 2. Polling trigger",
+      "1. Polling trigger | 2. Polling trigger"
+    ],
+    correct: [1]
+  },
+  9196: {
+    text: "A Contact-table business rule hides the State/Province column only when City equals London. Which option correctly describes the rule's behavior and scope?",
+    choices: [
+      "1. Contact table main forms | 2. Model-driven apps | 3. The State/Province column remains visible",
+      "1. Model-driven apps | 2. Contact table main forms | 3. The State/Province column remains visible",
+      "1. The State/Province column remains visible | 2. Contact table main forms | 3. Model-driven apps",
+      "1. Model-driven apps | 2. The State/Province column remains visible | 3. Contact table main forms"
+    ],
+    correct: [3]
+  },
+  9199: {
+    choices: ["Customizations", "Actions", "Tables", "Triggers"],
+    correct: [1, 3]
+  },
+  9201: {
+    choices: [
+      "Power Platform connector",
+      "Microsoft Azure Data Lake",
+      "Data Migration Framework",
+      "Power Virtual Agents"
+    ],
+    correct: [0]
+  },
+  9206: {
+    text: "A colleague shares an automated cloud flow with you. The flow starts when a new account is added to a model-driven app, sends an approval in Microsoft Teams, updates the account after approval, and sends a welcome email. Which connector provides the trigger?"
+  },
+  9210: {
+    choices: [
+      "1. Power Automate for desktop | 2. Power Automate mobile | 3. Power Automate portal",
+      "1. Power Automate portal | 2. Power Automate mobile | 3. Power Automate for desktop",
+      "1. Power Automate mobile | 2. Power Automate portal | 3. Power Automate for desktop",
+      "1. Power Automate mobile | 2. Power Automate for desktop | 3. Power Automate portal"
+    ],
+    correct: [1]
+  },
+  9213: {
+    choices: [
+      "Microsoft Power Platform admin center",
+      "Microsoft Power BI service",
+      "Microsoft Power BI Desktop",
+      "Microsoft Power BI mobile app"
+    ]
+  },
+  9214: {
+    text: "You are creating a report in the Power BI service by using a dataset. In which two ways can you add a visual? Select all that apply.",
+    choices: [
+      "Select a visual",
+      "Use Power BI Q&A",
+      "Drag a field onto the canvas",
+      "Pin a page from another report",
+      "Pin a visual from another report"
+    ],
+    correct: [0, 2]
+  },
+  9221: {
+    text: "You are developing a Microsoft Power Platform solution that uses data stored in Excel, Dataverse, and Azure SQL. You must display several visualizations without moving the data out of its source locations. Which tool should you use?"
+  },
+  9224: {
+    choices: [
+      "1. Action | 2. Condition | 3. Action",
+      "1. Trigger | 2. Action | 3. Action",
+      "1. Action | 2. Action | 3. Trigger",
+      "1. Action | 2. Trigger | 3. Action"
+    ],
+    correct: [1]
+  },
+  9227: {
+    choices: [
+      "1. AppSource | 2. Lifecycle Services",
+      "1. AppSource | 2. Azure Marketplace",
+      "1. Azure Marketplace | 2. AppSource",
+      "1. Lifecycle Services | 2. Azure Marketplace"
+    ],
+    correct: [1]
+  },
+  9228: {
+    choices: [
+      "1. Trigger | 2. Action",
+      "1. Action | 2. Action",
+      "1. Action | 2. Trigger",
+      "1. Business process flow | 2. Action"
+    ],
+    correct: [1]
+  },
+  9229: {
+    text: "You are designing Power BI dashboards and reports to analyze a company's financial data. You must analyze the past three years of data from the accounting system and ensure that dashboards display only the required data. What are two possible ways to achieve the goal? Select all that apply.",
+    choices: [
+      "Create aggregations.",
+      "Import data into Microsoft Dataverse.",
+      "Share dashboards.",
+      "Create calculated columns."
+    ]
+  },
+  9230: {
+    text: "Which statements about Copilot Studio agents in Microsoft Teams are true? Select all that apply.",
+    choices: [
+      "Copilot Studio agents can be created directly in Microsoft Teams.",
+      "Copilot Studio agents can use the bot-testing feature directly within Microsoft Teams."
+    ]
+  },
+  9232: {
+    choices: [
+      "Prebuilt tables, forms, and views reduce development time.",
+      "The same app works on mobile devices, tablets, and PCs.",
+      "The app can continue using Excel as its data source.",
+      "Staff and anonymous users can both use the app."
+    ],
+    correct: [0, 1]
+  },
+  9233: {
+    choices: [
+      "Dynamics 365 Remote Assist",
+      "Dynamics 365 Business Central",
+      "Dynamics 365 Finance",
+      "Dynamics 365 for Phones"
+    ],
+    correct: [3]
+  },
+  9237: {
+    choices: [
+      "1. View | 2. Form",
+      "1. Form | 2. View",
+      "1. Table | 2. Column",
+      "1. Column | 2. Table"
+    ],
+    correct: [1]
+  },
+  9238: {
+    text: "A company uses a model-driven app. You add several columns to a form. Users state that the new columns do not appear. What should you do?",
+    choices: [
+      "Create a Power Automate flow.",
+      "Create a business rule.",
+      "Copy the form and rename it.",
+      "Ensure columns are in only one section of the form.",
+      "Publish the form."
+    ],
+    correct: [4]
+  },
+  9241: {
+    choices: [
+      "Sharing either a model-driven app or a canvas app always sends every user an email containing the app link.",
+      "Administrators assign security roles and permissions identically for canvas apps, model-driven apps, and shared apps.",
+      "Both personal views and system views must be published before any user can use them.",
+      "None of the above statements are true."
+    ],
+    correct: [3]
+  }
+};
+
+var PL900_CONTEXT_AUDIT_REVISIONS = {
+  9064: null,
+  9071: null,
+  9113: null,
+  9128: null,
+  9158: [
+    "Retrieve the five newest posts from the company's Facebook page.",
+    "Write the retrieved posts to the product database.",
+    "Combine the author and link values into one value.",
+    "Run the flow every hour."
+  ],
+  9151: null,
+  9179: [
+    "Automatically send a text message based on report submission.",
+    "Automatically send an 8 PM reminder based on a missing status report."
+  ],
+  9188: [
+    "Create an approval workflow.",
+    "Connect to the operational data used by Dynamics 365 Field Service for charts and reports."
+  ],
+  9362: null,
+  9365: null
+};
+
 (function applyPL900ContextRevisions() {
   var banks = [pl900Questions, pl900Questions2, pl900Questions3];
   var replacements = [
@@ -669,8 +2113,20 @@ var PL900_MISSING_QUESTIONS = [
     [/\bArapidly\b/g, "A rapidly"],
     [/\bIfa\b/g, "If a"],
     [/\bAl Builder\b/g, "AI Builder"],
+    [/\bAl (?=models?\b)/g, "AI "],
     [/\bPower Bl\b/g, "Power BI"],
     [/\bPower Bi\b/g, "Power BI"],
+    [/\bPower BI desktop\b/g, "Power BI Desktop"],
+    [/\bPower BI Service\b/g, "Power BI service"],
+    [/\bPower Platform Admin center\b/g, "Power Platform admin center"],
+    [/\bPower Apps Admin center\b/g, "Power Apps admin center"],
+    [/\bPower Apps apps\b/g, "Power Apps applications"],
+    [/\bPower Apps app\b/g, "Power Apps application"],
+    [/\bPower platform\b/g, "Power Platform"],
+    [/\bMicrosoft [Ff]low\b/g, "Power Automate"],
+    [/\bCopilot Studio copilot\b/g, "Copilot Studio agent"],
+    [/\bBusiness Process Flows\b/g, "Business process flows"],
+    [/\bWhich of the following statements are TRUE\?/g, "Which statements are true?"],
     [/\bSharePnint\b/g, "SharePoint"],
     [/\bmodel-\s*driven\b/gi, "model-driven"],
     [/\bepps\b/gi, "apps"],
@@ -706,7 +2162,13 @@ var PL900_MISSING_QUESTIONS = [
       .replace(/\s*["'â€œâ€,;:]*\|\s*$/, "")
       .trim();
 
-    return capitalizeInitial(value);
+    value = value.split("|").map(function (segment) {
+      return capitalizeInitial(segment.trim());
+    }).join(" | ");
+
+    return value
+      .replace(/\bIOS\b/g, "iOS")
+      .replace(/\bIframe\b/g, "IFrame");
   }
 
   function cleanPromptSuffix(value) {
@@ -729,6 +2191,10 @@ var PL900_MISSING_QUESTIONS = [
     return value.slice(0, questionMark + 1);
   }
 
+  Object.keys(PL900_CONTEXT_AUDIT_REVISIONS).forEach(function (id) {
+    PL900_QUESTION_CONTEXTS[id] = PL900_CONTEXT_AUDIT_REVISIONS[id];
+  });
+
   PL900_MISSING_QUESTIONS.forEach(function (question) {
     var exists = banks.some(function (bank) {
       return bank.some(function (candidate) {
@@ -748,11 +2214,24 @@ var PL900_MISSING_QUESTIONS = [
   banks.forEach(function (bank) {
     bank.forEach(function (question) {
       if (!question) return;
-      var dataRevision = PL900_DATA_REVISIONS[question.id] || {};
+      var dataRevision = Object.assign(
+        {},
+        PL900_DATA_REVISIONS[question.id] || {},
+        PL900_FINAL_REVISIONS[question.id] || {},
+        PL900_AUDIT_REVISIONS[question.id] || {},
+        PL900_ADVANCED_AUDIT_REVISIONS[question.id] || {},
+        PL900_WORKLOAD_AUDIT_REVISIONS[question.id] || {}
+      );
       question.text = normalizeImportedText(dataRevision.text || PL900_TEXT_REVISIONS[question.id] || question.text);
       if (dataRevision.choices) question.choices = dataRevision.choices;
       if (dataRevision.correct) question.correct = dataRevision.correct;
       if (dataRevision.type) question.type = dataRevision.type;
+      if (Object.prototype.hasOwnProperty.call(dataRevision, "explanation")) {
+        question.explanation = dataRevision.explanation;
+      }
+      if (Object.prototype.hasOwnProperty.call(dataRevision, "ordered")) {
+        question.ordered = dataRevision.ordered;
+      }
 
       question.text = cleanPromptSuffix(question.text)
         .replace(/(?:Instructions:\s*)?For each of the following statements,\s*select Yes (?:if|it) the statement is true[.,]?\s*/gi, "")
@@ -761,6 +2240,22 @@ var PL900_MISSING_QUESTIONS = [
       question.text = capitalizeInitial(question.text);
       question.choices = question.choices.map(cleanChoiceText);
       question.explanation = normalizeImportedText(question.explanation);
+
+      if (question.type === "multiple" && question.correct.length < 2) {
+        question.type = "single";
+        question.ordered = false;
+        question.text = question.text
+          .replace(/Which of the following statements are TRUE\?\s*Select all that apply\.?/i, "Which statement is true?")
+          .replace(/Which statements are true\?\s*Select all that apply\.?/i, "Which statement is true?")
+          .replace(/Which statements about ([^?]+) are true\?\s*Select all that apply\.?/i, "Which statement about $1 is true?")
+          .trim();
+      }
+
+      if (question.type === "single") {
+        question.correct = [question.correct[0]];
+      } else if (question.type === "multiple") {
+        question.ordered = false;
+      }
 
       if (question.id === 9019) {
         question.type = "multiple";
