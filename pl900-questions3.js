@@ -1,8 +1,7 @@
 var pl900Questions3 = [
   {
     "id": 9245,
-    "text": "You receive a copy of a Power Automate cloud flow from a colleague. For each of the following statements, select Yes if the statement is true. Otherwise, select No.
-\nWhich of the following statements are TRUE? Select all that apply.",
+    "text": "You receive a copy of a Power Automate cloud flow from a colleague. For each of the following statements, select Yes if the statement is true. Otherwise, select No.\n\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
       "You can create a new flow that is a copy of the original flow.",
@@ -92,8 +91,7 @@ var pl900Questions3 = [
   },
   {
     "id": 9252,
-    "text": "You create a model-driven app. You need to determine which customizations can be made to table forms. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.
-\nWhich of the following statements are TRUE? Select all that apply.",
+    "text": "You create a model-driven app. You need to determine which customizations can be made to table forms. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.\n\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
       "A form can be made visible only to users who have been assigned a specific security role.",
@@ -485,8 +483,7 @@ var pl900Questions3 = [
   },
   {
     "id": 9277,
-    "text": "Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.
-\nWhich of the following statements are TRUE? Select all that apply.",
+    "text": "Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.\n\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
       "The date and time are the triggers for a scheduled cloud flow.",
@@ -835,8 +832,7 @@ var pl900Questions3 = [
   },
   {
     "id": 9301,
-    "text": "A tutoring company has developed and deployed a model-driven app for the administration staff and a canvas app for teachers Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.
-\nWhich of the following statements are TRUE? Select all that apply.",
+    "text": "A tutoring company has developed and deployed a model-driven app for the administration staff and a canvas app for teachers Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.\n\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
       "Teachers can access the canvas app by using desktops and mobile devices.",
@@ -1133,8 +1129,7 @@ var pl900Questions3 = [
   },
   {
     "id": 9320,
-    "text": "A company plans to use Power BI to visualize data. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.
-\nWhich of the following statements are TRUE? Select all that apply.",
+    "text": "A company plans to use Power BI to visualize data. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.\n\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
       "Power BI allows users to create and consume visualizations in one view by using data from several different sources.",

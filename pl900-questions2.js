@@ -140,8 +140,7 @@ var pl900Questions2 = [
   },
   {
     "id": 9130,
-    "text": "Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.
-\nWhich of the following statements are TRUE? Select all that apply.",
+    "text": "Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.\n\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
       "You can customize buttons and menu items in canvas apps but cannot reorder the screens.",
@@ -251,8 +250,7 @@ var pl900Questions2 = [
   },
   {
     "id": 9138,
-    "text": "A tutoring company has developed and deployed a model-driven app for the administration staff and a canvas app for teachers. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.
-\nWhich of the following statements are TRUE? Select all that apply.",
+    "text": "A tutoring company has developed and deployed a model-driven app for the administration staff and a canvas app for teachers. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.\n\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
       "te) Teachers can access the canvas app by using desktops and mobile devices.",
@@ -296,8 +294,7 @@ var pl900Questions2 = [
   },
   {
     "id": 9141,
-    "text": "A company plans to implement Power Platform solutions. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.
-\nWhich of the following statements are TRUE? Select all that apply.",
+    "text": "A company plans to implement Power Platform solutions. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.\n\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
       "Users can interact with canvas apps directly in Microsoft SharePoint and Teams.",
@@ -524,8 +521,7 @@ var pl900Questions2 = [
   },
   {
     "id": 9156,
-    "text": "You are creating a Power Automate approval flow. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.
-\nWhich of the following statements are TRUE? Select all that apply.",
+    "text": "You are creating a Power Automate approval flow. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.\n\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
       "The addition of an expense report to a Microsoft OneDrive folder can initiate an approval flow.",
@@ -836,8 +832,7 @@ var pl900Questions2 = [
   },
   {
     "id": 9177,
-    "text": "A company plans to implement Power Automate. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.
-\nWhich of the following statements are TRUE? Select all that apply.",
+    "text": "A company plans to implement Power Automate. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.\n\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
       "Business Process Flows are considered automatic flows.",
@@ -1131,8 +1126,7 @@ var pl900Questions2 = [
   },
   {
     "id": 9197,
-    "text": "A tutoring company has developed and deployed a model-driven app for the administration staff and a canvas app for teachers. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.
-\nWhich of the following statements are TRUE? Select all that apply.",
+    "text": "A tutoring company has developed and deployed a model-driven app for the administration staff and a canvas app for teachers. Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.\n\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
       "Teachers can access the canvas app by using a browser or a 1@) mobile app.",
@@ -1499,8 +1493,7 @@ var pl900Questions2 = [
   },
   {
     "id": 9223,
-    "text": "Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.
-\nWhich of the following statements are TRUE? Select all that apply.",
+    "text": "Instructions: For each of the following statements, select Yes if the statement is true. Otherwise, select No.\n\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
       "A Power Automate cloud flow can be added to a solution by using the Power Automate mobile app.",
