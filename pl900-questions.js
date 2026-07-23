@@ -286,7 +286,7 @@ var pl900Questions = [
     "choices": [
       "Office cloud policies",
       "Group Policy Objects",
-      "tenant-level policies 'MESLNSTED)",
+      "tenant-level policies",
       "preset security policies",
       "Environment-level DLP policy"
     ],
@@ -327,7 +327,7 @@ var pl900Questions = [
   },
   {
     "id": 9022,
-    "text": "A team of five people plans to create Power Platform solutions for a company. Team members plan to initially use Power Platform trial instances to create solutions. Team members have questions about how many Power Platform instances and Common Data Service databases they need. You need to respond to the team. How should you respond? To answer, drag the appropriate responses to the correct questions. Each response may be used once, more than once, or not at all. You may need to drag the split bar between panes or scroll to view content. Each correct selection is worth one point. Responses Answer Area Question 'One per tenant How many trial instances must the team create? tesa omen Data Service databases a One per Power Platform app must the team create? ONE PER USER ONE PER ENVIRONMENT\n\nSelect the option that correctly matches all requirements in the order listed.",
+    "text": "A team of five people plans to create Power Platform solutions for a company. Team members plan to initially use Power Platform trial instances to create solutions. Team members have questions about how many Power Platform instances and Common Data Service databases they need. You need to respond to the team. How should you respond? To answer, drag the appropriate responses to the correct questions. Each response may be used once, more than once, or not at all. You may need to drag the split bar between panes or scroll to view content. Each correct selection is worth one point. Responses Answer Area Question One per tenant How many trial instances must the team create? tesa omen Data Service databases a One per Power Platform app must the team create? ONE PER USER ONE PER ENVIRONMENT\n\nSelect the option that correctly matches all requirements in the order listed.",
     "type": "single",
     "choices": [
       "1. One per environment | 2. One per user",
@@ -500,7 +500,7 @@ var pl900Questions = [
   },
   {
     "id": 9033,
-    "text": "A company plans to use Al Builder to help improve business performance. You need ta determine which Al Models are available for use. Which three types of models can you use? Each correct answer presents a complete solution E text classification '",
+    "text": "A company plans to use Al Builder to help improve business performance. You need ta determine which Al Models are available for use. Which three types of models can you use? Each correct answer presents a complete solution E text classification",
     "type": "multiple",
     "choices": [
       "linear regression",
@@ -518,7 +518,7 @@ var pl900Questions = [
   },
   {
     "id": 9034,
-    "text": "'A company uses Microsoft 365 and Dynamics 365 Sales. The company does not have any developers on its staff. You need to explain to the executives the benefits of using Power Platform apps. What are two benefits? Each correct answer presents a complete solution. addresses. and Dynamics 365 Sales.",
+    "text": "A company uses Microsoft 365 and Dynamics 365 Sales. The company does not have any developers on its staff. You need to explain to the executives the benefits of using Power Platform apps. What are two benefits? Each correct answer presents a complete solution. addresses. and Dynamics 365 Sales.",
     "type": "multiple",
     "choices": [
       "Users can send emails from Dynamics 365 Sales to their personal email",
@@ -797,7 +797,7 @@ var pl900Questions = [
   },
   {
     "id": 9052,
-    "text": "You create a business rule on contact entity to enforce the requirement that users must enter either a telephone number, fax number, or an email when creating a new record. 'The company decides to remove fax number from the condition. You need to update the business rule. What ate two ways of achieving the goal? Each correct answer presents 2 complete solution, €. Take a snapshot of the business rule and change the condition.",
+    "text": "You create a business rule on contact entity to enforce the requirement that users must enter either a telephone number, fax number, or an email when creating a new record. The company decides to remove fax number from the condition. You need to update the business rule. What ate two ways of achieving the goal? Each correct answer presents 2 complete solution, €. Take a snapshot of the business rule and change the condition.",
     "type": "multiple",
     "choices": [
       "Save a copy/change it and deactivate or delete the original",
@@ -844,7 +844,7 @@ var pl900Questions = [
   },
   {
     "id": 9055,
-    "text": "'A toy company creates a text classification model in Al Builder to monitor customer feedback for specific key words. When negative feedback is received for a toy, the company wants to proactively perform engineering reviews for the toy and schedule additional training sessions for workers who produce the toy. What are tivo possible ways to achieve the goal? Each correct answer presents a complete solution, 7 Biren j ( Y . Build a Power Automate flow.",
+    "text": "A toy company creates a text classification model in Al Builder to monitor customer feedback for specific key words. When negative feedback is received for a toy, the company wants to proactively perform engineering reviews for the toy and schedule additional training sessions for workers who produce the toy. What are tivo possible ways to achieve the goal? Each correct answer presents a complete solution, 7 Biren j ( Y . Build a Power Automate flow.",
     "type": "multiple",
     "choices": [
       "Implement the Virtual Agent.",
@@ -891,7 +891,7 @@ var pl900Questions = [
   },
   {
     "id": 9058,
-    "text": "'A company plans to build canvas apps that will be used within Microsoft Teams. You need to identify the platform based on the design considerations. To answer, drag the appropriate platforms to the correct design considerations. Each platform may be used once, more than once, or not at all. You may need to drag the split bar between panes or scroll to view content.\n\nSelect the option that correctly matches all requirements in the order listed.",
+    "text": "A company plans to build canvas apps that will be used within Microsoft Teams. You need to identify the platform based on the design considerations. To answer, drag the appropriate platforms to the correct design considerations. Each platform may be used once, more than once, or not at all. You may need to drag the split bar between panes or scroll to view content.\n\nSelect the option that correctly matches all requirements in the order listed.",
     "type": "single",
     "choices": [
       "1. Platforms Design consideration Platform | 2. Platforms Design consideration Platform",
@@ -1221,7 +1221,7 @@ var pl900Questions = [
   },
   {
     "id": 9080,
-    "text": "'A manufacturing company uses Internet of Things (IoT) devices to monitor the temperature in different parts of their warehouse. You need to view near real-time information from the loT devices in Power BI Service dashboards. Which tool should you use?",
+    "text": "A manufacturing company uses Internet of Things (IoT) devices to monitor the temperature in different parts of their warehouse. You need to view near real-time information from the loT devices in Power BI Service dashboards. Which tool should you use?",
     "type": "single",
     "choices": [
       "Scheduled refresh dataset",
@@ -1684,7 +1684,7 @@ var pl900Questions = [
   },
   {
     "id": 9110,
-    "text": "'A company uses Dynamics 365 Supply Chain Management. The company wants to build customer user interfaces that add additional functionality. You need to recommend a solution for the company. What should you recommend? O AlBuilder",
+    "text": "A company uses Dynamics 365 Supply Chain Management. The company wants to build customer user interfaces that add additional functionality. You need to recommend a solution for the company. What should you recommend? O AlBuilder",
     "type": "single",
     "choices": [
       "Power BI",

@@ -45,7 +45,7 @@ var pl900Questions3 = [
   },
   {
     "id": 9248,
-    "text": "'A manufacturing company is building a model-driven app to manage its warehouse. The app has two custom tables: Order and Batch. You need to identify the appropriate component for each required function of the app. Which component should you choose for each function? To answer, drag the appropriate components to the correct functions. Each component may be used once, more than once, or not at all. You may need to drag the split bar between panes or scroll to view content.\n\nSelect the option that correctly matches all requirements in the order listed.",
+    "text": "A manufacturing company is building a model-driven app to manage its warehouse. The app has two custom tables: Order and Batch. You need to identify the appropriate component for each required function of the app. Which component should you choose for each function? To answer, drag the appropriate components to the correct functions. Each component may be used once, more than once, or not at all. You may need to drag the split bar between panes or scroll to view content.\n\nSelect the option that correctly matches all requirements in the order listed.",
     "type": "single",
     "choices": [
       "1. Business rule | 2. Dashboard | 3. View | 4. Business process flow",
@@ -107,10 +107,10 @@ var pl900Questions3 = [
   },
   {
     "id": 9253,
-    "text": "A company uses a model-driven app to manage customer data. The company requires updates to the account table main form. The updates must be made within the app. You need to make the required updates. Which changes should you make to meet each requirement? To answer, drag the appropriate changes the correct requirements. Each change may be used once, more than once, or not at all. You may need drag the split bar between panes or scroll to view content. Changes: Answer Area | Greate anew column. Requirement 'Change ' Require the city to be selected from a drop-down instead of [ Change Edit the existing column. entered as text Restrict the maximum number of characters of the Postal [ Change code column to 4. Remove the time component from the Last on hold time [arange datetime column. New, EDIT, EDIT\n\nSelect the option that correctly matches all requirements in the order listed.",
+    "text": "A company uses a model-driven app to manage customer data. The company requires updates to the account table main form. The updates must be made within the app. You need to make the required updates. Which changes should you make to meet each requirement? To answer, drag the appropriate changes the correct requirements. Each change may be used once, more than once, or not at all. You may need drag the split bar between panes or scroll to view content. Changes: Answer Area | Greate anew column. Requirement Change Require the city to be selected from a drop-down instead of [ Change Edit the existing column. entered as text Restrict the maximum number of characters of the Postal [ Change code column to 4. Remove the time component from the Last on hold time [arange datetime column. New, EDIT, EDIT\n\nSelect the option that correctly matches all requirements in the order listed.",
     "type": "single",
     "choices": [
-      "1. Greate anew column. Requirement 'Change | 2. code column to 4. | 3. datetime column.",
+      "1. Greate anew column. Requirement Change | 2. code column to 4. | 3. datetime column.",
       "1. Edit the existing choice | 2. Create a new Choice column | 3. Edit the existing choice",
       "1. Create a new Choice column | 2. Edit the existing choice | 3. Edit the existing choice",
       "1. Edit the existing choice | 2. Edit the existing choice | 3. Create a new Choice column"
@@ -154,7 +154,7 @@ var pl900Questions3 = [
   },
   {
     "id": 9256,
-    "text": "A company is undergoing a digital transformation by using Microsoft Power Platform. Departments in the company have the following requirements: Customer service | Allow customers without Microsoft Power Platform licenses to create their own account and log customer sence tickets Fookbes 'Alow technvcians to take photos of warehouse equipment with thew mobile devices and record detatls about equipment condition. Finance ily copy details from Fwvakces received in a shared ralbox into the finance system Create a Iist of key words and phrases used by customers who provided You need to determine which department can use a canvas app to meet its requirement. For which department should you develop a canvas app? [ ~ A. Facilities",
+    "text": "A company is undergoing a digital transformation by using Microsoft Power Platform. Departments in the company have the following requirements: Customer service | Allow customers without Microsoft Power Platform licenses to create their own account and log customer sence tickets Fookbes Alow technvcians to take photos of warehouse equipment with thew mobile devices and record detatls about equipment condition. Finance ily copy details from Fwvakces received in a shared ralbox into the finance system Create a Iist of key words and phrases used by customers who provided You need to determine which department can use a canvas app to meet its requirement. For which department should you develop a canvas app? [ ~ A. Facilities",
     "type": "single",
     "choices": [
       "Finance",
@@ -213,7 +213,7 @@ var pl900Questions3 = [
   },
   {
     "id": 9260,
-    "text": "'A company uses Dynamics 365 Supply Chain Management. When a sales order is created for one of the customers that a specific user manages, a Microsoft Outlook task must be created to remind the user to perform any follow up activities that are required. You need to implement the functionality to create Outlook tasks. Which feature should you use? AlBuilder E Power Bl",
+    "text": "A company uses Dynamics 365 Supply Chain Management. When a sales order is created for one of the customers that a specific user manages, a Microsoft Outlook task must be created to remind the user to perform any follow up activities that are required. You need to implement the functionality to create Outlook tasks. Which feature should you use? AlBuilder E Power Bl",
     "type": "single",
     "choices": [
       "Business Events",
@@ -312,7 +312,7 @@ var pl900Questions3 = [
       "Azure Communication Services Chat",
       "Language - Question Answering",
       "Azure Application Insights",
-      "Azure Cognitive Service for Language 'Most vortD |",
+      "Azure Cognitive Service for Language",
       "AI Builder"
     ],
     "correct": [
@@ -370,7 +370,7 @@ var pl900Questions3 = [
   },
   {
     "id": 9270,
-    "text": "with customers ring dat 'A company stores its customer warranty information in Microsoft Dataverse. Authenticated and authorized customers must be able to access their own warranty information without requiring a user-assigned Microsoft Power Platform license. You need to share warranty information with these customers. What should you use?",
+    "text": "A company stores its customer warranty information in Microsoft Dataverse. Authenticated and authorized customers must be able to access their own warranty information without requiring a user-assigned Microsoft Power Platform license. You need to share warranty information with these customers. What should you use?",
     "type": "single",
     "choices": [
       "Power BI report",
@@ -385,7 +385,7 @@ var pl900Questions3 = [
   },
   {
     "id": 9271,
-    "text": "'A company is considering using Al Builder to gain insights into its data. You need to determine whether the use cases for Al Builder meet the company's requirements. What are three use cases for Al Builder? Each correct answer presents a complete solution.",
+    "text": "A company is considering using Al Builder to gain insights into its data. You need to determine whether the use cases for Al Builder meet the company's requirements. What are three use cases for Al Builder? Each correct answer presents a complete solution.",
     "type": "multiple",
     "choices": [
       "Prediction",
@@ -402,7 +402,7 @@ var pl900Questions3 = [
   },
   {
     "id": 9272,
-    "text": "You are creating a self-service solution to handle incoming sales support calls. The solution must detect the caller's location and translate any information the caller provides from the caller's native language to English. Which two components should you use? Each correct answer presents part of the solution. 'A. Power Virtual Agents",
+    "text": "You are creating a self-service solution to handle incoming sales support calls. The solution must detect the caller's location and translate any information the caller provides from the caller's native language to English. Which two components should you use? Each correct answer presents part of the solution.",
     "type": "multiple",
     "choices": [
       "Microsoft Azure Cognitive Services SboBacl) |",
@@ -784,7 +784,7 @@ var pl900Questions3 = [
   },
   {
     "id": 9298,
-    "text": "'A company has an upcoming seminar. The invitation will be sent to an existing customer base. The event manager wants the customers to register and prepay from their mobile devices. The chief security officer requires any technology with payment data to be PCI compliant. You need to identify the components of the solution, What should you identify to meet the requirements? To answer, move the appropriate solutions to the correct requirements. You may use each solution once, more than once, or not at all, You may need to move the split bar between panes or scroll to view content. Solutions Requirement Solution 4 for payment processing. Power pages, power pages\n\nSelect the option that correctly matches all requirements in the order listed.",
+    "text": "A company has an upcoming seminar. The invitation will be sent to an existing customer base. The event manager wants the customers to register and prepay from their mobile devices. The chief security officer requires any technology with payment data to be PCI compliant. You need to identify the components of the solution, What should you identify to meet the requirements? To answer, move the appropriate solutions to the correct requirements. You may use each solution once, more than once, or not at all, You may need to move the split bar between panes or scroll to view content. Solutions Requirement Solution 4 for payment processing. Power pages, power pages\n\nSelect the option that correctly matches all requirements in the order listed.",
     "type": "single",
     "choices": [
       "1. Power pages, power pages | 2. Power Pages",
@@ -816,7 +816,7 @@ var pl900Questions3 = [
   },
   {
     "id": 9300,
-    "text": "'A company creates a canvas app that allows employees to manage their vacation requests. The app also contains the company's holiday closures, as shown in the following graphic. emt 9 bly | + ome e Sigs = Treeview 'Company Holidays Fay, December 25 Saturday, December 26 = 2 Thursday, December 31 Friday, January 01 a Use the drop-down menus to select the answer choice that answers each question based on the information presented in the graphic. Use the drop-down menus to select the answer choice that answers each question based on the information presented in the graphic.\n\nSelect the option that correctly matches all requirements in the order listed.",
+    "text": "A company creates a canvas app that allows employees to manage their vacation requests. The app also contains the company's holiday closures, as shown in the following graphic. emt 9 bly | + ome e Sigs = Treeview Company Holidays Fay, December 25 Saturday, December 26 = 2 Thursday, December 31 Friday, January 01 a Use the drop-down menus to select the answer choice that answers each question based on the information presented in the graphic. Use the drop-down menus to select the answer choice that answers each question based on the information presented in the graphic.\n\nSelect the option that correctly matches all requirements in the order listed.",
     "type": "single",
     "choices": [
       "1. Formula | 2. Play | 3. CompanyHolidaysGallery",
@@ -1120,7 +1120,7 @@ var pl900Questions3 = [
       "Display form",
       "Icon",
       "Search",
-      "Gallery '"
+      "Gallery"
     ],
     "correct": [
       3
@@ -1679,7 +1679,7 @@ var pl900Questions3 = [
   },
   {
     "id": 9360,
-    "text": "A company uses a model-driven app for its sales team. You must customize a form to meet the following requirements: Ifa checkbox is selected, a hidden field must appear. The account form must display a list of contacts and fields about contacts. You need to identify the components a developer must configure to meet the requirements. What should you identify? To answer, drag the appropriate components to the correct requirements. Each component may be used 'once, more than once, or not at all. You may need to drag the split bar between panes or scroll to view content. 'Components Answer Area\n\nSelect the option that correctly matches all requirements in the order listed.",
+    "text": "A company uses a model-driven app for its sales team. You must customize a form to meet the following requirements: Ifa checkbox is selected, a hidden field must appear. The account form must display a list of contacts and fields about contacts. You need to identify the components a developer must configure to meet the requirements. What should you identify? To answer, drag the appropriate components to the correct requirements. Each component may be used once, more than once, or not at all. You may need to drag the split bar between panes or scroll to view content. Components Answer Area\n\nSelect the option that correctly matches all requirements in the order listed.",
     "type": "single",
     "choices": [
       "1. Form | 2. View",
@@ -1725,7 +1725,7 @@ var pl900Questions3 = [
   },
   {
     "id": 9363,
-    "text": "'A company uses Microsoft Power Platform to connect to multiple data sources and manage business data. The low-code components in Microsoft Power Platform must be able to create and update data in these data sources. You need to access the required data by using Microsoft Power Platform components. Which component should you use for each requirement? To answer, select the appropriate options in the answer area.\n\nSelect the option that correctly matches all requirements in the order listed.",
+    "text": "A company uses Microsoft Power Platform to connect to multiple data sources and manage business data. The low-code components in Microsoft Power Platform must be able to create and update data in these data sources. You need to access the required data by using Microsoft Power Platform components. Which component should you use for each requirement? To answer, select the appropriate options in the answer area.\n\nSelect the option that correctly matches all requirements in the order listed.",
     "type": "single",
     "choices": [
       "1. Standard connector | 2. Custom connector",
