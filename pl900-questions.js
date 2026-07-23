@@ -377,7 +377,7 @@ var pl900Questions = [
     "text": "A company currently does not separate testing, development and production as per standard Application Lifecycle Management (ALM) protocol. The company uses Power Apps for accounting and sales processes. The company needs to use only one login account per user. The company also must prevent development and testing from impacting production. You need to implement a solution to meet the requirements. Which method should you select?",
     "type": "single",
     "choices": [
-      "separate environments rontdddillend",
+      "separate environments",
       "separate tenants",
       "separate Microsoft Azure Storage Blobs",
       "separate connectors"
@@ -1015,7 +1015,7 @@ var pl900Questions = [
   },
   {
     "id": 9066,
-    "text": "A recent update has been made to a canvas app. The update causes usability issues. You need to roll back the app to a previous version. What should you do? previous version. Deactivate the live app, import the previous version of the app, and then activate the app.",
+    "text": "A recent update has been made to a canvas app. The update causes usability issues. You need to roll back the app to a previous version. What should you do?",
     "type": "single",
     "choices": [
       "Uninstall the app for all users and reinstall by using the package from",
@@ -1821,7 +1821,7 @@ var pl900Questions = [
   },
   {
     "id": 9119,
-    "text": "You create a canvas app by using the Generate from data feature. The app connects to a Microsoft SharePoint list. For each of the following statements, select Yes if the statement is true. Otherwise, select No.\n\nWhich of the following statements are TRUE? Select all that apply.",
+    "text": "You create a canvas app by using the Generate from data feature. The app connects to a Microsoft SharePoint list.\n\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
       "A screen is generated that contains a browsable list of SharePoint list items.",
