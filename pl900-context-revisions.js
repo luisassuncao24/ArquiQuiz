@@ -31,6 +31,7 @@ var PL900_QUESTION_CONTEXTS = {
   9064: ["Select the combination that contains three valid ways to distribute or expose a Power BI dashboard to coworkers."],
   9068: ["Create dashboards that contain sales information for one store.", "Share those dashboards with store managers."],
   9069: ["Provide a phone-friendly reporting experience.", "Let users query data with natural language.", "Load and combine data from files."],
+  9070: ["Display a chart that compares incoming calls with wait time and pin it to a dashboard.", "Notify a specific user when the number of waiting support calls exceeds 20.", "Display metrics from different related datasets."],
   9071: ["Select the combination that contains two valid Power BI distribution methods that support coworker access and collaboration."],
   9073: ["Quickly create an app for a complex Dataverse-backed business process with little or no code.", "Create a simple app with a highly customizable user-interface layout."],
   9074: ["Run an automation from an app when a condition is met.", "Identify the component that supplies actions and triggers for a service."],
@@ -64,6 +65,7 @@ var PL900_QUESTION_CONTEXTS = {
   9167: ["Allow Power Automate to communicate with a third-party application.", "Periodically detect changes in the third-party application."],
   9169: ["Ensure every team member follows the same task-completion steps.", "Let a user manually email the project lead after completing a task.", "Send a weekly list of completed tasks automatically."],
   9170: ["Start a flow when a user selects a button.", "Start a flow when a record is created.", "Guide a user through a series of steps in a model-driven app."],
+  9171: ["Retrieve data from Microsoft Excel.", "Retrieve data from Azure Data Lake.", "Retrieve data from GitHub."],
   9172: ["Define how the flow starts.", "Add the next operation to the flow.", "Choose the service and operation that sends the text.", "Configure the operation's values.", "Store the completed flow."],
   9173: ["Start a flow when a user selects a button in a canvas app.", "Start a flow when a user selects a button in the Power Automate mobile app."],
   9178: ["Send an email automatically when a record changes.", "Ensure every salesperson follows the same sales process."],
@@ -134,6 +136,421 @@ var PL900_TEXT_REVISIONS = {
   9364: "A company uses Microsoft Teams as its primary collaboration tool. Which statements about using Microsoft Power Platform with Teams are true? Select all that apply."
 };
 
+var PL900_DATA_REVISIONS = {
+  9003: {
+    choices: ["Dynamics 365 connector", "Microsoft SharePoint", "Microsoft Azure Storage", "Microsoft Dataverse"],
+    correct: [3]
+  },
+  9017: {
+    choices: ["One version", "Two versions", "Three versions", "Four versions"],
+    correct: [2]
+  },
+  9023: {
+    text: "A company is creating a canvas app to track and analyze customer visits at its retail stores. The visit data is stored on-premises at each store. The app must make that data available when users launch it. Which tool should you use?",
+    choices: ["Connector", "Microsoft Dataverse", "Data source", "Power Automate", "On-premises data gateway"],
+    correct: [4]
+  },
+  9037: {
+    text: "What is a benefit of deploying Microsoft 365 and Dynamics 365 apps in the same tenant?",
+    choices: [
+      "Use Microsoft Dataverse to connect to application data.",
+      "Set up Microsoft 365 groups once to grant permissions to all data.",
+      "Users can access both Microsoft 365 and Dynamics 365 by using single sign-on (SSO)."
+    ],
+    correct: [2]
+  },
+  9048: {
+    choices: ["Microsoft Dataverse", "Business process flow", "Table metadata", "Business rule"],
+    correct: [0]
+  },
+  9046: {
+    text: "You want to create a Power Apps app with a custom sitemap for navigating between tables, dashboards, and other components. Which type of app should you create?",
+    choices: ["Model-driven app", "Canvas app", "Power Pages site", "Canvas app created from a template"],
+    correct: [0]
+  },
+  9047: {
+    text: "A company is building apps that connect to several data sources and respond to events from those services. Which two operation types do connectors expose? Select all that apply.",
+    choices: ["Plug-ins", "Actions", "Triggers"],
+    correct: [1, 2]
+  },
+  9049: {
+    choices: ["Demo website", "Live production website", "Test chat feature"],
+    correct: [0]
+  },
+  9056: {
+    text: "A company is evaluating AI Builder. Which statements about prebuilt AI Builder models are true? Select all that apply.",
+    choices: [
+      "Prebuilt AI Builder models are pretrained and ready to interpret business data.",
+      "Prebuilt AI Builder models are available for both Power Automate and Power Apps."
+    ],
+    correct: [0, 1]
+  },
+  9063: {
+    text: "You have a Power BI report. Which statements are true? Select all that apply.",
+    choices: [
+      "You can export data from a visualization in a Power BI report.",
+      "You can show the data behind a report visual without exporting it.",
+      "You can export data to view supporting data for a KPI."
+    ],
+    correct: [0, 1, 2]
+  },
+  9079: {
+    text: "You are building Power BI visualizations for a team. Which statements are true? Select all that apply.",
+    choices: [
+      "Power BI can retrieve data from no more than two sources for each dashboard.",
+      "Power BI visualizations can be used in canvas apps and model-driven apps.",
+      "Power BI can display charts and list boxes on dashboards."
+    ],
+    correct: [1, 2]
+  },
+  9095: {
+    text: "User1 shares a Power BI dashboard with User2, who works for another company. User2 can view it and forwards the sharing email to User3. User3 can view dashboards that he creates, but the forwarded link returns an error. Why?",
+    choices: [
+      "User3 must upgrade Power BI.",
+      "User2 must sign out before User3 can sign in.",
+      "Forwarding the email does not share the dashboard with User3.",
+      "User1 used the wrong organizational account for Power BI."
+    ],
+    correct: [2]
+  },
+  9096: {
+    text: "A company plans to implement Power BI. Which statements are true? Select all that apply.",
+    choices: [
+      "Power BI Report Builder is the only tool used to create reports for the Power BI service.",
+      "The Power BI service can include calculated columns.",
+      "Power BI Desktop can include calculated columns."
+    ],
+    correct: [1, 2]
+  },
+  9119: {
+    text: "You create a canvas app by using the Generate from data feature and connect it to a Microsoft SharePoint list. Which statements are true? Select all that apply.",
+    choices: [
+      "A screen is generated that contains a browsable list of SharePoint list items.",
+      "A screen is generated that allows users to update SharePoint list items."
+    ],
+    correct: [0, 1]
+  },
+  9098: {
+    text: "You are viewing a shared Power BI report in the Power BI service. You need to add one visual to a dashboard as a tile. Which action should you use?"
+  },
+  9204: {
+    choices: ["One connector", "Two connectors", "Three connectors", "Four connectors"],
+    correct: [1]
+  },
+  9222: {
+    text: "You create a Microsoft Power Automate flow. Which of the following statements are true? Select all that apply.",
+    choices: [
+      "A Power Automate flow button requires a user to provide input before the button can be selected.",
+      "A Power Automate flow can only be triggered from virtual buttons in software.",
+      "None of the above statements are true."
+    ],
+    correct: [2]
+  },
+  9138: {
+    text: "A tutoring company has deployed a model-driven app for administration staff and a canvas app for teachers. Which statements are true? Select all that apply.",
+    choices: [
+      "Teachers can access the canvas app from desktop and mobile devices.",
+      "Assigning security roles is the only action required to grant access to the canvas app.",
+      "Administration staff can create personal views and dashboards in the model-driven app."
+    ],
+    correct: [0, 2]
+  },
+  9139: {
+    choices: [
+      "Add the app to a solution.",
+      "Publish the app.",
+      "Add a Power Apps component framework (PCF) control to the app."
+    ],
+    correct: [1]
+  },
+  9144: {
+    text: "You are creating a canvas app that will be used in several countries and regions. Which statements are true? Select all that apply.",
+    choices: [
+      "The canvas app authoring environment adapts to the language setting of the author.",
+      "When a canvas app runs on a mobile device, it adopts the app author's language.",
+      "Numbers and dates in a Power Apps app automatically conform to the regional and language settings of the user's device."
+    ],
+    correct: [0, 2]
+  },
+  9168: {
+    text: "For which scenarios can you use Power Automate? Select all that apply.",
+    choices: [
+      "Notify team members when a response is recorded in Microsoft Forms.",
+      "Save email attachments to OneDrive for Business when an email is received.",
+      "Receive notifications when negative comments about the company are posted on Twitter."
+    ],
+    correct: [0, 1, 2]
+  },
+  9185: {
+    text: "A company plans to connect Power Apps to custom services for which no connectors are available. Which statements about custom connectors are true? Select all that apply.",
+    choices: [
+      "Custom connectors for customer-specific services do not require Microsoft review and certification.",
+      "You can build a custom connector once and reuse it in Power Apps and Power Automate.",
+      "You can make a custom connector publicly available to all Power Platform users without Microsoft certification."
+    ],
+    correct: [0, 1]
+  },
+  9191: {
+    choices: [
+      "Create a custom connector.",
+      "Create a cloud flow that exports and imports the changed data.",
+      "Export all data to Azure Blob Storage."
+    ],
+    correct: [1]
+  },
+  9195: {
+    text: "Which statements about Power Automate capabilities are true? Select all that apply.",
+    choices: [
+      "You can trigger a Power Automate flow when an Excel or Word file is uploaded to a SharePoint site.",
+      "You can use a Power Automate desktop flow to open a website and perform an action that creates a file.",
+      "You can use a connector in a Power Automate cloud flow to retrieve data from a third-party data source."
+    ],
+    correct: [0, 1, 2]
+  },
+  9197: {
+    text: "A tutoring company has deployed a model-driven app for administration staff and a canvas app for teachers. Which statements are true? Select all that apply.",
+    choices: [
+      "Teachers can access the canvas app by using a browser or the Power Apps mobile app.",
+      "Administration staff can create personal views and dashboards in the model-driven app."
+    ],
+    correct: [0, 1]
+  },
+  9208: {
+    text: "You are developing a Copilot Studio agent for a company. Which statements are true? Select all that apply.",
+    choices: [
+      "You must create a topic to specify how the agent responds to a user.",
+      "You can use prebuilt entities or custom entities."
+    ],
+    correct: [0, 1]
+  },
+  9223: {
+    text: "Which statements about Power Automate are true? Select all that apply.",
+    choices: [
+      "A Power Automate cloud flow can be added to a solution by using the Power Automate mobile app.",
+      "Power Automate for desktop is an application that must be installed on a computer.",
+      "Business process flows can be created by using the Power Automate portal."
+    ],
+    correct: [1, 2]
+  },
+  9239: {
+    text: "A company plans to use Power BI to visualize data. Which statements are true? Select all that apply.",
+    choices: [
+      "Power BI lets users create and consume visualizations in one view by using data from several sources.",
+      "Microsoft Power Platform uses Microsoft SQL Server databases to securely store and manage data used by business applications."
+    ],
+    correct: [0]
+  },
+  9242: {
+    text: "You test a business process flow in a sandbox environment. After testing, you must copy only the business process flow to a production environment, without data or unrelated modifications. What should you do?",
+    choices: [
+      "Export the default solution.",
+      "Create a view and export the view.",
+      "Add the business process flow to a separate solution and export that solution.",
+      "Export the form that contains the business process flow to a separate solution."
+    ],
+    correct: [2]
+  },
+  9259: {
+    text: "A company uses a model-driven app to manage its sales process. You are creating a Power Automate cloud flow that sends a Teams message when a new order is recorded in Dataverse. Which flow component determines when the flow starts?",
+    choices: ["An action", "A formula", "A trigger"],
+    correct: [2]
+  },
+  9263: {
+    choices: [
+      "1. List | 2. Basic form",
+      "1. Basic form | 2. Basic form",
+      "1. List | 2. List",
+      "1. Basic form | 2. List"
+    ],
+    correct: [3]
+  },
+  9273: {
+    text: "You want to build and train a no-code machine-learning model that can generate predictions in Power Automate cloud flows. Which service should you use?",
+    choices: ["AI Builder", "Azure Cognitive Services", "Azure Machine Learning", "Azure Cognitive Search"],
+    correct: [0]
+  },
+  9302: {
+    choices: [
+      "Trigger a request for approval from a senior manager for high-value expenses.",
+      "Upload and process a PDF file.",
+      "Transfer a conversation to a live agent when the copilot cannot answer the question."
+    ],
+    correct: [2]
+  },
+  9326: {
+    text: "A company is implementing Microsoft Power Platform. Which capability is available with Managed Environments?",
+    choices: ["Pipelines", "Additional Dataverse capacity", "Longer cloud-flow run-history retention"],
+    correct: [0]
+  },
+  9348: {
+    text: "A company plans to implement a ticketing application using Microsoft Dataverse. Customers must be able to sign in through an external website and view details about their open cases. Which Microsoft Power Platform solution should the company use?",
+    choices: ["Power Pages site", "Model-driven app", "Canvas app"],
+    correct: [0]
+  },
+  9331: {
+    text: "An environmental agency uses Specimen and Species tables in Microsoft Dataverse. The Specimen table has a Species lookup, Owner columns, a Name primary-name column, and a Specimen GUID column. Which statements are true? Select all that apply.",
+    choices: [
+      "Many specimens can be associated with one species.",
+      "The Specimen table is organization-owned.",
+      "The Name column is the primary key of the Specimen table."
+    ],
+    correct: [0]
+  },
+  9360: {
+    choices: [
+      "1. Form | 2. View",
+      "1. View | 2. Form",
+      "1. Form | 2. Form",
+      "1. View | 2. View"
+    ],
+    correct: [0]
+  },
+  9363: {
+    choices: [
+      "1. Standard connector | 2. Custom connector",
+      "1. Standard connector | 2. Standard connector",
+      "1. Custom connector | 2. Custom connector",
+      "1. Custom connector | 2. Standard connector"
+    ],
+    correct: [3]
+  },
+  9367: {
+    text: "You create a canvas app for a company. A professional developer must be able to edit the app but must not be able to delete it. Which permission should you grant when sharing the app?",
+    choices: ["User", "Owner", "Co-owner"],
+    correct: [2]
+  }
+};
+
+/*
+ * The source PDF numbers 369 entries, but five numbers contain no question
+ * body (131, 192, 220, 280, and 350). The original import also skipped ten
+ * real questions. Restore those ten here while preserving their PDF numbers.
+ */
+var PL900_MISSING_QUESTIONS = [
+  {
+    id: 9070,
+    text: "You are creating a Power BI screen for a call center. Match each requirement to the Power BI component that meets it.",
+    type: "single",
+    choices: [
+      "1. Tile | 2. Alert | 3. DirectQuery",
+      "1. Dashboard | 2. Subscription | 3. Import",
+      "1. Report | 2. Alert | 3. Import",
+      "1. Tile | 2. Subscription | 3. DirectQuery"
+    ],
+    correct: [0],
+    explanation: "A pinned chart is a tile, threshold notifications use alerts, and DirectQuery can query related datasets without importing them."
+  },
+  {
+    id: 9122,
+    text: "A company plans to create a canvas app that connects to three databases, each of which uses a different proprietary format. What is the minimum number of connectors required?",
+    type: "single",
+    choices: ["Zero", "One", "Two", "Three"],
+    correct: [3],
+    explanation: "Each distinct proprietary data source requires its own connector."
+  },
+  {
+    id: 9171,
+    text: "You are creating a Power Automate flow. Match each data-retrieval requirement to the component you should use.",
+    type: "single",
+    choices: [
+      "1. Connector | 2. Connector | 3. Connector",
+      "1. Expression | 2. Connector | 3. Formula",
+      "1. Formula | 2. Expression | 3. Connector",
+      "1. Connector | 2. Formula | 3. Expression"
+    ],
+    correct: [0],
+    explanation: "Power Automate uses connectors to access Excel, Azure Data Lake, and GitHub."
+  },
+  {
+    id: 9183,
+    text: "A business plans to use AI Builder. Which actions can it perform? Select all that apply.",
+    type: "multiple",
+    choices: [
+      "Use a text-classification model to retrieve text and analyze its meaning.",
+      "Tag Instagram posts that mention a new product.",
+      "Send the number of product mentions to a Power BI dashboard."
+    ],
+    correct: [0, 1, 2],
+    explanation: "The PDF's marked response is incorrect; the verification record confirms that all three actions are supported."
+  },
+  {
+    id: 9219,
+    text: "Which statements about custom connectors are true? Select all that apply.",
+    type: "multiple",
+    choices: [
+      "Custom connectors use public or private APIs to connect to external data sources.",
+      "Custom connectors cannot be used in Power Automate.",
+      "A connector operation can be an action or a trigger."
+    ],
+    correct: [0, 2],
+    explanation: "Custom connectors can be used by Power Automate, and connector operations are exposed as actions or triggers."
+  },
+  {
+    id: 9250,
+    text: "A canvas app stores information in SharePoint. A user currently copies that information into Microsoft Dataverse manually. You need to automate the transfer. What should you create?",
+    type: "single",
+    choices: [
+      "A Power Automate cloud flow that uses the SharePoint and Dataverse connectors.",
+      "A Power Apps component framework control that runs when the app loads.",
+      "A business process flow that calls a desktop flow.",
+      "A Power Apps component framework control that runs when the app saves.",
+      "A cloud flow that only uses an email connector."
+    ],
+    correct: [0],
+    explanation: "The source's highlighted option says to use no connectors and is defective. Moving data between SharePoint and Dataverse requires their connectors."
+  },
+  {
+    id: 9281,
+    text: "Which statements about Power Automate capabilities are true? Select all that apply.",
+    type: "multiple",
+    choices: [
+      "You can trigger a flow when an Excel or Word file is uploaded to a SharePoint site.",
+      "A desktop flow can open a cloud-based application and perform an action that creates a file.",
+      "A connector in a cloud flow can insert third-party data into a data source used by a Power Apps app."
+    ],
+    correct: [0, 1, 2],
+    explanation: ""
+  },
+  {
+    id: 9330,
+    text: "Which statements about pinning Power BI content to a dashboard are true? Select all that apply.",
+    type: "multiple",
+    choices: [
+      "You must create a dashboard before you can pin a visual to it.",
+      "Dashboards are created inside workspaces.",
+      "You can pin an entire report page to a dashboard."
+    ],
+    correct: [1, 2],
+    explanation: "A dashboard can be created as part of the pinning process; dashboards live in workspaces, and an entire report page can be pinned."
+  },
+  {
+    id: 9333,
+    text: "A company uses a model-driven app to track inquiries and orders. It wants customers to review orders and add inquiries through a self-service Power Pages site. Which statements describe Power Pages benefits? Select all that apply.",
+    type: "multiple",
+    choices: [
+      "Power Pages always requires users to sign in before they can view or add information.",
+      "Power Pages sites work across supported desktop and mobile browsers without device-specific configuration.",
+      "Power Pages connects natively to the same Dataverse environment used by the model-driven app."
+    ],
+    correct: [1, 2],
+    explanation: "Power Pages supports both anonymous and authenticated access, responsive browser experiences, and native Dataverse connectivity."
+  },
+  {
+    id: 9342,
+    text: "You are creating a Power Pages site. Which two Copilot features are identified in the source as available in Power Pages design studio? Select all that apply.",
+    type: "multiple",
+    choices: [
+      "Generate copy text.",
+      "Create automation that runs when a user submits data.",
+      "Create AI-generated images.",
+      "Create a webchat interface for site users.",
+      "Create a site interface from a short description."
+    ],
+    correct: [3, 4],
+    explanation: "The source's exam-era intended answers are webchat and creating an interface from a description. Newer product capabilities may also make generated text defensible."
+  }
+];
+
 (function applyPL900ContextRevisions() {
   var banks = [pl900Questions, pl900Questions2, pl900Questions3];
   var replacements = [
@@ -145,6 +562,8 @@ var PL900_TEXT_REVISIONS = {
     [/\bPower Bl\b/g, "Power BI"],
     [/\bPower Bi\b/g, "Power BI"],
     [/\bSharePnint\b/g, "SharePoint"],
+    [/\bmodel-\s*driven\b/gi, "model-driven"],
+    [/\bepps\b/gi, "apps"],
     [/â€”/g, "—"],
     [/â€™/g, "'"],
     [/â€œ/g, "“"],
@@ -161,16 +580,37 @@ var PL900_TEXT_REVISIONS = {
     return value;
   }
 
+  PL900_MISSING_QUESTIONS.forEach(function (question) {
+    var exists = banks.some(function (bank) {
+      return bank.some(function (candidate) {
+        return candidate && candidate.id === question.id;
+      });
+    });
+    if (exists) return;
+
+    var targetBank = question.id < 9120
+      ? pl900Questions
+      : question.id < 9245
+        ? pl900Questions2
+        : pl900Questions3;
+    targetBank.push(question);
+  });
+
   banks.forEach(function (bank) {
     bank.forEach(function (question) {
       if (!question) return;
-      question.text = normalizeImportedText(PL900_TEXT_REVISIONS[question.id] || question.text);
+      var dataRevision = PL900_DATA_REVISIONS[question.id] || {};
+      question.text = normalizeImportedText(dataRevision.text || PL900_TEXT_REVISIONS[question.id] || question.text);
+      if (dataRevision.choices) question.choices = dataRevision.choices;
+      if (dataRevision.correct) question.correct = dataRevision.correct;
+      if (dataRevision.type) question.type = dataRevision.type;
+
+      question.text = question.text
+        .replace(/(?:Instructions:\s*)?For each of the following statements,\s*select Yes (?:if|it) the statement is true[.,]?\s*/gi, "")
+        .replace(/Otherwise,?\s*select No[.,]?\s*/gi, "")
+        .trim();
       question.choices = question.choices.map(normalizeImportedText);
       question.explanation = normalizeImportedText(question.explanation);
-
-      if (question.id === 9017) {
-        question.choices[3] = "Three versions";
-      }
 
       if (question.id === 9019) {
         question.type = "multiple";
@@ -197,10 +637,19 @@ var PL900_TEXT_REVISIONS = {
         .replace(/\s*Select the option that correctly matches all requirements in the order listed\.\s*$/i, "")
         .trim();
 
+      var importedAnswerArea = baseText.search(/\b(?:To answer|Answer Area|Hot Area|Select and Place)\b/i);
+      if (importedAnswerArea >= 0) {
+        baseText = baseText.slice(0, importedAnswerArea).trim();
+      }
+
       question.text = baseText +
         "\n\nRequirements/scenarios in order:\n" +
         numberedItems +
         "\n\nSelect the answer option that correctly matches every numbered item.";
+    });
+
+    bank.sort(function (left, right) {
+      return left.id - right.id;
     });
   });
 })();
