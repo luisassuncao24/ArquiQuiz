@@ -204,7 +204,7 @@ var pl900Questions2 = [
   },
   {
     "id": 9135,
-    "text": "'A Power Apps developer has sufficient permissions to create apps, connections, and flows. 'The developer does not have permissions needed to access company data. main security role in Power apps = CDS user You need to grant the developer access to company data for an app. Which predefined security role should you assign to the developer?",
+    "text": "A Power Apps developer has sufficient permissions to create apps, connections, and flows. The developer does not have permissions needed to access company data. main security role in Power apps = CDS user You need to grant the developer access to company data for an app. Which predefined security role should you assign to the developer?",
     "type": "single",
     "choices": [
       "Environment Maker",
@@ -448,7 +448,7 @@ var pl900Questions2 = [
   },
   {
     "id": 9151,
-    "text": "'A company uses Power Automate. Which three items can trigger flows? Each correct answer presents a complete solution. A. Lifecycle Services B. Microsoft 365 Admin center\n\nSelect the option that correctly matches all requirements in the order listed.",
+    "text": "A company uses Power Automate. Which three items can trigger flows? Each correct answer presents a complete solution. A. Lifecycle Services B. Microsoft 365 Admin center\n\nSelect the option that correctly matches all requirements in the order listed.",
     "type": "single",
     "choices": [
       "1. Outlook/Microsoft 365 | 2. Dataverse | 3. Windows desktop",
@@ -509,7 +509,7 @@ var pl900Questions2 = [
     "text": "You are creating a Power Automate flow. The flow must read each item in a Microsoft SharePoint list that details sales opportunities and set the value for a field named Status to Overdue if the value of a field named Follow up is less than or equal to the current date. You need to select the appropriate component to cycle through the entire list. Which component should you use? ~ ¢. Action",
     "type": "single",
     "choices": [
-      "Condition '",
+      "Condition",
       "Connector",
       "Trigger",
       "Apply to each"
@@ -539,7 +539,7 @@ var pl900Questions2 = [
     "type": "single",
     "choices": [
       "plug-in",
-      "approval flow '",
+      "approval flow",
       "business rule",
       "team flow",
       "scheduled flow"
@@ -626,7 +626,7 @@ var pl900Questions2 = [
   },
   {
     "id": 9163,
-    "text": "'A company builds and sells residential apartments. The company uses Dynamics 365 Sales to manage sales opportunities. Management must receive notifications on their mobile devices when sales opportunities are created. You need to recommend the appropriate Microsoft Power Platform components to address the requirements. Which two components should you recommend to invoke the notification process? Each correct answer presents part of the solution.",
+    "text": "A company builds and sells residential apartments. The company uses Dynamics 365 Sales to manage sales opportunities. Management must receive notifications on their mobile devices when sales opportunities are created. You need to recommend the appropriate Microsoft Power Platform components to address the requirements. Which two components should you recommend to invoke the notification process? Each correct answer presents part of the solution.",
     "type": "single",
     "choices": [
       "AlBuilder",
@@ -819,8 +819,8 @@ var pl900Questions2 = [
     "choices": [
       "Navigate to the Power Automate admin center and view the projects.",
       "Navigate to the Action Items section of the Power Automate portal.",
-      "Enable Repair Tips for the flow. '",
-      "Navigate to the flow and view the run history. ' |",
+      "Enable Repair Tips for the flow.",
+      "Navigate to the flow and view the run history.",
       "Navigate to the Power Automate web portal and click view notifications. :"
     ],
     "correct": [
@@ -863,7 +863,7 @@ var pl900Questions2 = [
   },
   {
     "id": 9179,
-    "text": "'A company is creating a canvas app to manage weekly status reports from users about projects Status reports must be created weekly. Users can enter project tasks with descriptions. Users can aleo 'add escalation requests for tasks that ae late or at risk. When a status report is submitted with an escalation request, the app must automatically send a text _message to the submitter's manager. A reminder must be sent at 8 PM on Sunday to everyone who has not yet submitted a status report for the previous week, 'You need to identify the appropriate components to use in the solution What should you use? To answer, drag the appropriate implementation mechanisms to the correct 'requirements. Each implementation mechanism may be used once, more then once, or not at all. You may need to drag the split bar between panes or scroll to view content. implementation Mechanisms 'nower he Implementation Mechansre [roves 'on the report submason. Automata urd test message bated Implementation Mechanar [one Atoraly send a remie at 8PM. Implemertanon Mecharsm 'ese on a msn tos ep (Bosness proces ws Tri trigger and condition\n\nSelect the option that correctly matches all requirements in the order listed.",
+    "text": "A company is creating a canvas app to manage weekly status reports from users about projects Status reports must be created weekly. Users can enter project tasks with descriptions. Users can aleo add escalation requests for tasks that ae late or at risk. When a status report is submitted with an escalation request, the app must automatically send a text _message to the submitter's manager. A reminder must be sent at 8 PM on Sunday to everyone who has not yet submitted a status report for the previous week, You need to identify the appropriate components to use in the solution What should you use? To answer, drag the appropriate implementation mechanisms to the correct requirements. Each implementation mechanism may be used once, more then once, or not at all. You may need to drag the split bar between panes or scroll to view content. implementation Mechanisms 'nower he Implementation Mechansre [roves 'on the report submason. Automata urd test message bated Implementation Mechanar [one Atoraly send a remie at 8PM. Implemertanon Mecharsm 'ese on a msn tos ep (Bosness proces ws Tri trigger and condition\n\nSelect the option that correctly matches all requirements in the order listed.",
     "type": "single",
     "choices": [
       "1. Implemertanon Mecharsm | 2. trigger and condition",
@@ -991,7 +991,7 @@ var pl900Questions2 = [
   },
   {
     "id": 9188,
-    "text": "'A company uses a third party application and an approval process via email, At the end of the month, the IT department enters the data into Microsoft Excel to create pivot charts. The Excel pivot charts must use the same data source as Dynamics 365 Field Service to generate charts and reports. You need to recommend a solution.",
+    "text": "A company uses a third party application and an approval process via email, At the end of the month, the IT department enters the data into Microsoft Excel to create pivot charts. The Excel pivot charts must use the same data source as Dynamics 365 Field Service to generate charts and reports. You need to recommend a solution.",
     "type": "single",
     "choices": [
       "Requirement Solution",
@@ -1186,7 +1186,7 @@ var pl900Questions2 = [
   },
   {
     "id": 9201,
-    "text": "'A company plans to move an on-premises customer service data management system to a cloud- managed solution. The customer service application must be replaced by a model-driven application. The company uses Microsoft SQL Server Integration Services (SSIS) packages to move data from the on-premises database system to a third-party enterprise resource planning (ERP) system. You need to replace the SSIS packages for data transfer. What should the conppany use in place of the packages to move the data? ( a owt nrton ramanae so",
+    "text": "A company plans to move an on-premises customer service data management system to a cloud- managed solution. The customer service application must be replaced by a model-driven application. The company uses Microsoft SQL Server Integration Services (SSIS) packages to move data from the on-premises database system to a third-party enterprise resource planning (ERP) system. You need to replace the SSIS packages for data transfer. What should the conppany use in place of the packages to move the data? ( a owt nrton ramanae so",
     "type": "single",
     "choices": [
       "r Platform connector",
@@ -1232,10 +1232,10 @@ var pl900Questions2 = [
   },
   {
     "id": 9204,
-    "text": "You are creating a canvas app. The app must display a list of records from a Microsoft Excel spreadsheet stored in Microsoft OneDrive. 'An app user must be able to update the item details and save the details back into the spreadsheet or email the item details to themselves by using a button. You need to identify how many connectors are required to complete the app. How many connectors should you use?",
+    "text": "You are creating a canvas app. The app must display a list of records from a Microsoft Excel spreadsheet stored in Microsoft OneDrive. An app user must be able to update the item details and save the details back into the spreadsheet or email the item details to themselves by using a button. You need to identify how many connectors are required to complete the app. How many connectors should you use?",
     "type": "single",
     "choices": [
-      "two '",
+      "two",
       "three",
       "four",
       "Two connectors"
@@ -1543,7 +1543,7 @@ var pl900Questions2 = [
     "type": "single",
     "choices": [
       "Production",
-      "Test '",
+      "Test",
       "Sandbox"
     ],
     "correct": [
@@ -1631,7 +1631,7 @@ var pl900Questions2 = [
   },
   {
     "id": 9232,
-    "text": "'A company uses a Microsoft Excel spreadsheet to record raw material quality daily. The company's chief technology officer (CTO) wants to use a model-driven app to record the information. The chief executive officer (CEO) will fund the development of the app for the CTO only if the CEO understands the benefits of using a model-driven app. You need to identify the benefits of model-driven apps. Which two benefits of using a model-driven app should you identify? Each correct answer presents a complete solution. The app may continue to use the existing Excel spreadsheet as a source data.",
+    "text": "A company uses a Microsoft Excel spreadsheet to record raw material quality daily. The company's chief technology officer (CTO) wants to use a model-driven app to record the information. The chief executive officer (CEO) will fund the development of the app for the CTO only if the CEO understands the benefits of using a model-driven app. You need to identify the benefits of model-driven apps. Which two benefits of using a model-driven app should you identify? Each correct answer presents a complete solution. The app may continue to use the existing Excel spreadsheet as a source data.",
     "type": "multiple",
     "choices": [
       "Both staff members and anonymous users may use the app.",
@@ -1646,7 +1646,7 @@ var pl900Questions2 = [
   },
   {
     "id": 9233,
-    "text": "'A company uses Dynamics 365 Sales. The company uses a browser-based app named Sales Hub. You need to ensure that users can access data from Sales Hub by using mobile devices. Which app should users install? . Dynamics 365 Finance",
+    "text": "A company uses Dynamics 365 Sales. The company uses a browser-based app named Sales Hub. You need to ensure that users can access data from Sales Hub by using mobile devices. Which app should users install? . Dynamics 365 Finance",
     "type": "single",
     "choices": [
       "Dynamics 365 Remote Assist",
@@ -1660,7 +1660,7 @@ var pl900Questions2 = [
   },
   {
     "id": 9234,
-    "text": "'You create a canvas app that uses @ Microsoft Excel spreadsheet asa data source. 'The spreadsheet contains a lst of pets. Each column in the spreadsheet isa different attribute about a pet You need ta create an interface to allow users to save a new pet record tothe spreadsheet. What is the minimum numberof controls you need to implement to create the interface? G. Three controis:a text input contro, a date picker control, and a combo box control . Four controls: a text input control, a date picker control, a combo box contra, 'and a button control",
+    "text": "You create a canvas app that uses @ Microsoft Excel spreadsheet asa data source. The spreadsheet contains a lst of pets. Each column in the spreadsheet isa different attribute about a pet You need ta create an interface to allow users to save a new pet record tothe spreadsheet. What is the minimum numberof controls you need to implement to create the interface? G. Three controis:a text input contro, a date picker control, and a combo box control . Four controls: a text input control, a date picker control, a combo box contra, and a button control",
     "type": "single",
     "choices": [
       "One contro an edt form control",
@@ -1673,7 +1673,7 @@ var pl900Questions2 = [
   },
   {
     "id": 9235,
-    "text": "'A company creates canvas apps for its sales team. 'A.user creates a canvas app from a data source. You need to determine the screens created, Which three sereens should you identify? Each correct answer presents part ofthe solution, Y browse E, dolete",
+    "text": "A company creates canvas apps for its sales team. A user creates a canvas app from a data source. You need to determine the screens created, Which three sereens should you identify? Each correct answer presents part ofthe solution, Y browse E, dolete",
     "type": "multiple",
     "choices": [
       "welcome",
@@ -1724,7 +1724,7 @@ var pl900Questions2 = [
   },
   {
     "id": 9238,
-    "text": "'A company uses a model-driven app. You add several columns to a form, Users state the new columns do not appear on the form. You need to fix the issue. What should you do? . Ensure columns are in one section of the form only. ~ E. Publish the form. eae",
+    "text": "A company uses a model-driven app. You add several columns to a form, Users state the new columns do not appear on the form. You need to fix the issue. What should you do? . Ensure columns are in one section of the form only. ~ E. Publish the form. eae",
     "type": "single",
     "choices": [
       "Create a Power Automate flow.",
@@ -1742,7 +1742,7 @@ var pl900Questions2 = [
     "text": "A company plans to use Power BI to visualize data. Instructions: For each of the following statements, select Yes if the statement is true. Othemise, select Power 8! allows users to create and consume visualizations in one view by using data from several different sources. Power Platform uses Microsoft SQL Server databases to securely store and manage data used by business applications. Lusesnial\n\nWhich of the following statements are TRUE? Select all that apply.",
     "type": "multiple",
     "choices": [
-      "'A company plans to use Power BI to visualize data.",
+      "A company plans to use Power BI to visualize data.",
       "Instructions: For each of the following statements, select Yes if the statement is true. Othemise, select Power 8! allows users to create and consume visualizations in one view by using data from several different sources."
     ],
     "correct": [
