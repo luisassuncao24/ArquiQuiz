@@ -162,6 +162,60 @@ html[data-theme="light"] :is(.question-code-block, #math-input, .case-select) {
   color: #0f172a;
 }
 
+/* Keep every status and difficulty label on a light surface in light mode. */
+html[data-theme="light"] .diff-beginner,
+html[data-theme="light"] .mode-indicator-practice,
+html[data-theme="light"] .set-card-completed.completed-pass,
+html[data-theme="light"] .congrats-badge {
+  background: #dcfce7;
+  color: #166534;
+}
+
+html[data-theme="light"] .diff-intermediate,
+html[data-theme="light"] .mode-indicator-test,
+html[data-theme="light"] .set-card-completed.completed-fail {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+html[data-theme="light"] .diff-advanced,
+html[data-theme="light"] .diff-case,
+html[data-theme="light"] .case-intro-badge,
+html[data-theme="light"] .quiz-name-badge {
+  background: #f3e8ff;
+  color: #6b21a8;
+}
+
+html[data-theme="light"] .diff-proficient {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+html[data-theme="light"] .diff-expert {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+html[data-theme="light"] :is(.diff-official, .diff-random) {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+html[data-theme="light"] .question-type-badge.single {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+html[data-theme="light"] .question-type-badge.multiple {
+  background: #f3e8ff;
+  color: #6b21a8;
+}
+
+html[data-theme="light"] .question-type-badge.sequence {
+  background: #ccfbf1;
+  color: #0f766e;
+}
+
 html[data-theme="light"] :is(#math-card, #pause-card, #confirm-card, #mode-card, #peek-card, #streak-card) {
   background: #ffffff;
   box-shadow: 0 25px 60px rgba(15, 23, 42, 0.24);
