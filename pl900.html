@@ -95,6 +95,7 @@
     <script src="pl900-questions2.js"></script>
     <script src="pl900-questions3.js"></script>
     <script src="pl900-context-revisions.js"></script>
+    <script src="pl900-passleader-archive.js"></script>
     <script src="pl900-testcases.js"></script>
     <script>
       window.QUIZ_CONFIG = {
@@ -122,6 +123,13 @@
             difficulty: "advanced",
             description: "123 questions covering AI Builder, Power Pages, advanced platform administration, security, and licensing scenarios.",
             data: pl900Questions3
+          },
+          {
+            key: "passleader_archive",
+            label: "PassLeader Archive",
+            difficulty: "advanced",
+            description: "32 questions from the supplied 2020-2022 PassLeader PDFs that match the verified PL-900 bank. Unverified source entries are excluded.",
+            data: PL900_PASSLEADER_ARCHIVE_QUESTIONS
           }
         ],
         testCases: PL900_TEST_CASES,

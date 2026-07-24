@@ -179,6 +179,117 @@
             font-variant-numeric: tabular-nums;
         }
 
+        .version-button {
+            background: none;
+            border: 0;
+            color: inherit;
+            cursor: pointer;
+            font: inherit;
+            padding: 0.2rem 0.35rem;
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        .version-button:hover { color: #38bdf8; }
+        .version-button:focus-visible,
+        .version-history-close:focus-visible {
+            outline: 3px solid rgba(56, 189, 248, 0.5);
+            outline-offset: 2px;
+        }
+
+        .version-history-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.25rem;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(4px);
+        }
+
+        .version-history-card {
+            width: min(100%, 520px);
+            max-height: min(78vh, 650px);
+            overflow: auto;
+            background: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 14px;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+            padding: 1.4rem;
+        }
+
+        .version-history-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .version-history-header h2 {
+            margin: 0;
+            color: #f8fafc;
+            font-size: 1.15rem;
+        }
+
+        .version-history-header p {
+            margin: 0.3rem 0 0;
+            color: #94a3b8;
+            font-size: 0.8rem;
+        }
+
+        .version-history-close {
+            flex: 0 0 auto;
+            background: #334155;
+            border: 1px solid #475569;
+            border-radius: 7px;
+            color: #e2e8f0;
+            cursor: pointer;
+            font-size: 1.1rem;
+            line-height: 1;
+            padding: 0.35rem 0.55rem;
+        }
+
+        .version-history-list {
+            display: grid;
+            gap: 0.7rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .version-history-item {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 9px;
+            padding: 0.8rem 0.9rem;
+        }
+
+        .version-history-version {
+            color: #38bdf8;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .version-history-item p {
+            color: #cbd5e1;
+            font-size: 0.84rem;
+            line-height: 1.45;
+            margin: 0.3rem 0 0;
+        }
+
+        html[data-theme="light"] .version-button { color: #475569; }
+        html[data-theme="light"] .version-button:hover { color: #0369a1; }
+        html[data-theme="light"] .version-history-overlay { background: rgba(226, 232, 240, 0.82); }
+        html[data-theme="light"] .version-history-card { background: #ffffff; border-color: #cbd5e1; box-shadow: 0 24px 60px rgba(15, 23, 42, 0.24); }
+        html[data-theme="light"] .version-history-header h2 { color: #0f172a; }
+        html[data-theme="light"] .version-history-header p { color: #475569; }
+        html[data-theme="light"] .version-history-close { background: #f1f5f9; border-color: #cbd5e1; color: #334155; }
+        html[data-theme="light"] .version-history-item { background: #f8fafc; border-color: #cbd5e1; }
+        html[data-theme="light"] .version-history-item p { color: #334155; }
+
         @media (max-width: 960px) {
             .hub-cards {
                 grid-template-columns: 1fr;
@@ -257,7 +368,7 @@
                     Practice questions covering Power Apps, Power Automate, Power BI, Power Virtual Agents, Dataverse, connectors, AI Builder, and Power Pages.
                 </p>
                 <div class="hub-card-meta">
-                    <span class="hub-meta-item">&#128202; 3 quiz sets</span>
+                    <span class="hub-meta-item">&#128202; 4 quiz sets</span>
                     <span class="hub-meta-item">&#8987; 120 min timer</span>
                 </div>
                 <a href="pl900.html" class="hub-start-btn btn-pl9">Start PL-900 Prep &#8594;</a>
@@ -267,15 +378,35 @@
         <div class="hub-footer">
             <a href="user-guide.html" target="_blank">&#128214; User Guide</a>
             &nbsp;&middot;&nbsp; Progress is saved per exam in your browser
-            <div id="hub-version" class="hub-version"></div>
+            <button id="hub-version" class="hub-version version-button" type="button" aria-haspopup="dialog" aria-controls="version-history-overlay"></button>
+        </div>
+    </div>
+
+    <div id="version-history-overlay" class="version-history-overlay" role="dialog" aria-modal="true" aria-labelledby="version-history-title" style="display:none;">
+        <div class="version-history-card">
+            <div class="version-history-header">
+                <div>
+                    <h2 id="version-history-title">ArquiQuiz version history</h2>
+                    <p>Recent improvements and fixes</p>
+                </div>
+                <button id="version-history-close" class="version-history-close" type="button" aria-label="Close version history">&times;</button>
+            </div>
+            <ul id="version-history-list" class="version-history-list"></ul>
         </div>
     </div>
     <script>
       (function () {
         "use strict";
 
-        // Release policy: increment this version for every deployed change.
-        var APP_VERSION = "1.0.5";
+        // Release policy: increment this version and add a CHANGE_LOG entry for every deployed change.
+        var APP_VERSION = "1.0.7";
+        var CHANGE_LOG = [
+          { version: "1.0.7", text: "Added the validated 32-question PassLeader PL-900 archive quiz set." },
+          { version: "1.0.6", text: "Added this clickable version history window to track future releases." },
+          { version: "1.0.5", text: "Renamed the product to ArquiQuiz." },
+          { version: "1.0.4", text: "Updated light mode so difficulty and status labels use light color variants." },
+          { version: "1.0.3", text: "Improved light-mode coverage, protected copied issue reports from exposing answer keys, and refreshed the guide." }
+        ];
         var HUB_AUTH_KEY = "quiz_hub_authenticated";
         var HUB_PASSWORD = "Arqui.123";
 
@@ -284,8 +415,32 @@
         var input = document.getElementById("math-input");
         var error = document.getElementById("math-error");
         var submit = document.getElementById("math-submit-btn");
+        var versionButton = document.getElementById("hub-version");
+        var versionOverlay = document.getElementById("version-history-overlay");
+        var versionCloseButton = document.getElementById("version-history-close");
+        var versionHistoryList = document.getElementById("version-history-list");
 
-        document.getElementById("hub-version").textContent = "Version " + APP_VERSION;
+        versionButton.textContent = "Version " + APP_VERSION + " · View changelog";
+        versionHistoryList.innerHTML = CHANGE_LOG.map(function (entry) {
+          return '<li class="version-history-item"><span class="version-history-version">Version ' + entry.version + '</span><p>' + entry.text + '</p></li>';
+        }).join("");
+
+        function closeVersionHistory() {
+          versionOverlay.style.display = "none";
+          versionButton.focus();
+        }
+
+        versionButton.addEventListener("click", function () {
+          versionOverlay.style.display = "flex";
+          versionCloseButton.focus();
+        });
+        versionCloseButton.addEventListener("click", closeVersionHistory);
+        versionOverlay.addEventListener("click", function (event) {
+          if (event.target === versionOverlay) closeVersionHistory();
+        });
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Escape" && versionOverlay.style.display !== "none") closeVersionHistory();
+        });
 
         function unlockHub() {
           overlay.style.display = "none";
