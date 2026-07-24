@@ -582,7 +582,7 @@
 <div class="toc no-break">
   <div class="toc-title">📑 Table of Contents</div>
   <div class="toc-grid">
-    <a class="toc-item" href="#s1"><span class="toc-num">01</span> Getting Started &amp; Verification</a>
+    <a class="toc-item" href="#s1"><span class="toc-num">01</span> Getting Started &amp; Access</a>
     <a class="toc-item" href="#s2"><span class="toc-num">02</span> Main Dashboard Overview</a>
     <a class="toc-item" href="#s3"><span class="toc-num">03</span> Quick Practice ⚡</a>
     <a class="toc-item" href="#s4"><span class="toc-num">04</span> Practice Quiz Sets</a>
@@ -603,44 +603,44 @@
   <div class="section-header">
     <div class="section-num">1</div>
     <span class="section-icon">🔐</span>
-    <h2 class="section-title">Getting Started &amp; Human Verification</h2>
+    <h2 class="section-title">Getting Started &amp; Access</h2>
   </div>
 
-  <p>The MB-820 Quiz is a browser-based study tool designed to help you prepare for the <strong>Microsoft Dynamics 365 Business Central Functional Consultant (MB-820)</strong> certification exam. No installation is required — simply open <code>index.html</code> in your browser.</p>
+  <p>This guide uses the MB-820 Quiz as its example. The same core controls are available across the Exam Quiz Hub. No installation is required — simply open <code>index.html</code> in your browser.</p>
 
   <div class="callout-row no-break">
     <div class="callout-img">
       <div class="screenshot-wrap">
-        <div class="screenshot-label">Figure 1.1 — Human Verification Screen</div>
+        <div class="screenshot-label">Figure 1.1 — Access Screen (legacy illustration)</div>
         <div class="screenshot-frame">
-          <img src="guide-assets/01_verification.png" alt="Human Verification Screen">
+          <img src="guide-assets/01_verification.png" alt="Legacy verification screen">
         </div>
-        <div class="screenshot-caption">A simple math challenge protects the quiz from automated access.</div>
+        <div class="screenshot-caption">The current hub uses a single password screen; this image is retained only as an older MB-820 visual reference.</div>
       </div>
     </div>
     <div class="callout-text">
-      <h3>What is the verification?</h3>
-      <p>When you first open the quiz, a <strong>Human Verification</strong> card appears over a blurred background. This is a lightweight bot-protection mechanism that ensures real users are accessing the content.</p>
+      <h3>How access works</h3>
+      <p>When you first open the hub, a <strong>password</strong> card appears over a blurred background. Enter the shared password once to access the hub and any exam from it.</p>
 
       <div class="callout-item">
         <div class="callout-dot blue">1</div>
-        <span>A random arithmetic question is shown (e.g., <em>"What is 13 − 7?"</em>)</span>
+        <span>Enter the shared password in the access field</span>
       </div>
       <div class="callout-item">
         <div class="callout-dot blue">2</div>
-        <span>Type the numeric answer in the input field</span>
+        <span>Click <strong>Enter</strong> or press <kbd>Enter</kbd></span>
       </div>
       <div class="callout-item">
         <div class="callout-dot blue">3</div>
-        <span>Click <strong>Enter</strong> (or press <kbd>Enter</kbd>) to proceed</span>
+        <span>After access is granted, choose an exam from the hub</span>
       </div>
       <div class="callout-item">
         <div class="callout-dot blue">4</div>
-        <span>A new question is generated if you answer incorrectly — no lockout</span>
+        <span>The password is requested only on the main hub page, not again for individual sections</span>
       </div>
 
       <div class="info-box tip" style="margin-top:.9rem">
-        <strong>💡 Tip:</strong> The verification only runs once per session. Refreshing the page will show it again.
+        <strong>💡 Tip:</strong> Access is remembered in this browser until its stored site data is cleared.
       </div>
     </div>
   </div>
@@ -654,7 +654,7 @@
     <h2 class="section-title">Main Dashboard Overview</h2>
   </div>
 
-  <p>After passing verification, you land on the <strong>Main Dashboard</strong> — your hub for all quiz activities. It is organized into distinct sections that scroll vertically.</p>
+  <p>After entering the hub password, choose an exam and you land on its <strong>Main Dashboard</strong> — your hub for all quiz activities. It is organized into distinct sections that scroll vertically.</p>
 
   <div class="screenshot-wrap no-break">
     <div class="screenshot-label">Figure 2.1 — Main Dashboard (top portion)</div>
@@ -732,7 +732,7 @@
     <li>Questions you previously answered <strong>incorrectly appear first</strong>, then unseen ones, then correctly-answered ones.</li>
     <li>Clicking <strong>Submit Answer</strong> immediately reveals whether you were right or wrong, along with the explanation.</li>
     <li>Use <strong>Skip ⏭</strong> to jump over a question you're not ready for.</li>
-    <li>Use <strong>📋 Copy</strong> to copy the question details to your clipboard to report an issue via Teams.</li>
+    <li>Use <strong>📋 Copy</strong> to copy the question and its visible choices to a report template for Teams. The answer key is never included.</li>
   </ul>
 
   <h3>🔥 Streak System</h3>
@@ -808,7 +808,7 @@
   <p>Each Practice Quiz card has a <strong>Case Study (optional)</strong> dropdown. Selecting a case study (Alpine, Contoso, or Fabrikam) runs the quiz and the case study back-to-back, with a <strong>combined weighted score</strong> (70% quiz + 30% case study) shown on the results screen.</p>
 
   <div class="info-box good">
-    <strong>✅ Pass threshold:</strong> A score of <strong>70% or higher</strong> is required to mark a quiz or case study as completed in the preparation progress bar — matching the real MB-820 pass mark.
+    <strong>✅ Pass threshold:</strong> A score of <strong>70% or higher</strong> is required to mark a quiz or case study as completed in the preparation progress bar.
   </div>
 </div>
 
@@ -932,7 +932,7 @@
   </div>
 
   <h3>📋 Copy Issue Button</h3>
-  <p>Every question has a small <strong>📋 Copy Issue</strong> button. Clicking it copies the full question details (text, choices, correct answer) to your clipboard in a formatted template — ready to paste into a Teams chat to report a bug or typo.</p>
+  <p>Every question has a small <strong>📋 Copy Issue</strong> button. Clicking it copies the question text and visible choices to a formatted report template — ready to paste into a Teams chat to report a bug or typo. It never copies the answer key.</p>
 
   <div class="info-box tip">
     <strong>💡 Partial credit:</strong> No partial credit is awarded for multiple-choice questions — you must select <em>all</em> correct options and no incorrect ones to receive full credit.
@@ -947,7 +947,7 @@
     <h2 class="section-title">Timer &amp; Auto-Pause</h2>
   </div>
 
-  <p>Every Practice Quiz runs with a <strong>120-minute countdown timer</strong> matching the actual MB-820 exam duration. The timer is displayed prominently in the header bar throughout the quiz.</p>
+  <p>Every Practice Quiz runs with a <strong>120-minute countdown timer</strong>. The timer is displayed prominently in the header bar throughout the quiz.</p>
 
   <h3>Timer Color States</h3>
   <div class="timer-states no-break">

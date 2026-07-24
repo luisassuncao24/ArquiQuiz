@@ -48,6 +48,20 @@ html[data-theme="light"] :is(#quiz-container, .hub-container) {
   box-shadow: 0 20px 50px rgba(15, 23, 42, 0.14);
 }
 
+/* Dashboard preparation progress retained its dark base styling in light mode. */
+html[data-theme="light"] .prep-progress-bar-container {
+  background: #ffffff;
+  border-color: #cbd5e1;
+}
+
+html[data-theme="light"] .prep-progress-title {
+  color: #0f172a;
+}
+
+html[data-theme="light"] .prep-progress-track {
+  background: #e2e8f0;
+}
+
 html[data-theme="light"] .hub-card {
   background: #f8fafc;
   border-color: #cbd5e1;

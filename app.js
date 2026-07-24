@@ -271,7 +271,6 @@
   // a Teams chat (or any other channel) to report a bug or typo.
   function copyIssue(q, setLabel, feedbackEl) {
     var formattedChoices = q.choices.map(function (c, i) { return (i + 1) + ". " + c; }).join("\n");
-    var correctAnswerTexts = q.correct.map(function (i) { return q.choices[i]; }).join(", ");
     var text =
       "[" + _examTitle + "] Issue Report — Question #" + q.id + "\n\n" +
       "Please describe the issue you found:\n" +
@@ -281,7 +280,6 @@
       "Question ID: #" + q.id + "\n" +
       "Question Text:\n" + q.text + "\n\n" +
       "Choices:\n" + formattedChoices + "\n\n" +
-      "Correct Answer(s): " + correctAnswerTexts + "\n" +
       "--------------------------------";
 
     function showFeedback(msg) {
