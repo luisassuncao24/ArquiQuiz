@@ -120,6 +120,8 @@ html[data-theme="light"] .review-later-results-btn { background: #d97706; color:
 
 html[data-theme="light"] .question-feedback-btn { background: #eff6ff; border-color: #93c5fd; color: #1d4ed8; }
 html[data-theme="light"] .question-feedback-btn:hover { background: #dbeafe; color: #1e40af; }
+html[data-theme="light"] .question-tools .report-issue-btn { background: #ffffff; border-color: #cbd5e1; color: #475569; }
+html[data-theme="light"] .question-tools .report-issue-btn:hover { background: #f3e8ff; border-color: #c4b5fd; color: #6b21a8; }
 html[data-theme="light"] .question-feedback-panel,
 html[data-theme="light"] .question-quality-section { background: #eff6ff; border-color: #93c5fd; }
 html[data-theme="light"] :is(.question-feedback-panel h3, .question-quality-header h2) { color: #0f172a; }

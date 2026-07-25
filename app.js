@@ -2776,10 +2776,12 @@
       '</div>' +
       (q.context ? '<div class="question-context">' + q.context + '</div>' : '') +
       '<div class="question-text">' + q.text + '</div>' +
+      '<div class="question-tools">' +
       '<button class="review-later-btn' + (isSavedForReview ? ' saved' : '') + '" id="review-later-btn" type="button" title="Save this question to revisit later">' +
         (isSavedForReview ? '\u2713 Saved for Review' : '\uD83D\uDD16 Review Later') + '</button>' +
       '<button class="question-feedback-btn" id="question-feedback-btn" type="button" title="Give feedback about this question\'s wording or formatting">\uD83D\uDCDD Feedback</button>' +
       '<button class="report-issue-btn" id="report-issue-btn" title="Copy question details to clipboard to report an issue">\uD83D\uDCCB Copy Issue</button>' +
+      '</div>' +
       '<span class="copy-issue-feedback" id="copy-issue-feedback" style="display:none;"></span>';
 
     if (!practiceMode) {

@@ -326,6 +326,23 @@ body {
 .question-feedback-btn:hover { background: #172554; color: #dbeafe; }
 .qp-feedback-btn { display: inline-block; margin: 0; }
 
+.question-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  margin-top: 0.75rem;
+}
+.question-tools :is(.review-later-btn, .question-feedback-btn, .report-issue-btn) {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  margin: 0;
+  padding: 0.35rem 0.7rem;
+  font-weight: 700;
+}
+.question-tools .report-issue-btn { color: #94a3b8; }
+
 .question-feedback-panel {
   margin-top: 0.75rem;
   padding: 0.85rem;
