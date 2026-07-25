@@ -82,6 +82,16 @@
     description: RANDOM_QUIZ_COUNT + " randomly selected questions drawn from all available quizzes. Does not count towards preparation progress.",
     data: ALL_QUESTIONS
   };
+  const WEAK_TOPICS_SET = {
+    key: "weak_topics",
+    label: "Weak Topics Challenge",
+    difficulty: "weak",
+    description: "A focused review generated from the categories missed in your completed quizzes.",
+    data: ALL_QUESTIONS
+  };
+  const WEAK_REVIEW_KEY = _prefix + "_weak_topic_reviews";
+  const WEAK_REVIEW_COUNT = 10;
+  const WEAK_REVIEW_DELAYS_DAYS = [1, 3];
 
   const TIMER_DURATION       = typeof _cfg.timerDuration === "number" ? _cfg.timerDuration : 120 * 60; // 120 minutes in seconds
   const TIMER_WARNING_MINS   = 30;       // yellow threshold
@@ -109,6 +119,7 @@
   let timerInterval = null;
   let studyOnlyInterval = null; // hidden study-time ticker for sessions without a countdown clock
   let reviewMode    = false; // true when re-viewing a completed quiz (no re-save)
+  let activeWeakReview = null;
 
   // ── Idle / auto-pause state ───────────────────────────────────────────────
   let idleTimeout          = null;  // setTimeout handle for auto-pause
@@ -174,6 +185,7 @@
     caseStudy      = null;
     savedQuizState = null;
     casePhase      = "quiz";
+    activeWeakReview = null;
     showSetSelection();
   });
 
@@ -432,6 +444,9 @@
 
   function saveProgress() {
     try {
+      // Weak-topic reviews are intentionally one-sitting challenges. They do
+      // not create a normal quiz progress card or affect preparation progress.
+      if (activeSet && activeSet.key === "weak_topics") return;
       if (caseStudyMode === "combined" && casePhase === "testcase" && savedQuizState) {
         // In the test-case phase of a combined run — persist both parts
         localStorage.setItem(saveKey(), JSON.stringify({
@@ -552,6 +567,8 @@
       });
       // Clear random quiz progress
       localStorage.removeItem(_prefix + "_quiz_progress_random");
+      // Clear scheduled weak-topic reviews along with all other learning data.
+      localStorage.removeItem(WEAK_REVIEW_KEY);
       _testCases.forEach(function (tc) {
         localStorage.removeItem(_prefix + "_case_" + tc.key);
         localStorage.removeItem(_prefix + "_completed_case_" + tc.key);
@@ -700,7 +717,7 @@
           type: "case", date: new Date().toISOString(),
           caseLabel: caseStudy.label, caseKey: caseStudy.key, casePct: pct
         });
-      } else if (activeSet && activeSet.key !== "random") {
+      } else if (activeSet && activeSet.key !== "random" && activeSet.key !== "weak_topics") {
         // Random-practice quiz results are intentionally not persisted as
         // "completed" state — the quiz serves only for ad-hoc practice and
         // must not affect the preparation progress bar.
@@ -718,6 +735,153 @@
         });
       }
     } catch (e) { /* storage unavailable */ }
+  }
+
+  // ── Weak Topics Challenge ────────────────────────────────────────────────
+  // A completed quiz with missed questions creates an immediate 10-question
+  // review. Completing that review schedules two further attempts: one day
+  // later and then three days later.
+  function loadWeakTopicReviews() {
+    try {
+      const raw = localStorage.getItem(WEAK_REVIEW_KEY);
+      const stored = raw ? JSON.parse(raw) : [];
+      return Array.isArray(stored) ? stored.filter(function (review) {
+        return review && Array.isArray(review.questionIds) && review.questionIds.length > 0;
+      }) : [];
+    } catch (e) { return []; }
+  }
+
+  function saveWeakTopicReviews(reviews) {
+    try { localStorage.setItem(WEAK_REVIEW_KEY, JSON.stringify(reviews)); } catch (e) { /* storage unavailable */ }
+  }
+
+  function getWeakQuestionMap() {
+    const map = {};
+    ALL_QUESTIONS.forEach(function (q) { map[q.id] = q; });
+    return map;
+  }
+
+  function buildWeakReviewQuestionIds(categories, priorityIds) {
+    const byId = getWeakQuestionMap();
+    const selected = [];
+    const used = {};
+    function add(id) {
+      if (byId[id] && !used[id] && selected.length < WEAK_REVIEW_COUNT) {
+        used[id] = true;
+        selected.push(id);
+      }
+    }
+
+    (priorityIds || []).forEach(add);
+    shuffle(ALL_QUESTIONS.filter(function (q) {
+      return categories.indexOf(getQuestionCategory(q.id)) !== -1;
+    })).forEach(function (q) { add(q.id); });
+    // Small question banks may not have ten questions in the missed categories.
+    // Fill the remaining places from the exam pool rather than presenting a
+    // broken or undersized challenge.
+    shuffle(ALL_QUESTIONS).forEach(function (q) { add(q.id); });
+    return selected;
+  }
+
+  function scheduleWeakTopicReview() {
+    if (reviewMode || !activeSet || activeSet.key === "random" || activeSet.key === "weak_topics") return;
+    const missed = results.filter(function (result) { return result.partialScore < 1; });
+    if (missed.length === 0) return;
+
+    const categoryCounts = {};
+    missed.forEach(function (result) {
+      const category = getQuestionCategory(result.questionId);
+      categoryCounts[category] = (categoryCounts[category] || 0) + 1;
+    });
+    const categories = Object.keys(categoryCounts).sort(function (a, b) {
+      return categoryCounts[b] - categoryCounts[a] || a.localeCompare(b);
+    }).slice(0, 3);
+    const questionIds = buildWeakReviewQuestionIds(categories, missed.map(function (result) { return result.questionId; }));
+    if (questionIds.length === 0) return;
+
+    const reviews = loadWeakTopicReviews();
+    const now = Date.now();
+    reviews.push({
+      id: "weak-" + now + "-" + Math.random().toString(36).slice(2, 8),
+      createdAt: now,
+      dueAt: now,
+      stage: 0,
+      status: "due",
+      categories: categories,
+      questionIds: questionIds
+    });
+    // Keep the saved queue useful without allowing old completed entries to
+    // grow forever. Scheduled reviews are never discarded.
+    const completed = reviews.filter(function (review) { return review.status === "completed"; });
+    const active = reviews.filter(function (review) { return review.status !== "completed"; });
+    saveWeakTopicReviews(active.concat(completed.slice(-8)));
+  }
+
+  function getNextWeakTopicReview() {
+    const reviews = loadWeakTopicReviews().filter(function (review) { return review.status !== "completed"; });
+    if (reviews.length === 0) return null;
+    reviews.sort(function (a, b) { return a.dueAt - b.dueAt || a.createdAt - b.createdAt; });
+    return reviews[0];
+  }
+
+  function formatWeakReviewDue(dueAt) {
+    const remaining = dueAt - Date.now();
+    if (remaining <= 0) return "Due now";
+    const days = Math.ceil(remaining / (24 * 60 * 60 * 1000));
+    return days === 1 ? "Due tomorrow" : "Due in " + days + " days";
+  }
+
+  function completeWeakTopicReview() {
+    if (!activeWeakReview || reviewMode) return "";
+    const reviews = loadWeakTopicReviews();
+    const review = reviews.find(function (entry) { return entry.id === activeWeakReview.id; });
+    if (!review || review.status === "completed") return "";
+
+    const missedIds = results.filter(function (result) { return result.partialScore < 1; })
+      .map(function (result) { return result.questionId; });
+    if (review.stage < WEAK_REVIEW_DELAYS_DAYS.length) {
+      const delayDays = WEAK_REVIEW_DELAYS_DAYS[review.stage];
+      review.stage++;
+      review.status = "scheduled";
+      review.dueAt = Date.now() + delayDays * 24 * 60 * 60 * 1000;
+      review.questionIds = buildWeakReviewQuestionIds(review.categories || [], missedIds);
+      saveWeakTopicReviews(reviews);
+      return "Your next focused review is scheduled for " + (delayDays === 1 ? "tomorrow" : "3 days from now") + ".";
+    }
+
+    review.status = "completed";
+    review.completedAt = Date.now();
+    saveWeakTopicReviews(reviews);
+    return "You completed the full focused-review cycle.";
+  }
+
+  function buildWeakTopicsSection() {
+    const review = getNextWeakTopicReview();
+    let detail = "Complete a quiz with missed questions to unlock a focused 10-question review.";
+    let badge = "Waiting for quiz results";
+    let categories = "";
+    let disabled = " disabled";
+    if (review) {
+      const due = formatWeakReviewDue(review.dueAt);
+      const isDue = review.dueAt <= Date.now();
+      badge = due;
+      categories = review.categories && review.categories.length
+        ? '<p class="weak-topics-categories"><strong>Focus:</strong> ' + review.categories.join(", ") + '</p>'
+        : "";
+      detail = isDue
+        ? "Review the topics you missed most before moving on to new material."
+        : "This review unlocks automatically when its scheduled date arrives.";
+      disabled = isDue ? "" : " disabled";
+    }
+    return '<div class="section-divider"></div>' +
+      '<h2 class="set-selection-title">Weak Topics Challenge</h2>' +
+      '<p class="set-selection-sub">A short, targeted learning loop: review now, then revisit after 1 day and 3 days.</p>' +
+      '<div class="set-cards"><div class="set-card weak-topics-card">' +
+        '<div class="set-card-header"><span class="set-card-title">Weak Topics Review</span><span class="set-card-count">' + WEAK_REVIEW_COUNT + ' questions</span></div>' +
+        '<span class="difficulty-badge diff-weak">\uD83C\uDFAF ' + badge + '</span>' +
+        '<p class="set-card-desc">' + detail + '</p>' + categories +
+        '<div class="set-card-actions"><button class="set-btn weak-topics-start-btn" id="weak-topics-start-btn"' + disabled + '>Start Challenge</button></div>' +
+      '</div></div>';
   }
 
   function loadCompletedQuiz(set) {
@@ -1205,6 +1369,85 @@
     '</div>';
   }
 
+  function getReadinessData() {
+    const categories = {};
+    let totalScore = 0;
+    let totalQuestions = 0;
+    let completedSets = 0;
+
+    function addResults(saved) {
+      if (!saved || !Array.isArray(saved.results) || saved.results.length === 0) return;
+      completedSets++;
+      saved.results.forEach(function (result) {
+        const category = getQuestionCategory(result.questionId);
+        const earned = typeof result.partialScore === "number" ? result.partialScore : (result.isCorrect ? 1 : 0);
+        if (!categories[category]) categories[category] = { name: category, score: 0, total: 0 };
+        categories[category].score += earned;
+        categories[category].total++;
+        totalScore += earned;
+        totalQuestions++;
+      });
+    }
+
+    QUESTION_SETS.forEach(function (set) { addResults(loadCompletedQuiz(set)); });
+    _testCases.forEach(function (testCase) { addResults(loadCompletedCase(testCase)); });
+
+    const rows = Object.keys(categories).map(function (name) {
+      const row = categories[name];
+      row.pct = row.total ? Math.round((row.score / row.total) * 100) : 0;
+      return row;
+    });
+    return {
+      overallPct: totalQuestions ? Math.round((totalScore / totalQuestions) * 100) : null,
+      completedSets: completedSets,
+      rows: rows,
+      weakest: rows.slice().sort(function (a, b) { return a.pct - b.pct || b.total - a.total; })[0] || null,
+      strongest: rows.slice().sort(function (a, b) { return b.pct - a.pct || b.total - a.total; })[0] || null
+    };
+  }
+
+  function buildReadinessDashboard() {
+    const data = getReadinessData();
+    const review = getNextWeakTopicReview();
+    const reviewDue = review && review.dueAt <= Date.now();
+    const rows = data.rows.slice().sort(function (a, b) { return a.pct - b.pct || b.total - a.total; }).slice(0, 5);
+    let recommendation;
+    let action = '';
+
+    if (reviewDue) {
+      recommendation = 'A Weak Topics Challenge is ready now. Reinforce the missed areas before starting more new material.';
+      action = '<button class="readiness-action-btn" id="readiness-weak-start-btn">Start Weak Topics Challenge</button>';
+    } else if (data.overallPct === null) {
+      recommendation = 'Complete your first practice quiz to create a personalized readiness score and recommendations.';
+      action = '<button class="readiness-action-btn" id="readiness-practice-btn">Choose a Practice Quiz</button>';
+    } else if (data.weakest) {
+      recommendation = 'Focus next on ' + data.weakest.name + ' (' + data.weakest.pct + '%). Your saved results show this is the area with the most room to improve.';
+      action = '<button class="readiness-action-btn" id="readiness-practice-btn">Choose a Practice Quiz</button>';
+    }
+
+    const score = data.overallPct === null ? '—' : data.overallPct + '%';
+    const scoreClass = data.overallPct === null ? 'readiness-score-empty' : data.overallPct >= PASS_PCT ? 'readiness-score-good' : data.overallPct >= MARGINAL_PCT ? 'readiness-score-watch' : 'readiness-score-needs-work';
+    const strongest = data.strongest ? data.strongest.name + ' (' + data.strongest.pct + '%)' : 'Complete a quiz to measure this';
+    const reviewStatus = review ? (reviewDue ? 'Due now' : formatWeakReviewDue(review.dueAt)) : 'No review due';
+    const categoryRows = rows.length
+      ? rows.map(function (row) {
+          const status = row.pct >= PASS_PCT ? 'Strong' : row.pct >= MARGINAL_PCT ? 'Building' : 'Needs review';
+          return '<li class="readiness-category-row"><span>' + row.name + '</span><strong>' + row.pct + '%</strong><em class="readiness-status readiness-status-' + status.toLowerCase().replace(" ", "-") + '">' + status + '</em></li>';
+        }).join('')
+      : '<li class="readiness-category-empty">No category data yet.</li>';
+
+    return '<section class="readiness-dashboard" aria-labelledby="readiness-title">' +
+      '<div class="readiness-header"><div><h2 id="readiness-title">Exam Readiness</h2><p>Use your saved quiz and case-study results to decide what to study next.</p></div><div class="readiness-score ' + scoreClass + '"><span>' + score + '</span><small>readiness</small></div></div>' +
+      '<div class="readiness-highlights">' +
+        '<div><span>Completed sets</span><strong>' + data.completedSets + '</strong></div>' +
+        '<div><span>Strongest area</span><strong>' + strongest + '</strong></div>' +
+        '<div><span>Focused review</span><strong>' + reviewStatus + '</strong></div>' +
+      '</div>' +
+      '<div class="readiness-body"><div class="readiness-recommendation"><h3>Recommended next step</h3><p>' + recommendation + '</p>' + action + '</div>' +
+      '<div class="readiness-categories"><h3>Areas to improve</h3><ul>' + categoryRows + '</ul></div></div>' +
+    '</section>';
+  }
+
   function buildCongratulationsScreen() {
     return '<div class="congrats-screen">' +
       '<div class="congrats-trophy">\uD83C\uDFC6</div>' +
@@ -1350,13 +1593,15 @@
     }
     html += buildProgressBar();
     if (inProgressCount > 0) html += buildInProgressBanner(inProgressCount);
+    html += buildReadinessDashboard();
 
     // ── Quick Practice (above Practice Quizzes) ──────────────────────────
     html += buildQuickPracticeSection();
+    html += buildWeakTopicsSection();
 
     // ── Section 1: Practice Quizzes ──────────────────────────────────────
     html += '<div class="section-divider"></div>' +
-      '<h2 class="set-selection-title">Practice Quizzes</h2>' +
+      '<h2 class="set-selection-title" id="practice-quizzes-heading">Practice Quizzes</h2>' +
       '<p class="set-selection-sub">Each quiz has a 120-minute countdown timer. Optionally attach a case study for a combined score.</p>' +
       '<div class="set-cards">';
 
@@ -1741,6 +1986,35 @@
       });
     }
 
+    const weakTopicsStartBtn = document.getElementById("weak-topics-start-btn");
+    if (weakTopicsStartBtn && !weakTopicsStartBtn.disabled) {
+      weakTopicsStartBtn.addEventListener("click", function () {
+        const review = getNextWeakTopicReview();
+        if (!review || review.dueAt > Date.now()) return;
+        showModeOverlay(function () { initWeakTopicsChallenge(review); });
+      });
+    }
+
+    const readinessWeakStartBtn = document.getElementById("readiness-weak-start-btn");
+    if (readinessWeakStartBtn) {
+      readinessWeakStartBtn.addEventListener("click", function () {
+        const review = getNextWeakTopicReview();
+        if (!review || review.dueAt > Date.now()) return;
+        showModeOverlay(function () { initWeakTopicsChallenge(review); });
+      });
+    }
+    const readinessPracticeBtn = document.getElementById("readiness-practice-btn");
+    if (readinessPracticeBtn) {
+      readinessPracticeBtn.addEventListener("click", function () {
+        const heading = document.getElementById("practice-quizzes-heading");
+        if (heading) {
+          heading.scrollIntoView({ behavior: "smooth", block: "start" });
+          const firstStart = setSelectionEl.querySelector(".start-set-btn:not(.case-start-btn)");
+          if (firstStart) firstStart.focus({ preventScroll: true });
+        }
+      });
+    }
+
     // Reset In-Progress button (banner)
     const resetInProgressBtn = document.getElementById("reset-inprogress-btn");
     if (resetInProgressBtn) {
@@ -1967,6 +2241,37 @@
     renderQuestion();
   }
 
+
+  function initWeakTopicsChallenge(review) {
+    const qMap = getWeakQuestionMap();
+    const questions = review.questionIds.map(function (id) { return qMap[id]; }).filter(Boolean);
+    if (questions.length === 0) {
+      showSetSelection();
+      return;
+    }
+    reviewMode        = false;
+    isPaused          = false;
+    activeWeakReview  = review;
+    hidePauseOverlay();
+    activeSet      = WEAK_TOPICS_SET;
+    caseStudyMode  = null;
+    caseStudy      = null;
+    savedQuizState = null;
+    casePhase      = "quiz";
+    showHomeBtn();
+    hideTimer();
+    setSelectionEl.style.display = "none";
+    summaryEl.style.display      = "none";
+    document.getElementById("quiz-container").classList.remove("finished");
+    nextBtn.style.display        = "none";
+    shuffled     = questions;
+    current      = 0;
+    score        = 0;
+    results      = [];
+    timerSeconds = TIMER_DURATION;
+    startStudyOnlyTimer();
+    renderQuestion();
+  }
 
   function showCaseIntro() {
     quizIsActive = false;
@@ -2535,7 +2840,12 @@
 
   // ── Standalone quiz summary (unchanged behaviour) ─────────────────────────
   function showQuizSummary() {
-    saveCompletedState();
+    const isWeak = activeSet && activeSet.key === "weak_topics";
+    const weakFollowUp = isWeak ? completeWeakTopicReview() : "";
+    if (!isWeak) {
+      saveCompletedState();
+      scheduleWeakTopicReview();
+    }
     const total          = shuffled.length || results.length;
     const rawScore       = score;
     const pct            = total ? Math.round((rawScore / total) * 100) : 0;
@@ -2547,7 +2857,11 @@
     const isRandom = activeSet.key === "random";
 
     const badge   = pct >= PASS_PCT ? "pass" : (pct >= MARGINAL_PCT ? "marginal" : "fail");
-    const verdict = isRandom
+    const verdict = isWeak
+      ? (pct >= PASS_PCT
+          ? "Great progress \u2014 you strengthened a topic that needs attention. " + weakFollowUp
+          : "Keep working through the explanations below. " + weakFollowUp)
+      : isRandom
       ? (pct >= PASS_PCT
           ? "Well done \u2014 " + pct + "% on the random practice quiz! \uD83C\uDF89"
           : "Keep practising \u2014 " + pct + "% on the random practice quiz. Review the explanations below.")
@@ -2559,7 +2873,9 @@
 
     const timeTaken   = TIMER_DURATION - timerSeconds;
     const timeExpired = timerSeconds === 0;
-    const timeStr     = timeExpired
+    const timeStr     = isWeak
+      ? "10-question focused review"
+      : timeExpired
       ? "Time expired (" + formatTime(TIMER_DURATION) + " used)"
       : formatTime(timeTaken) + " used (" + formatTime(timerSeconds) + " remaining)";
 
@@ -2574,7 +2890,8 @@
       intermediate: { icon: "\uD83D\uDFE1", label: "Intermediate" },
       proficient:   { icon: "\uD83D\uDD34", label: "Proficient" },
       official:     { icon: "\uD83D\uDCCB", label: "Official" },
-      random:       { icon: "\uD83C\uDFB2", label: "Random" }
+      random:       { icon: "\uD83C\uDFB2", label: "Random" },
+      weak:         { icon: "\uD83C\uDFAF", label: "Focused Review" }
     };
     const dmeta = difficultyMeta[activeSet.difficulty] || { icon: "", label: "" };
 
@@ -2583,14 +2900,14 @@
 
     summaryEl.innerHTML =
       '<div class="summary-card ' + badge + '">' +
-        (pct >= PASS_PCT && !reviewMode ? '<div class="celebration-banner"><span class="celebration-text">\uD83C\uDF89 Congratulations!</span><span class="celebration-sub">You cleared the ' + _examName + ' passing threshold!</span></div>' : '') +
-        '<h2>' + (isRandom ? "Random Practice Complete!" : "Quiz Complete!") + '</h2>' +
+        (pct >= PASS_PCT && !reviewMode && !isWeak ? '<div class="celebration-banner"><span class="celebration-text">\uD83C\uDF89 Congratulations!</span><span class="celebration-sub">You cleared the ' + _examName + ' passing threshold!</span></div>' : '') +
+        '<h2>' + (isWeak ? "Weak Topics Challenge Complete!" : isRandom ? "Random Practice Complete!" : "Quiz Complete!") + '</h2>' +
         '<p class="summary-set-label">' +
           dmeta.icon + ' ' + activeSet.label + ' &nbsp;&middot;&nbsp; ' + perfLabel +
         '</p>' +
         '<div class="score-circle">' +
           '<span class="score-number">' + pct + '%</span>' +
-          '<span class="score-label">' + (isRandom ? fullyCorrect + " / " + total + " correct" : examPoints + ' / 1000 ' + _examName + ' pts') + '</span>' +
+          '<span class="score-label">' + ((isRandom || isWeak) ? fullyCorrect + " / " + total + " correct" : examPoints + ' / 1000 ' + _examName + ' pts') + '</span>' +
         '</div>' +
         '<p class="score-verdict">' + verdict + '</p>' +
         '<div class="summary-meta">' +
@@ -2601,7 +2918,7 @@
         '</div>' +
         chart +
         '<div class="summary-actions">' +
-          '<button class="restart-btn" id="restart-btn">' + (isRandom ? 'New Random Quiz' : 'Restart Quiz') + '</button>' +
+          (isWeak ? '' : '<button class="restart-btn" id="restart-btn">' + (isRandom ? 'New Random Quiz' : 'Restart Quiz') + '</button>') +
           '<button class="change-set-btn" id="change-set-btn-summary">Back to Menu</button>' +
         '</div>' +
       '</div>' +
@@ -2609,9 +2926,10 @@
       bd.breakdownHtml;
 
     summaryEl.style.display = "block";
-    if (pct >= PASS_PCT && !reviewMode) launchConfetti();
+    if (pct >= PASS_PCT && !reviewMode && !isWeak) launchConfetti();
 
-    document.getElementById("restart-btn").addEventListener("click", function () {
+    const restartBtn = document.getElementById("restart-btn");
+    if (restartBtn) restartBtn.addEventListener("click", function () {
       reviewMode = false;
       if (isRandom) {
         showModeOverlay(function () { initRandomQuiz(false); });
