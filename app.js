@@ -151,6 +151,8 @@
   const QP_STREAK_KEY = _prefix + "_qp_streak";
   const QP_BEST_KEY   = _prefix + "_qp_best";
   const QP_SEEN_KEY   = _prefix + "_qp_seen"; // question IDs answered in the current run
+  const REVIEW_LATER_KEY = _prefix + "_review_later";
+  const QUESTION_FEEDBACK_KEY = _prefix + "_question_feedback";
   var qp = { pool: [], poolIdx: 0, streak: 0, bestStreak: 0, seenInRun: new Set() };
   var UT_MESSAGES = [
     { streak: 5,  msg: "KILLING SPREE!",   emoji: "\uD83D\uDD25", color: "#f97316" },
@@ -569,6 +571,8 @@
       localStorage.removeItem(_prefix + "_quiz_progress_random");
       // Clear scheduled weak-topic reviews along with all other learning data.
       localStorage.removeItem(WEAK_REVIEW_KEY);
+      localStorage.removeItem(REVIEW_LATER_KEY);
+      localStorage.removeItem(QUESTION_FEEDBACK_KEY);
       _testCases.forEach(function (tc) {
         localStorage.removeItem(_prefix + "_case_" + tc.key);
         localStorage.removeItem(_prefix + "_completed_case_" + tc.key);
@@ -702,7 +706,9 @@
           type: "combined", date: new Date().toISOString(),
           quizLabel: activeSet.label, quizKey: activeSet.key, quizPct: quizPct,
           caseLabel: caseStudy.label, caseKey: caseStudy.key, casePct: casePct,
-          combinedPct: combinedPct
+          combinedPct: combinedPct,
+          quizCategoryScores: summarizeCategoryScores(savedQuizState.results),
+          caseCategoryScores: summarizeCategoryScores(results)
         });
       } else if (caseStudyMode === "standalone") {
         const total = shuffled.length;
@@ -715,7 +721,8 @@
         // Record standalone case attempt in history
         saveToHistory({
           type: "case", date: new Date().toISOString(),
-          caseLabel: caseStudy.label, caseKey: caseStudy.key, casePct: pct
+          caseLabel: caseStudy.label, caseKey: caseStudy.key, casePct: pct,
+          categoryScores: summarizeCategoryScores(results)
         });
       } else if (activeSet && activeSet.key !== "random" && activeSet.key !== "weak_topics") {
         // Random-practice quiz results are intentionally not persisted as
@@ -731,7 +738,8 @@
         // Record standalone quiz attempt in history
         saveToHistory({
           type: "quiz", date: new Date().toISOString(),
-          quizLabel: activeSet.label, quizKey: activeSet.key, quizPct: pct
+          quizLabel: activeSet.label, quizKey: activeSet.key, quizPct: pct,
+          categoryScores: summarizeCategoryScores(results)
         });
       }
     } catch (e) { /* storage unavailable */ }
@@ -882,6 +890,218 @@
         '<p class="set-card-desc">' + detail + '</p>' + categories +
         '<div class="set-card-actions"><button class="set-btn weak-topics-start-btn" id="weak-topics-start-btn"' + disabled + '>Start Challenge</button></div>' +
       '</div></div>';
+  }
+
+  // ── Review Later bookmarks ────────────────────────────────────────────────
+  // These bookmarks contain only the question text and source. They never save
+  // or reveal answer keys, so they are safe to use in both Practice and Test mode.
+  function loadReviewLaterBookmarks() {
+    try {
+      const raw = localStorage.getItem(REVIEW_LATER_KEY);
+      const entries = raw ? JSON.parse(raw) : [];
+      return Array.isArray(entries) ? entries.filter(function (entry) {
+        return entry && entry.key && entry.questionText;
+      }) : [];
+    } catch (e) { return []; }
+  }
+
+  function saveReviewLaterBookmarks(entries) {
+    try { localStorage.setItem(REVIEW_LATER_KEY, JSON.stringify(entries)); } catch (e) { /* storage unavailable */ }
+  }
+
+  function getCurrentQuestionSource() {
+    if (caseStudyMode === "standalone" && caseStudy) return caseStudy.label;
+    if (caseStudyMode === "combined" && casePhase === "testcase" && caseStudy) return caseStudy.label;
+    return activeSet ? activeSet.label : _examName;
+  }
+
+  function reviewLaterKey(question, source) {
+    return String(source) + "::" + String(question.id);
+  }
+
+  function isBookmarkedForReview(question, source) {
+    const key = reviewLaterKey(question, source);
+    return loadReviewLaterBookmarks().some(function (entry) { return entry.key === key; });
+  }
+
+  function toggleReviewLaterBookmark(question, source) {
+    const key = reviewLaterKey(question, source);
+    const entries = loadReviewLaterBookmarks();
+    const existingIndex = entries.findIndex(function (entry) { return entry.key === key; });
+    if (existingIndex !== -1) {
+      entries.splice(existingIndex, 1);
+      saveReviewLaterBookmarks(entries);
+      return false;
+    }
+    entries.unshift({
+      key: key,
+      questionId: question.id,
+      source: source,
+      questionText: question.text,
+      createdAt: Date.now()
+    });
+    saveReviewLaterBookmarks(entries);
+    return true;
+  }
+
+  function getCurrentSessionReviewLaterNumbers() {
+    const entries = loadReviewLaterBookmarks();
+    const keys = {};
+    entries.forEach(function (entry) { keys[entry.key] = true; });
+    return shuffled.map(function (question, index) {
+      return keys[reviewLaterKey(question, getCurrentQuestionSource())] ? index + 1 : null;
+    }).filter(Boolean);
+  }
+
+  function buildReviewLaterSection() {
+    const entries = loadReviewLaterBookmarks();
+    const visible = entries.slice(0, 12);
+    const list = visible.length
+      ? '<ul class="review-later-list">' + visible.map(function (entry) {
+          return '<li class="review-later-item"><div><span class="review-later-source">' + entry.source + '</span><p>' + entry.questionText + '</p></div>' +
+            '<button class="review-later-remove-btn" data-bookmark-key="' + entry.key + '" type="button" aria-label="Remove saved question">Remove</button></li>';
+        }).join('') + '</ul>' +
+        (entries.length > visible.length ? '<p class="review-later-more">+' + (entries.length - visible.length) + ' more saved questions</p>' : '')
+      : '<p class="review-later-empty">Bookmark a question from either Practice or Test mode to keep it here.</p>';
+    return '<div class="section-divider"></div>' +
+      '<section class="review-later-section" aria-labelledby="review-later-title"><div class="review-later-header"><div><h2 id="review-later-title">Review Later</h2><p>Saved questions remain private to this exam and never display an answer key here.</p></div>' +
+        '<span class="review-later-count">' + entries.length + ' saved</span></div>' + list +
+        (entries.length ? '<button class="review-later-clear-btn" id="review-later-clear-btn" type="button">Clear saved questions</button>' : '') +
+      '</section>';
+  }
+
+  function showReviewLaterCheckpoint(questionNumbers) {
+    quizIsActive = false;
+    clearIdleTimer();
+    hideTimer();
+    stopStudyOnlyTimer();
+    saveStudyTime();
+    questionEl.innerHTML = '<div class="review-later-checkpoint"><span class="review-later-checkpoint-icon">\uD83D\uDD16</span><h2>Review Later Check</h2>' +
+      '<p>You marked ' + questionNumbers.length + ' question' + (questionNumbers.length === 1 ? '' : 's') + ' for later: <strong>' + questionNumbers.map(function (number) { return 'Q' + number; }).join(', ') + '</strong>.</p>' +
+      '<p>Your saved questions are available from the dashboard after results. No answers are shown on this screen.</p>' +
+      '<button class="review-later-results-btn" id="review-later-results-btn" type="button">See Results</button></div>';
+    choicesEl.innerHTML = '';
+    nextBtn.style.display = 'none';
+    document.getElementById('review-later-results-btn').addEventListener('click', showSummary);
+  }
+
+  // ── Question Quality Feedback ─────────────────────────────────────────────
+  // Quality reports deliberately store no correct answers and no user answer.
+  const QUESTION_FEEDBACK_TYPES = [
+    "Clear and well written",
+    "Wording is confusing",
+    "Question seems incomplete",
+    "Answers seem incorrect or incomplete",
+    "Typo or formatting issue"
+  ];
+
+  function escapeHtml(value) {
+    return String(value == null ? "" : value)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
+  }
+
+  function loadQuestionFeedback() {
+    try {
+      const raw = localStorage.getItem(QUESTION_FEEDBACK_KEY);
+      const entries = raw ? JSON.parse(raw) : [];
+      return Array.isArray(entries) ? entries.filter(function (entry) {
+        return entry && entry.id && entry.type && entry.questionText;
+      }) : [];
+    } catch (e) { return []; }
+  }
+
+  function saveQuestionFeedback(entries) {
+    try { localStorage.setItem(QUESTION_FEEDBACK_KEY, JSON.stringify(entries)); } catch (e) { /* storage unavailable */ }
+  }
+
+  function recordQuestionFeedback(question, source, type, comment) {
+    const entries = loadQuestionFeedback();
+    entries.unshift({
+      id: "feedback-" + Date.now() + "-" + Math.random().toString(36).slice(2, 8),
+      questionId: question.id,
+      source: source,
+      questionText: question.text,
+      type: type,
+      comment: String(comment || "").trim().slice(0, 600),
+      createdAt: Date.now()
+    });
+    saveQuestionFeedback(entries.slice(0, 200));
+  }
+
+  function showQuestionQualityPanel(host, question, source) {
+    const existing = host.querySelector(".question-feedback-panel");
+    if (existing) { existing.remove(); return; }
+    const panel = document.createElement("div");
+    panel.className = "question-feedback-panel";
+    panel.innerHTML = '<h3>Question Quality Feedback</h3><p>Report wording or formatting only. Your answer and the correct answer are not included.</p>' +
+      '<label>Feedback type<select class="question-feedback-type">' + QUESTION_FEEDBACK_TYPES.map(function (type) {
+        return '<option value="' + escapeHtml(type) + '">' + escapeHtml(type) + '</option>';
+      }).join("") + '</select></label>' +
+      '<label>Optional comment<textarea class="question-feedback-comment" maxlength="600" placeholder="Tell us what should be improved"></textarea></label>' +
+      '<div><button type="button" class="question-feedback-save-btn">Save feedback</button><button type="button" class="question-feedback-cancel-btn">Cancel</button></div>';
+    host.appendChild(panel);
+    panel.querySelector(".question-feedback-cancel-btn").addEventListener("click", function () { panel.remove(); });
+    panel.querySelector(".question-feedback-save-btn").addEventListener("click", function () {
+      recordQuestionFeedback(question, source, panel.querySelector(".question-feedback-type").value, panel.querySelector(".question-feedback-comment").value);
+      panel.innerHTML = '<p class="question-feedback-saved">\u2713 Feedback saved. Thank you for helping improve this question.</p>';
+      setTimeout(function () { if (panel.parentNode) panel.remove(); }, 2400);
+    });
+  }
+
+  function copyQuestionFeedback(entry, feedbackEl) {
+    const text = "[" + _examTitle + "] Question Quality Feedback\n\n" +
+      "Source: " + entry.source + "\n" +
+      "Question ID: #" + entry.questionId + "\n" +
+      "Feedback: " + entry.type + "\n" +
+      (entry.comment ? "Comment: " + entry.comment + "\n" : "") +
+      "\nQuestion text:\n" + entry.questionText;
+    function done(message) {
+      if (feedbackEl) {
+        feedbackEl.textContent = message;
+        feedbackEl.style.display = "inline";
+        setTimeout(function () { feedbackEl.style.display = "none"; }, 3000);
+      }
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { done("Copied"); }, function () { done("Copy failed"); });
+    } else {
+      try {
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.select();
+        const copied = document.execCommand("copy");
+        document.body.removeChild(textarea);
+        done(copied ? "Copied" : "Copy failed");
+      } catch (e) { done("Copy failed"); }
+    }
+  }
+
+  function buildQuestionQualitySection() {
+    const entries = loadQuestionFeedback();
+    const counts = {};
+    QUESTION_FEEDBACK_TYPES.forEach(function (type) { counts[type] = 0; });
+    entries.forEach(function (entry) { counts[entry.type] = (counts[entry.type] || 0) + 1; });
+    const summary = QUESTION_FEEDBACK_TYPES.map(function (type) {
+      return '<li><span>' + escapeHtml(type) + '</span><strong>' + counts[type] + '</strong></li>';
+    }).join("");
+    const recent = entries.slice(0, 10);
+    const recentHtml = recent.length
+      ? '<ul class="question-quality-list">' + recent.map(function (entry) {
+          return '<li class="question-quality-item"><div><span class="question-quality-type">' + escapeHtml(entry.type) + '</span><span class="question-quality-source">' + escapeHtml(entry.source) + '</span><p>' + escapeHtml(entry.questionText) + '</p>' +
+            (entry.comment ? '<blockquote>' + escapeHtml(entry.comment) + '</blockquote>' : '') + '</div><div class="question-quality-actions"><button type="button" class="question-quality-copy-btn" data-feedback-id="' + entry.id + '">Copy report</button><button type="button" class="question-quality-remove-btn" data-feedback-id="' + entry.id + '">Remove</button><span class="question-quality-copy-status" style="display:none;"></span></div></li>';
+        }).join("") + '</ul>'
+      : '<p class="question-quality-empty">No feedback saved yet.</p>';
+    return '<div class="section-divider"></div><section class="question-quality-section" aria-labelledby="question-quality-title"><div class="question-quality-header"><div><h2 id="question-quality-title">Question Quality</h2><p>Feedback is saved locally and includes no answer keys.</p></div><span>' + entries.length + ' reports</span></div>' +
+      '<ul class="question-quality-summary">' + summary + '</ul>' + recentHtml +
+      (entries.length ? '<button type="button" class="question-quality-clear-btn" id="question-quality-clear-btn">Clear feedback</button>' : '') +
+    '</section>';
   }
 
   function loadCompletedQuiz(set) {
@@ -1117,6 +1337,7 @@
         '<div class="qp-btn-row">' +
           '<button class="qp-submit-btn" id="qp-submit-btn"' + (q.type === "sequence" || q.type === "single" ? " disabled" : "") + '>Submit Answer</button>' +
           '<button class="qp-skip-btn" id="qp-skip-btn">Skip \u23ED</button>' +
+          '<button class="question-feedback-btn qp-feedback-btn" id="qp-feedback-btn" type="button">\uD83D\uDCDD Feedback</button>' +
           '<button class="report-issue-btn qp-report-btn" id="qp-report-btn" title="Copy question details to clipboard to report an issue">\uD83D\uDCCB Copy</button>' +
         '</div>' +
         '<span class="copy-issue-feedback" id="qp-copy-feedback" style="display:none;"></span>' +
@@ -1189,6 +1410,60 @@
       var qpCopyFeedback = document.getElementById("qp-copy-feedback");
       qpReportBtn.addEventListener("click", function () { copyIssue(q, "Quick Practice", qpCopyFeedback); });
     }
+    var qpFeedbackBtn = document.getElementById("qp-feedback-btn");
+    if (qpFeedbackBtn) qpFeedbackBtn.addEventListener("click", function () { showQuestionQualityPanel(container, q, "Quick Practice"); });
+  }
+
+  function summarizeCategoryScores(resultEntries) {
+    const categories = {};
+    (resultEntries || []).forEach(function (result) {
+      const category = getQuestionCategory(result.questionId);
+      const score = typeof result.partialScore === "number" ? result.partialScore : (result.isCorrect ? 1 : 0);
+      if (!categories[category]) categories[category] = { score: 0, total: 0 };
+      categories[category].score += score;
+      categories[category].total++;
+    });
+    const summary = {};
+    Object.keys(categories).forEach(function (category) {
+      summary[category] = categories[category].total ? Math.round((categories[category].score / categories[category].total) * 100) : 0;
+    });
+    return summary;
+  }
+
+  function getPreviousAttempt(type, key) {
+    const history = loadHistory();
+    return history.find(function (entry) {
+      if (entry.type !== type) return false;
+      return type === "quiz" ? entry.quizKey === key : type === "case" ? entry.caseKey === key : entry.quizKey === key;
+    }) || null;
+  }
+
+  function buildAttemptComparison(currentPct, previousAttempt, currentCategoryScores, previousCategoryScores) {
+    if (!previousAttempt) return "";
+    const previousPct = previousAttempt.type === "quiz" ? previousAttempt.quizPct : previousAttempt.type === "case" ? previousAttempt.casePct : previousAttempt.combinedPct;
+    if (typeof previousPct !== "number") return "";
+    const delta = currentPct - previousPct;
+    const deltaText = (delta > 0 ? "+" : "") + delta + " percentage point" + (Math.abs(delta) === 1 ? "" : "s");
+    const deltaClass = delta > 0 ? "attempt-up" : delta < 0 ? "attempt-down" : "attempt-flat";
+    let categoryText = "";
+    if (currentCategoryScores && previousCategoryScores) {
+      const changes = Object.keys(currentCategoryScores).filter(function (category) {
+        return typeof previousCategoryScores[category] === "number";
+      }).map(function (category) {
+        return { category: category, delta: currentCategoryScores[category] - previousCategoryScores[category] };
+      }).filter(function (change) { return change.delta !== 0; });
+      if (changes.length) {
+        changes.sort(function (a, b) { return b.delta - a.delta; });
+        const best = changes[0];
+        const worst = changes[changes.length - 1];
+        categoryText = '<p class="attempt-category-change">' +
+          (best.delta > 0 ? 'Most improved: <strong>' + best.category + ' (+' + best.delta + ')</strong>.' : '') +
+          (worst.delta < 0 ? (best.delta > 0 ? ' ' : '') + 'Needs attention: <strong>' + worst.category + ' (' + worst.delta + ')</strong>.' : '') +
+        '</p>';
+      }
+    }
+    return '<section class="attempt-comparison"><div><span class="attempt-comparison-label">Compared with your previous attempt</span><strong>' + previousPct + '% \u2192 ' + currentPct + '%</strong></div>' +
+      '<span class="attempt-delta ' + deltaClass + '">' + deltaText + '</span>' + categoryText + '</section>';
   }
 
   function onQpSubmit(container, q, qpSeqOrder) {
@@ -1253,7 +1528,8 @@
 
     var btnRow = container.querySelector(".qp-btn-row");
     if (btnRow) {
-      btnRow.innerHTML = '<button class="qp-next-btn" id="qp-next-btn">Next Question \u2192</button>';
+      btnRow.innerHTML = '<button class="qp-next-btn" id="qp-next-btn">Next Question \u2192</button>' +
+        '<button class="question-feedback-btn qp-feedback-btn" id="qp-feedback-btn" type="button">\uD83D\uDCDD Feedback</button>';
       document.getElementById("qp-next-btn").addEventListener("click", function () {
         if (!isCorrect) {
           // Run was reset — rebuild pool from all questions and start fresh
@@ -1264,6 +1540,7 @@
         }
         renderQuickPractice();
       });
+      document.getElementById("qp-feedback-btn").addEventListener("click", function () { showQuestionQualityPanel(container, q, "Quick Practice"); });
     }
 
     // Update streak display immediately
@@ -1594,6 +1871,8 @@
     html += buildProgressBar();
     if (inProgressCount > 0) html += buildInProgressBanner(inProgressCount);
     html += buildReadinessDashboard();
+    html += buildReviewLaterSection();
+    html += buildQuestionQualitySection();
 
     // ── Quick Practice (above Practice Quizzes) ──────────────────────────
     html += buildQuickPracticeSection();
@@ -1807,6 +2086,54 @@
     '</div>';
 
     setSelectionEl.innerHTML = html;
+
+    setSelectionEl.querySelectorAll(".review-later-remove-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        const key = btn.dataset.bookmarkKey;
+        saveReviewLaterBookmarks(loadReviewLaterBookmarks().filter(function (entry) { return entry.key !== key; }));
+        showSetSelection();
+      });
+    });
+    const reviewLaterClearBtn = document.getElementById("review-later-clear-btn");
+    if (reviewLaterClearBtn) {
+      reviewLaterClearBtn.addEventListener("click", function () {
+        showConfirm(
+          "Clear saved questions?",
+          "This will permanently remove every Review Later bookmark for this exam.",
+          function () {
+            saveReviewLaterBookmarks([]);
+            showSetSelection();
+          }
+        );
+      });
+    }
+
+    setSelectionEl.querySelectorAll(".question-quality-remove-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        const id = btn.dataset.feedbackId;
+        saveQuestionFeedback(loadQuestionFeedback().filter(function (entry) { return entry.id !== id; }));
+        showSetSelection();
+      });
+    });
+    setSelectionEl.querySelectorAll(".question-quality-copy-btn").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        const entry = loadQuestionFeedback().find(function (item) { return item.id === btn.dataset.feedbackId; });
+        if (entry) copyQuestionFeedback(entry, btn.parentElement.querySelector(".question-quality-copy-status"));
+      });
+    });
+    const questionQualityClearBtn = document.getElementById("question-quality-clear-btn");
+    if (questionQualityClearBtn) {
+      questionQualityClearBtn.addEventListener("click", function () {
+        showConfirm(
+          "Clear question feedback?",
+          "This will permanently remove every locally saved question-quality report for this exam.",
+          function () {
+            saveQuestionFeedback([]);
+            showSetSelection();
+          }
+        );
+      });
+    }
 
     // Render the Quick Practice card now that the container exists in the DOM
     renderQuickPractice();
@@ -2036,7 +2363,7 @@
       resetAllBtn.addEventListener("click", function () {
         showConfirm(
           "Reset All Progress?",
-          "This will permanently delete all quiz results, completion badges, case study progress, and attempt history. This cannot be undone.",
+          "This will permanently delete all quiz results, completion badges, case study progress, Review Later bookmarks, question-quality feedback, and attempt history. This cannot be undone.",
           function () {
             clearAllProgress();
             showSetSelection();
@@ -2403,6 +2730,9 @@
     nextBtn.style.display = "none";
 
     const q = shuffled[current];
+    const reviewLaterSource = getCurrentQuestionSource();
+    const isSavedForReview = isBookmarkedForReview(q, reviewLaterSource);
+    const savedForReviewCount = getCurrentSessionReviewLaterNumbers().length;
 
     // Phase banner for combined/standalone test case
     let phaseBanner = "";
@@ -2428,6 +2758,9 @@
     const quizNameBadge = quizName
       ? '<span class="quiz-name-badge">' + quizName + '</span>'
       : '';
+    const reviewLaterCountBadge = savedForReviewCount > 0
+      ? '<span class="review-later-progress">\uD83D\uDD16 ' + savedForReviewCount + ' saved</span>'
+      : '';
 
     questionEl.innerHTML =
       phaseBanner +
@@ -2436,13 +2769,16 @@
           ? '<span class="mode-indicator-badge mode-indicator-practice">\uD83D\uDCDA Practice</span>'
           : '<span class="mode-indicator-badge mode-indicator-test">\uD83D\uDCDD Test</span>' +
             '<button class="peek-btn" id="peek-btn" title="Peek at your current score">\uD83D\uDC41\uFE0F Peek</button>') +
-        quizNameBadge +
+        quizNameBadge + reviewLaterCountBadge +
       '</div>' +
       '<div class="question-type-badge ' + (q.type === "sequence" ? "sequence" : q.type === "multiple" ? "multiple" : "single") + '">' +
         (q.type === "sequence" ? "Sequence \u2014 select in the correct order" : q.type === "multiple" ? "Multiple Choice \u2014 select all that apply" : "Single Choice") +
       '</div>' +
       (q.context ? '<div class="question-context">' + q.context + '</div>' : '') +
       '<div class="question-text">' + q.text + '</div>' +
+      '<button class="review-later-btn' + (isSavedForReview ? ' saved' : '') + '" id="review-later-btn" type="button" title="Save this question to revisit later">' +
+        (isSavedForReview ? '\u2713 Saved for Review' : '\uD83D\uDD16 Review Later') + '</button>' +
+      '<button class="question-feedback-btn" id="question-feedback-btn" type="button" title="Give feedback about this question\'s wording or formatting">\uD83D\uDCDD Feedback</button>' +
       '<button class="report-issue-btn" id="report-issue-btn" title="Copy question details to clipboard to report an issue">\uD83D\uDCCB Copy Issue</button>' +
       '<span class="copy-issue-feedback" id="copy-issue-feedback" style="display:none;"></span>';
 
@@ -2456,6 +2792,20 @@
       var copyFeedbackEl = document.getElementById("copy-issue-feedback");
       reportIssueBtnEl.addEventListener("click", function () {
         copyIssue(shuffled[current], activeSet ? activeSet.label : "Unknown", copyFeedbackEl);
+      });
+    }
+    var reviewLaterBtnEl = document.getElementById("review-later-btn");
+    if (reviewLaterBtnEl) {
+      reviewLaterBtnEl.addEventListener("click", function () {
+        const isSaved = toggleReviewLaterBookmark(q, reviewLaterSource);
+        reviewLaterBtnEl.classList.toggle("saved", isSaved);
+        reviewLaterBtnEl.textContent = isSaved ? "\u2713 Saved for Review" : "\uD83D\uDD16 Review Later";
+      });
+    }
+    var questionFeedbackBtnEl = document.getElementById("question-feedback-btn");
+    if (questionFeedbackBtnEl) {
+      questionFeedbackBtnEl.addEventListener("click", function () {
+        showQuestionQualityPanel(questionEl, q, reviewLaterSource);
       });
     }
 
@@ -2703,6 +3053,8 @@
       nextBtn.textContent = "Next Question \u2192";
     } else if (caseStudyMode === "combined" && casePhase === "quiz") {
       nextBtn.textContent = "Continue to Case Study \u2192";
+    } else if (getCurrentSessionReviewLaterNumbers().length > 0) {
+      nextBtn.textContent = "Review Saved Questions \u2192";
     } else {
       nextBtn.textContent = "See Results";
     }
@@ -2735,7 +3087,9 @@
       if (caseStudyMode === "combined" && casePhase === "quiz") {
         startTestCasePhase();
       } else {
-        showSummary();
+        const reviewLaterNumbers = getCurrentSessionReviewLaterNumbers();
+        if (reviewLaterNumbers.length > 0 && !reviewMode) showReviewLaterCheckpoint(reviewLaterNumbers);
+        else showSummary();
       }
     }
   });
@@ -2841,6 +3195,8 @@
   // ── Standalone quiz summary (unchanged behaviour) ─────────────────────────
   function showQuizSummary() {
     const isWeak = activeSet && activeSet.key === "weak_topics";
+    const isRandom = activeSet && activeSet.key === "random";
+    const previousAttempt = (!reviewMode && !isWeak && !isRandom) ? getPreviousAttempt("quiz", activeSet.key) : null;
     const weakFollowUp = isWeak ? completeWeakTopicReview() : "";
     if (!isWeak) {
       saveCompletedState();
@@ -2853,8 +3209,6 @@
     const fullyCorrect   = results.filter(function (r) { return r.isCorrect; }).length;
     const partialResults = results.filter(function (r) { return !r.isCorrect && r.partialScore > 0; });
     const wrongCount     = results.filter(function (r) { return r.partialScore === 0; }).length;
-
-    const isRandom = activeSet.key === "random";
 
     const badge   = pct >= PASS_PCT ? "pass" : (pct >= MARGINAL_PCT ? "marginal" : "fail");
     const verdict = isWeak
@@ -2897,6 +3251,7 @@
 
     const bd = buildBreakdownHtml("Quiz", results, activeSet.data);
     const chart = buildCategoryChart(results, activeSet.data);
+    const comparison = (!isWeak && !isRandom) ? buildAttemptComparison(pct, previousAttempt, summarizeCategoryScores(results), previousAttempt && previousAttempt.categoryScores) : "";
 
     summaryEl.innerHTML =
       '<div class="summary-card ' + badge + '">' +
@@ -2910,6 +3265,7 @@
           '<span class="score-label">' + ((isRandom || isWeak) ? fullyCorrect + " / " + total + " correct" : examPoints + ' / 1000 ' + _examName + ' pts') + '</span>' +
         '</div>' +
         '<p class="score-verdict">' + verdict + '</p>' +
+        comparison +
         '<div class="summary-meta">' +
           '<span class="meta-item">\u23F1 ' + timeStr + '</span>' +
           '<span class="meta-item">\u2713 ' + fullyCorrect + ' correct</span>' +
@@ -2945,6 +3301,7 @@
 
   // ── Standalone test case summary ─────────────────────────────────────────
   function showStandaloneCaseSummary() {
+    const previousAttempt = !reviewMode ? getPreviousAttempt("case", caseStudy.key) : null;
     saveCompletedState();
     const total        = shuffled.length || results.length;
     const rawScore     = score;
@@ -2968,6 +3325,7 @@
 
     const bd = buildBreakdownHtml(caseStudy.label, results, caseStudy.questions);
     const chart = buildCategoryChart(results, caseStudy.questions);
+    const comparison = buildAttemptComparison(pct, previousAttempt, summarizeCategoryScores(results), previousAttempt && previousAttempt.categoryScores);
 
     summaryEl.innerHTML =
       '<div class="summary-card ' + badge + '">' +
@@ -2979,6 +3337,7 @@
           '<span class="score-label">' + fullyCorrect + ' / ' + total + ' correct</span>' +
         '</div>' +
         '<p class="score-verdict">' + verdict + '</p>' +
+        comparison +
         '<div class="summary-meta">' +
           '<span class="meta-item">\u2713 ' + fullyCorrect + ' correct</span>' +
           (partials.length > 0 ? '<span class="meta-item">\u25D1 ' + partials.length + ' partial</span>' : '') +
@@ -3007,6 +3366,7 @@
 
   // ── Combined summary (70% quiz + 30% case study) ──────────────────────────
   function showCombinedSummary() {
+    const previousAttempt = !reviewMode ? getPreviousAttempt("combined", activeSet.key) : null;
     saveCompletedState();
     // Current state holds test case results; savedQuizState holds quiz results
     const quizResultsArr = savedQuizState.results;
@@ -3057,6 +3417,7 @@
     const allResults = quizResultsArr.concat(caseResultsArr);
     const allData    = activeSet.data.concat(caseStudy.questions);
     const chart = buildCategoryChart(allResults, allData);
+    const comparison = buildAttemptComparison(combinedPct, previousAttempt, null, null);
 
     summaryEl.innerHTML =
       '<div class="summary-card ' + badge + '">' +
@@ -3070,6 +3431,7 @@
           '<span class="score-label">' + examPoints + ' / 1000 ' + _examName + ' pts</span>' +
         '</div>' +
         '<p class="score-verdict">' + verdict + '</p>' +
+        comparison +
         '<div class="combined-score-breakdown">' +
           '<div class="combined-score-row">' +
             '<span class="combined-score-label">\uD83D\uDCDA Quiz (' + activeSet.label + ')</span>' +
