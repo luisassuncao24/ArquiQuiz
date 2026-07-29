@@ -214,8 +214,8 @@
 
     /* ── Retired screenshot frames ──────────────────────────────────
        These images documented an older MB-820 interface. The guide is
-       shared by all exams, so it uses the live, exam-aware dashboard map
-       below instead of showing a misleading static screen. */
+       shared by all exams, so the guide shows only the matching current
+       dashboard capture rather than a misleading cross-exam screen. */
     .screenshot-wrap {
       display: none;
     }
@@ -253,6 +253,11 @@
       display: none;
       grid-template-columns: 1fr 1fr;
       gap: 1rem;
+      margin: 1.25rem 0;
+    }
+
+    .guide-dashboard-shot {
+      display: block;
       margin: 1.25rem 0;
     }
 
@@ -706,14 +711,14 @@
     </div>
   </div>
 
-  <div class="info-box tip"><strong>Current interface reference:</strong> This guide uses an exam-aware dashboard map instead of fixed screenshots, so opening it from PL-900, PL-400, or MB-820 always describes the selected exam rather than an older MB-820 layout.</div>
+  <div class="info-box tip"><strong>Current interface reference:</strong> This guide selects the matching PL-900, PL-400, or MB-820 dashboard capture, so it describes the selected exam rather than showing an older MB-820 layout.</div>
 
-  <div class="screenshot-wrap no-break">
-    <div class="screenshot-label">Figure 2.1 — Main Dashboard (top portion)</div>
+  <div class="guide-dashboard-shot no-break">
+    <div class="screenshot-label" id="dashboard-screenshot-label">Current dashboard — PL-900</div>
     <div class="screenshot-frame">
-      <img src="guide-assets/02_dashboard_full.png" alt="Main Dashboard">
+      <img id="dashboard-screenshot" src="guide-assets/pl900-dashboard.png" alt="PL-900 dashboard">
     </div>
-    <div class="screenshot-caption">The dashboard shows your preparation progress, in-progress sessions, Quick Practice, and all available quiz sets.</div>
+    <div class="screenshot-caption">A current capture of the selected exam dashboard, including preparation tools and Quick Practice.</div>
   </div>
 
   <h3>Dashboard Sections</h3>
@@ -1369,15 +1374,18 @@
     var guideConfig = {
       "MB-820": {
         label: "MB-820",
-        context: "This dashboard currently provides 4 quiz sets covering Business Central development, AL, extensions, and integration."
+        context: "This dashboard currently provides 4 quiz sets covering Business Central development, AL, extensions, and integration.",
+        screenshot: "guide-assets/mb820-dashboard.png"
       },
       "PL-400": {
         label: "PL-400",
-        context: "This dashboard currently provides 5 quiz sets covering Power Platform development, Dataverse, plug-ins, PCF controls, and ALM."
+        context: "This dashboard currently provides 5 quiz sets covering Power Platform development, Dataverse, plug-ins, PCF controls, and ALM.",
+        screenshot: "guide-assets/pl400-dashboard.png"
       },
       "PL-900": {
         label: "PL-900",
-        context: "This dashboard currently provides 4 quiz sets covering Power Platform fundamentals, apps, automation, analytics, AI, and governance."
+        context: "This dashboard currently provides 4 quiz sets covering Power Platform fundamentals, apps, automation, analytics, AI, and governance.",
+        screenshot: "guide-assets/pl900-dashboard.png"
       }
     };
     var config = guideConfig[exam];
@@ -1390,6 +1398,9 @@
     document.getElementById("guide-exam-context").textContent = config
       ? config.context
       : "Open an exam dashboard to see its current quiz sets, topics, and available case studies.";
+    document.getElementById("dashboard-screenshot").src = config ? config.screenshot : "guide-assets/pl900-dashboard.png";
+    document.getElementById("dashboard-screenshot").alt = label + " dashboard";
+    document.getElementById("dashboard-screenshot-label").textContent = "Current dashboard — " + label;
     document.title = label + " — ArquiQuiz User Guide";
   }());
 </script>
