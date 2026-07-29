@@ -350,7 +350,7 @@
                     Practice questions covering Power Apps, Power Automate, Dataverse, PCF components, plug-ins, custom connectors, and integrations.
                 </p>
                 <div class="hub-card-meta">
-                    <span class="hub-meta-item">&#128202; 2 quiz sets</span>
+                    <span class="hub-meta-item">&#128202; 5 quiz sets</span>
                     <span class="hub-meta-item">&#128203; Case studies</span>
                     <span class="hub-meta-item">&#8987; 120 min timer</span>
                 </div>
@@ -376,8 +376,7 @@
         </div>
 
         <div class="hub-footer">
-            <a href="user-guide.html" target="_blank">&#128214; User Guide</a>
-            &nbsp;&middot;&nbsp; Progress is saved per exam in your browser
+            Progress is saved per exam in your browser
             <button id="hub-version" class="hub-version version-button" type="button" aria-haspopup="dialog" aria-controls="version-history-overlay"></button>
         </div>
     </div>
@@ -399,8 +398,9 @@
         "use strict";
 
         // Release policy: increment this version and add a CHANGE_LOG entry for every deployed change.
-        var APP_VERSION = "1.0.16";
+        var APP_VERSION = "1.0.17";
         var CHANGE_LOG = [
+          { version: "1.0.17", text: "Moved the User Guide entry point to each exam dashboard, refreshed it for current ArquiQuiz features, and corrected hub quiz-set counts including PL-400's five sets." },
           { version: "1.0.16", text: "Restyled Review Later and Question Quality controls to match the quiz interface, and versioned shared assets so deployed pages reliably load the latest layout." },
           { version: "1.0.15", text: "Added Compare Attempts to quiz, case-study, and combined summaries, showing score movement and category improvements where previous category data is available." },
           { version: "1.0.14", text: "Added Question Quality Feedback for every question: local issue reports, optional comments, dashboard summaries, and copyable reports without answer keys." },

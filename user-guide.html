@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="theme.js"></script>
-  <title>MB-820 Quiz — User Guide</title>
+  <title>ArquiQuiz — User Guide</title>
   <style>
     /* ── Base reset ───────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -540,13 +540,13 @@
 <div class="cover-page">
   <p style="text-align:center; margin-bottom:1rem;"><a href="index.html" style="color:#6b7280; font-size:0.82rem; text-decoration:none;">&#8592; Back to ArquiQuiz</a></p>
   <div class="cover-badge">Official Documentation</div>
-  <h1 class="cover-title">MB-820 Quiz</h1>
-  <p class="cover-subtitle">Complete User Guide &amp; Feature Overview</p>
+  <h1 class="cover-title" id="guide-exam-title">ArquiQuiz</h1>
+  <p class="cover-subtitle" id="guide-exam-subtitle">Complete User Guide &amp; Feature Overview</p>
   <div class="cover-divider"></div>
   <div class="cover-meta">
-    <div class="cover-meta-item"><span class="cover-meta-icon">📚</span> 277 Questions</div>
-    <div class="cover-meta-item"><span class="cover-meta-icon">🎓</span> 4 Difficulty Levels</div>
-    <div class="cover-meta-item"><span class="cover-meta-icon">📋</span> 3 Case Studies</div>
+    <div class="cover-meta-item"><span class="cover-meta-icon">📚</span> Exam-specific question sets</div>
+    <div class="cover-meta-item"><span class="cover-meta-icon">🎓</span> Practice and Test modes</div>
+    <div class="cover-meta-item"><span class="cover-meta-icon">📋</span> Available case studies</div>
     <div class="cover-meta-item"><span class="cover-meta-icon">⚡</span> Quick Practice Mode</div>
     <div class="cover-meta-item"><span class="cover-meta-icon">📊</span> Progress Tracking</div>
   </div>
@@ -606,7 +606,7 @@
     <h2 class="section-title">Getting Started &amp; Access</h2>
   </div>
 
-  <p>This guide uses the MB-820 Quiz as its example. The same core controls are available across ArquiQuiz. No installation is required — simply open <code>index.html</code> in your browser.</p>
+  <p>This is the shared ArquiQuiz guide. It opens from each exam dashboard and covers the controls available for that exam. The exact number and names of quiz sets and case studies are shown on the dashboard itself.</p>
 
   <div class="callout-row no-break">
     <div class="callout-img">
@@ -676,11 +676,11 @@
     </div>
     <div class="feature-card">
       <div class="feature-card-title">⚡ Quick Practice</div>
-      <p>One question at a time, no timer, instant feedback. Draws from all 277 questions and prioritizes ones you previously got wrong.</p>
+      <p>One question at a time, no timer, instant feedback. Draws from the selected exam pool and prioritizes questions you previously got wrong.</p>
     </div>
     <div class="feature-card">
       <div class="feature-card-title">📚 Practice Quizzes</div>
-      <p>Four structured quiz sets (Beginner → Official) each with a 120-minute timer. Can be combined with a Case Study.</p>
+      <p>Each exam provides its own structured quiz sets with a 120-minute timer. Available sets can be combined with a Case Study when the exam includes one.</p>
     </div>
     <div class="feature-card">
       <div class="feature-card-title">🎲 Random Practice</div>
@@ -688,7 +688,7 @@
     </div>
     <div class="feature-card">
       <div class="feature-card-title">📋 Case Studies</div>
-      <p>3 standalone scenario-based test cases (Alpine, Contoso, Fabrikam). Can also be run after a Practice Quiz for a combined score.</p>
+      <p>Available scenario-based case studies can be run alone or after a Practice Quiz for a combined score.</p>
     </div>
     <div class="feature-card">
       <div class="feature-card-title">💾 Export / Import</div>
@@ -697,6 +697,22 @@
     <div class="feature-card">
       <div class="feature-card-title">🗑️ Reset All Progress</div>
       <p>Wipes all saved data including scores, history, and timers. Individual quiz/case reset buttons are also available per card.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-card-title">📊 Exam Readiness</div>
+      <p>Combines saved results into an overall readiness score, strongest area, areas to improve, and a recommended next action.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-card-title">🎯 Weak Topics Challenge</div>
+      <p>Missed categories create a focused 10-question review, followed by scheduled revisits after 1 day and 3 days.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-card-title">🔖 Review Later</div>
+      <p>Save a question in Practice or Test mode. The end-of-quiz check lists saved question numbers without revealing answers.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-card-title">📝 Question Quality</div>
+      <p>Report unclear wording, incomplete questions, answer concerns, or formatting issues without including answer keys.</p>
     </div>
   </div>
 </div>
@@ -728,7 +744,7 @@
 
   <h3>How it works</h3>
   <ul class="bullet">
-    <li>Questions are drawn from <strong>all 277 questions</strong> across every quiz set and case study.</li>
+    <li>Questions are drawn from the available question pool for the current exam.</li>
     <li>Questions you previously answered <strong>incorrectly appear first</strong>, then unseen ones, then correctly-answered ones.</li>
     <li>Clicking <strong>Submit Answer</strong> immediately reveals whether you were right or wrong, along with the explanation.</li>
     <li>Use <strong>Skip ⏭</strong> to jump over a question you're not ready for.</li>
@@ -769,28 +785,20 @@
     <h2 class="section-title">Practice Quiz Sets</h2>
   </div>
 
-  <p>There are <strong>four structured quiz sets</strong> designed to progressively challenge you, plus a random practice option. Each has a 120-minute countdown timer mirroring the actual exam conditions.</p>
+  <p>Each exam has its own structured quiz sets, plus Random Practice. The dashboard always shows the current set names and question counts. Structured quizzes use a 120-minute countdown timer mirroring exam conditions.</p>
 
   <div class="quiz-sets no-break">
     <div class="quiz-set-card beginner">
-      <div class="quiz-set-name">🟢 Beginner Quiz</div>
-      <p>66 foundational questions covering core Business Central concepts and terminology. Perfect starting point for newcomers.</p>
+      <div class="quiz-set-name">🟢 Foundation Sets</div>
+      <p>Start with the introductory or foundation set shown for the current exam to establish core terminology and concepts.</p>
     </div>
     <div class="quiz-set-card intermediate">
-      <div class="quiz-set-name">🟡 Intermediate Quiz</div>
-      <p>67 questions bridging foundational knowledge and advanced Business Central topics. For those with some BC experience.</p>
-    </div>
-    <div class="quiz-set-card proficient">
-      <div class="quiz-set-name">🔴 Proficient Quiz</div>
-      <p>67 scenario-based questions balanced across the full MB-820 exam: AL development, events, testing, permissions, API pages, XMLports, telemetry, and deployment.</p>
-    </div>
-    <div class="quiz-set-card official">
-      <div class="quiz-set-name">📋 Official Questions</div>
-      <p>77 official MB-820 exam questions covering deployment architecture, AL development, permissions, XMLports, queries, HTTP, reports, telemetry, and more.</p>
+      <div class="quiz-set-name">🟡 Progression Sets</div>
+      <p>Move through the remaining sets in dashboard order. Their labels and descriptions identify the focus and difficulty for the selected exam.</p>
     </div>
     <div class="quiz-set-card random" style="grid-column: span 2;">
       <div class="quiz-set-name">🎲 Random Practice Quiz</div>
-      <p>67 randomly selected questions drawn from <em>all</em> available sets. Great for mixed revision. Note: results do <strong>not</strong> count towards the preparation progress bar.</p>
+      <p>Uses a mixed selection from the available sets for the current exam. It is useful for revision and does <strong>not</strong> affect preparation progress.</p>
     </div>
   </div>
 
@@ -805,7 +813,7 @@
   </ul>
 
   <h3>📋 Attaching a Case Study</h3>
-  <p>Each Practice Quiz card has a <strong>Case Study (optional)</strong> dropdown. Selecting a case study (Alpine, Contoso, or Fabrikam) runs the quiz and the case study back-to-back, with a <strong>combined weighted score</strong> (70% quiz + 30% case study) shown on the results screen.</p>
+  <p>When an exam has case studies, its Practice Quiz cards offer a <strong>Case Study (optional)</strong> dropdown. Selecting one runs the quiz and the case study back-to-back, with a <strong>combined weighted score</strong> (70% quiz + 30% case study) shown on the results screen.</p>
 
   <div class="info-box good">
     <strong>✅ Pass threshold:</strong> A score of <strong>70% or higher</strong> is required to mark a quiz or case study as completed in the preparation progress bar.
@@ -933,6 +941,9 @@
 
   <h3>📋 Copy Issue Button</h3>
   <p>Every question has a small <strong>📋 Copy Issue</strong> button. Clicking it copies the question text and visible choices to a formatted report template — ready to paste into a Teams chat to report a bug or typo. It never copies the answer key.</p>
+
+  <h3>🔖 Review Later and 📝 Feedback</h3>
+  <p>Use <strong>Review Later</strong> in either mode to save a question for follow-up. The in-quiz counter shows how many questions are saved; at the end, a review check lists their question numbers without showing answers. Use <strong>Feedback</strong> to flag confusing wording, incomplete content, answer concerns, or typos. Feedback saves only the question, source, selected feedback type, and optional comment — never the correct answer or your answer.</p>
 
   <div class="info-box tip">
     <strong>💡 Partial credit:</strong> No partial credit is awarded for multiple-choice questions — you must select <em>all</em> correct options and no incorrect ones to receive full credit.
@@ -1068,7 +1079,12 @@
     <li>Count of correct and wrong answers</li>
     <li>List of <strong>questions you got wrong</strong>, showing your answer vs. the correct answer</li>
     <li>Confetti animation 🎉 for a passing score</li>
+    <li><strong>Compare Attempts</strong> — after a repeat attempt, shows score movement and, when available, category improvements</li>
   </ul>
+
+  <div class="info-box tip">
+    <strong>🎯 Weak Topics Challenge:</strong> A completed quiz with missed questions creates a focused 10-question review. Completing that review schedules follow-ups after 1 day and 3 days. It is separate from exam preparation completion.
+  </div>
 
   <div class="feature-grid no-break" style="margin-top:1rem">
     <div class="feature-card">
@@ -1094,7 +1110,7 @@
     <h2 class="section-title">Case Studies</h2>
   </div>
 
-  <p>Case Studies are <strong>scenario-based question sets</strong> drawn from realistic Business Central extension development projects. They are more advanced and closely mirror the style of questions found in the actual MB-820 exam.</p>
+  <p>Case Studies are <strong>scenario-based question sets</strong> available for exams that include them. They use a longer scenario context and help you practise applying knowledge to realistic situations.</p>
 
   <div class="screenshot-pair no-break">
     <div>
@@ -1114,20 +1130,7 @@
   </div>
 
   <h3>Available Case Studies</h3>
-  <div class="quiz-sets no-break" style="grid-template-columns: repeat(3,1fr)">
-    <div class="quiz-set-card official">
-      <div class="quiz-set-name">🏔️ Alpine Ski House</div>
-      <p><strong>13 questions</strong> — Housekeeping Management extension, POS integration, custom API design, non-conformity tracking.</p>
-    </div>
-    <div class="quiz-set-card intermediate">
-      <div class="quiz-set-name">🏭 Contoso Manufacturing</div>
-      <p><strong>12 questions</strong> — Extension lifecycle, telemetry, REST APIs, AL development patterns, debugging, upgrade codeunits.</p>
-    </div>
-    <div class="quiz-set-card beginner">
-      <div class="quiz-set-name">🔧 Fabrikam Inc.</div>
-      <p><strong>10 questions</strong> — AL extension development, API design, XMLport, translations, report layouts, telemetry, upgrade codeunits.</p>
-    </div>
-  </div>
+  <p>The current exam dashboard lists every available case study and its question count. If no cards appear, that exam does not include case studies.</p>
 
   <h3>Two ways to take a Case Study</h3>
   <div class="feature-grid no-break">
@@ -1153,11 +1156,11 @@
   <p>The quiz tracks your study progress in several ways, all stored locally in your browser via <code>localStorage</code>.</p>
 
   <h3>🎯 Preparation Progress Bar</h3>
-  <p>The bar at the top of the dashboard shows how many of the <strong>7 items</strong> (4 quizzes + 3 case studies) you have completed with ≥ 70%:</p>
+  <p>The bar at the top of the dashboard shows how many available quiz sets and case studies you have completed with ≥ 70%. The number adapts to the selected exam.</p>
 
   <div class="progress-visual no-break">
     <div class="progress-label">
-      <span>🎯 MB-820 Preparation Progress</span>
+      <span>🎯 Exam Preparation Progress</span>
       <span>3 / 7 (43%)</span>
     </div>
     <div class="progress-bar-track">
@@ -1245,11 +1248,11 @@
 
   <h3>📅 Recommended Study Path</h3>
   <ol class="step-list no-break">
-    <li><div class="step-num">1</div><div class="step-text"><strong>Start with Beginner Quiz in Practice Mode</strong> — Learn the terminology and foundational concepts before attempting harder questions.</div></li>
+    <li><div class="step-num">1</div><div class="step-text"><strong>Start with the first available set in Practice Mode</strong> — Learn the terminology and foundational concepts before attempting harder questions.</div></li>
     <li><div class="step-num">2</div><div class="step-text"><strong>Use Quick Practice daily</strong> — Even 5–10 minutes per day reinforces weak areas since failed questions surface first.</div></li>
-    <li><div class="step-num">3</div><div class="step-text"><strong>Progress through Intermediate → Proficient → Official</strong> — Each level adds new exam topic coverage.</div></li>
-    <li><div class="step-num">4</div><div class="step-text"><strong>Tackle Case Studies standalone first</strong> — Get familiar with the scenario context before combining them with a timed quiz.</div></li>
-    <li><div class="step-num">5</div><div class="step-text"><strong>Do a final full combined run in Test Mode</strong> — Simulate the actual exam by picking Proficient or Official + a Case Study, switching to Test Mode.</div></li>
+    <li><div class="step-num">3</div><div class="step-text"><strong>Progress through the available sets in dashboard order</strong> — Each set adds more exam-topic coverage.</div></li>
+    <li><div class="step-num">4</div><div class="step-text"><strong>Complete due Weak Topics Challenges</strong> — Use the 1-day and 3-day follow-ups to reinforce what you missed.</div></li>
+    <li><div class="step-num">5</div><div class="step-text"><strong>Use Test Mode for a final mixed run</strong> — Check your readiness, then use Compare Attempts to measure improvement.</div></li>
   </ol>
 
   <h3>🎯 Pro Tips</h3>
@@ -1294,9 +1297,9 @@
 
 <!-- ════════════════════════════════════════════════════ FOOTER ══════ -->
 <div class="footer">
-  <p><strong>MB-820 Quiz</strong> — Microsoft Dynamics 365 Business Central Functional Consultant Exam Prep</p>
+  <p><strong>ArquiQuiz</strong> — Certification Exam Preparation</p>
   <p style="margin-top:.3rem">This guide covers all features of the quiz application. For the latest version, refer to the repository.</p>
-  <p style="margin-top:.3rem">📌 <strong>Pass mark: 70%</strong> &nbsp;·&nbsp; ⏱ <strong>Exam duration: 120 minutes</strong> &nbsp;·&nbsp; 📚 <strong>277 practice questions</strong> &nbsp;·&nbsp; 📋 <strong>3 case studies</strong></p>
+  <p style="margin-top:.3rem">📌 <strong>Pass mark: 70%</strong> &nbsp;·&nbsp; ⏱ <strong>Structured quiz timer: 120 minutes</strong> &nbsp;·&nbsp; 📚 <strong>Question sets vary by exam</strong></p>
 </div>
 
 <!-- ════════════════════════════════════════════════ PRINT BUTTON ════ -->
@@ -1307,6 +1310,23 @@
     box-shadow:0 4px 14px rgba(29,78,216,.4);display:flex;align-items:center;gap:.5rem;
   ">🖨️ Print / Save as PDF</button>
 </div>
+
+<script>
+  (function () {
+    var exam = new URLSearchParams(window.location.search).get("exam");
+    var labels = {
+      "MB-820": "MB-820",
+      "PL-400": "PL-400",
+      "PL-900": "PL-900"
+    };
+    var label = labels[exam] || "ArquiQuiz";
+    document.getElementById("guide-exam-title").textContent = label === "ArquiQuiz" ? label : label + " User Guide";
+    document.getElementById("guide-exam-subtitle").textContent = label === "ArquiQuiz"
+      ? "Complete User Guide & Feature Overview"
+      : "Current features and study workflow for " + label;
+    document.title = label + " — ArquiQuiz User Guide";
+  }());
+</script>
 
 </body>
 </html>
