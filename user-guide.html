@@ -212,9 +212,12 @@
     p { margin-bottom: .8rem; color: #374151; }
     p:last-child { margin-bottom: 0; }
 
-    /* ── Screenshot frames ────────────────────────────────────────── */
+    /* ── Retired screenshot frames ──────────────────────────────────
+       These images documented an older MB-820 interface. The guide is
+       shared by all exams, so it uses the live, exam-aware dashboard map
+       below instead of showing a misleading static screen. */
     .screenshot-wrap {
-      margin: 1.25rem 0;
+      display: none;
     }
     .screenshot-wrap.no-break { page-break-inside: avoid; break-inside: avoid; }
     .screenshot-label {
@@ -247,7 +250,7 @@
 
     /* Side-by-side screenshots */
     .screenshot-pair {
-      display: grid;
+      display: none;
       grid-template-columns: 1fr 1fr;
       gap: 1rem;
       margin: 1.25rem 0;
@@ -289,6 +292,38 @@
       gap: .4rem;
     }
     .feature-card p { font-size: .82rem; color: #6b7280; margin: 0; }
+
+    /* ── Current interface map ───────────────────────────────────── */
+    .current-interface-map {
+      margin: 1.15rem 0;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      background: #fff;
+    }
+    .current-interface-map-header {
+      padding: .8rem 1rem;
+      background: linear-gradient(135deg, #eff6ff, #f8fafc);
+      border-bottom: 1px solid var(--border);
+    }
+    .current-interface-map-header strong { color: #1d4ed8; font-size: .95rem; }
+    .current-interface-map-header p { margin: .2rem 0 0; font-size: .8rem; color: #475569; }
+    .current-interface-map-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: .7rem;
+      padding: .85rem;
+    }
+    .current-interface-map-item {
+      border: 1px solid var(--border);
+      background: var(--gray-bg);
+      border-radius: 7px;
+      padding: .7rem;
+      font-size: .78rem;
+      color: #475569;
+    }
+    .current-interface-map-item strong { display: block; color: #1f2937; margin-bottom: .18rem; }
 
     /* ── Step list ────────────────────────────────────────────────── */
     .step-list { list-style: none; padding: 0; margin: .75rem 0 1rem; }
@@ -655,6 +690,23 @@
   </div>
 
   <p>After entering the hub password, choose an exam and you land on its <strong>Main Dashboard</strong> — your hub for all quiz activities. It is organized into distinct sections that scroll vertically.</p>
+
+  <div class="current-interface-map no-break" aria-label="Current dashboard map">
+    <div class="current-interface-map-header">
+      <strong id="live-exam-label">Selected exam dashboard</strong>
+      <p id="guide-exam-context">Open the dashboard to see its current quiz sets, topics, and available case studies.</p>
+    </div>
+    <div class="current-interface-map-grid">
+      <div class="current-interface-map-item"><strong>Preparation Progress</strong>Your completed-score progress for this exam.</div>
+      <div class="current-interface-map-item"><strong>Quick Practice</strong>One question at a time with immediate feedback.</div>
+      <div class="current-interface-map-item"><strong>Quiz Sets</strong>Structured timed practice for the selected exam.</div>
+      <div class="current-interface-map-item"><strong>Exam Readiness</strong>A focused summary of strengths and next steps.</div>
+      <div class="current-interface-map-item"><strong>Weak Topics</strong>A 10-question challenge based on missed categories.</div>
+      <div class="current-interface-map-item"><strong>Review &amp; Feedback</strong>Private saved-question and quality-report tools.</div>
+    </div>
+  </div>
+
+  <div class="info-box tip"><strong>Current interface reference:</strong> This guide uses an exam-aware dashboard map instead of fixed screenshots, so opening it from PL-900, PL-400, or MB-820 always describes the selected exam rather than an older MB-820 layout.</div>
 
   <div class="screenshot-wrap no-break">
     <div class="screenshot-label">Figure 2.1 — Main Dashboard (top portion)</div>
@@ -1314,16 +1366,30 @@
 <script>
   (function () {
     var exam = new URLSearchParams(window.location.search).get("exam");
-    var labels = {
-      "MB-820": "MB-820",
-      "PL-400": "PL-400",
-      "PL-900": "PL-900"
+    var guideConfig = {
+      "MB-820": {
+        label: "MB-820",
+        context: "This dashboard currently provides 4 quiz sets covering Business Central development, AL, extensions, and integration."
+      },
+      "PL-400": {
+        label: "PL-400",
+        context: "This dashboard currently provides 5 quiz sets covering Power Platform development, Dataverse, plug-ins, PCF controls, and ALM."
+      },
+      "PL-900": {
+        label: "PL-900",
+        context: "This dashboard currently provides 4 quiz sets covering Power Platform fundamentals, apps, automation, analytics, AI, and governance."
+      }
     };
-    var label = labels[exam] || "ArquiQuiz";
+    var config = guideConfig[exam];
+    var label = config ? config.label : "ArquiQuiz";
     document.getElementById("guide-exam-title").textContent = label === "ArquiQuiz" ? label : label + " User Guide";
     document.getElementById("guide-exam-subtitle").textContent = label === "ArquiQuiz"
       ? "Complete User Guide & Feature Overview"
       : "Current features and study workflow for " + label;
+    document.getElementById("live-exam-label").textContent = label === "ArquiQuiz" ? "ArquiQuiz dashboard" : label + " dashboard";
+    document.getElementById("guide-exam-context").textContent = config
+      ? config.context
+      : "Open an exam dashboard to see its current quiz sets, topics, and available case studies.";
     document.title = label + " — ArquiQuiz User Guide";
   }());
 </script>
