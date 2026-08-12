@@ -74,12 +74,29 @@
     return pool;
   })();
 
-  const RANDOM_QUIZ_COUNT = typeof _cfg.randomQuizCount === "number" ? _cfg.randomQuizCount : 67;
+  // Microsoft certification exams do not use a fixed 67-question format.
+  // Use a fresh, realistic-sized draw for each Random Practice attempt.
+  const RANDOM_QUIZ_MIN = typeof _cfg.randomQuizMin === "number" ? _cfg.randomQuizMin : 40;
+  const RANDOM_QUIZ_MAX = Math.max(
+    RANDOM_QUIZ_MIN,
+    typeof _cfg.randomQuizMax === "number" ? _cfg.randomQuizMax : 45
+  );
+  const RANDOM_QUIZ_COUNT_LABEL = RANDOM_QUIZ_MIN === RANDOM_QUIZ_MAX
+    ? String(RANDOM_QUIZ_MIN)
+    : RANDOM_QUIZ_MIN + "\u2013" + RANDOM_QUIZ_MAX;
+
+  function getRandomQuizQuestionCount() {
+    return Math.min(
+      ALL_QUESTIONS.length,
+      RANDOM_QUIZ_MIN + Math.floor(Math.random() * (RANDOM_QUIZ_MAX - RANDOM_QUIZ_MIN + 1))
+    );
+  }
+
   const RANDOM_SET = {
     key: "random",
     label: "Random Practice Quiz",
     difficulty: "random",
-    description: RANDOM_QUIZ_COUNT + " randomly selected questions drawn from all available quizzes. Does not count towards preparation progress.",
+    description: RANDOM_QUIZ_COUNT_LABEL + " randomly selected questions drawn from all available quizzes. A new attempt receives a fresh question count. Does not count towards preparation progress.",
     data: ALL_QUESTIONS
   };
   const WEAK_TOPICS_SET = {
@@ -1996,7 +2013,7 @@
         '<div class="set-card" id="random-quiz-card">' +
           '<div class="set-card-header">' +
             '<span class="set-card-title">' + RANDOM_SET.label + '</span>' +
-            '<span class="set-card-count">' + RANDOM_QUIZ_COUNT + ' questions</span>' +
+            '<span class="set-card-count">' + RANDOM_QUIZ_COUNT_LABEL + ' questions</span>' +
           '</div>' +
           '<span class="difficulty-badge diff-random">\uD83C\uDFB2 Random</span>' +
           '<p class="set-card-desc">' + RANDOM_SET.description + '</p>' +
@@ -2557,9 +2574,10 @@
       }
     }
 
-    // Fresh start — pick RANDOM_QUIZ_COUNT questions from the full pool
+    // Fresh start — choose a new count within the configured range, then draw
+    // that many questions from the full pool.
     clearProgress();
-    shuffled     = shuffle(ALL_QUESTIONS).slice(0, RANDOM_QUIZ_COUNT);
+    shuffled     = shuffle(ALL_QUESTIONS).slice(0, getRandomQuizQuestionCount());
     current      = 0;
     score        = 0;
     results      = [];
