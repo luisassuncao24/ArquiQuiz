@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="theme.js"></script>
-    <link rel="stylesheet" href="styles.css?v=1.2.0-beta.5">
-    <link rel="stylesheet" href="theme.css?v=1.2.0-beta.5">
-    <link rel="stylesheet" href="interactive-question.css?v=1.2.0-beta.5">
+    <link rel="stylesheet" href="styles.css?v=1.2.0-beta.6">
+    <link rel="stylesheet" href="theme.css?v=1.2.0-beta.6">
+    <link rel="stylesheet" href="interactive-question.css?v=1.2.0-beta.6">
     <title>MB-820 Quiz</title>
 </head>
 <body>
@@ -92,16 +92,16 @@
         </div>
     </div>
 
-    <script src="question-model.js?v=1.2.0-beta.5"></script>
-    <script src="interactive-question.js?v=1.2.0-beta.5"></script>
+    <script src="question-model.js?v=1.2.0-beta.6"></script>
+    <script src="interactive-question.js?v=1.2.0-beta.6"></script>
     <script src="questions.js"></script>
     <script src="questions2.js"></script>
     <script src="questionsOfficial.js"></script>
     <script src="testcases.js"></script>
     <script src="mb820-revisions.js"></script>
-    <script src="interactive-question-pilots.js?v=1.2.0-beta.5"></script>
+    <script src="interactive-question-pilots.js?v=1.2.0-beta.6"></script>
     <script>
-      var mb820InteractivePilot = window.ArquiQuizInteractivePilots.createPilotSet("mb820", [
+      var mb820InteractiveRelease = window.ArquiQuizInteractivePilots.createRelease("mb820", [
         questionsSet2,
         questions,
         questionsOfficial
@@ -112,9 +112,11 @@
         examTitle: "MB-820 Quiz",
         randomQuizMin: 40,
         randomQuizMax: 45,
-        interactivePilotSet: mb820InteractivePilot
+        interactiveLayouts: mb820InteractiveRelease.enabled,
+        interactiveQuestionReplacements: mb820InteractiveRelease.byId,
+        interactiveQuestionCompatibility: mb820InteractiveRelease.compatibilityById
       };
     </script>
-    <script src="app.js?v=1.2.0-beta.5"></script>
+    <script src="app.js?v=1.2.0-beta.6"></script>
 </body>
 </html>

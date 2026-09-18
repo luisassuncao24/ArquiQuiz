@@ -70,7 +70,16 @@
       ]
     : [];
 
-  const _baseQuestionSets = _cfg.questionSets || _defaultQuestionSets;
+  const _rawQuestionSets = _cfg.questionSets || _defaultQuestionSets;
+  const _interactiveQuestionReplacements = _cfg.interactiveQuestionReplacements || {};
+  const _interactiveQuestionCompatibility = _cfg.interactiveQuestionCompatibility || _interactiveQuestionReplacements;
+  const _baseQuestionSets = _rawQuestionSets.map(function (set) {
+    return Object.assign({}, set, {
+      data: Array.isArray(set.data) ? set.data.map(function (question) {
+        return _interactiveQuestionReplacements[String(question.id)] || question;
+      }) : []
+    });
+  });
   const QUESTION_SETS = _cfg.interactivePilotSet && Array.isArray(_cfg.interactivePilotSet.data) &&
     _cfg.interactivePilotSet.data.length > 0
     ? _baseQuestionSets.concat([_cfg.interactivePilotSet])
@@ -3310,13 +3319,25 @@
   }
 
   function getResultAnswerDisplay(question, result) {
-    if (isCanonicalInteractiveQuestion(question) || result.answerFormat === "interactive-v1") {
+    const interactiveQuestion = isCanonicalInteractiveQuestion(question)
+      ? question
+      : _interactiveQuestionCompatibility[String(result.questionId)];
+    if (result.answerFormat === "interactive-v1" && interactiveQuestion) {
+      return {
+        selected: formatInteractiveAnswer(interactiveQuestion, result.selected || {}),
+        correct: formatInteractiveAnswer(interactiveQuestion, result.correct || {})
+      };
+    }
+    if (isCanonicalInteractiveQuestion(question) && !Array.isArray(result.selected)) {
       return {
         selected: formatInteractiveAnswer(question, result.selected || {}),
         correct: formatInteractiveAnswer(question, result.correct || {})
       };
     }
-    const choices = Array.isArray(question.choices) ? question.choices : [];
+    const legacyQuestion = question.interactiveMigration && question.interactiveMigration.legacyQuestion;
+    const choices = legacyQuestion && Array.isArray(legacyQuestion.choices)
+      ? legacyQuestion.choices
+      : (Array.isArray(question.choices) ? question.choices : []);
     const selected = Array.isArray(result.selected) ? result.selected : [];
     const correct = Array.isArray(result.correct) ? result.correct : [];
     return {

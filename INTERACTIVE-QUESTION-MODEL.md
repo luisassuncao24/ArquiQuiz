@@ -2,7 +2,7 @@
 
 ArquiQuiz schema version 1 adds two canonical interactive question types without changing the existing `single`, `multiple`, or legacy `sequence` formats. The schema is shared by every exam wizard through `question-model.js`.
 
-The shared renderer is provided by `interactive-question.js` and `interactive-question.css`. Phase 3 connects it to quiz sessions. Phases 4 and 5 add and expand a local-only, source-backed migration pilot without modifying the production question banks.
+The shared renderer is provided by `interactive-question.js` and `interactive-question.css`. Phase 3 connects it to quiz sessions. Phases 4 and 5 validate a local, source-backed migration pilot, and Phase 6 promotes the approved migrations into normal quiz use through runtime replacement.
 
 ## Design guarantees
 
@@ -158,14 +158,14 @@ Interactive session results use stable IDs and the following versioned shape:
 
 `tests/app-interactive-integration.html` exercises the complete flow in both modes, including Quick Practice, case studies, summaries, saved results, Review Later, and issue copying.
 
-## Phases 4–5 pilot migration
+## Phases 4–6 migration and release
 
-`interactive-question-pilots.js` builds canonical copies of 14 existing source questions only when local preview is enabled:
+`interactive-question-pilots.js` builds canonical copies of 14 existing source questions:
 
 - PL-900: questions 9057, 9073, 9112, 9313, 9335, 9343, and 9351;
 - PL-400: questions 2007, 2080, 2098, 2223, 3046, and 3156;
 - MB-820: question 564 (ordering).
 
-The originals remain untouched and continue to power the normal quizzes. The pilot set is excluded from preparation progress, Random Practice, Quick Practice, Exam Readiness, weak-topic scheduling, and attempt history. MB-800 is intentionally excluded because its Beta questions are original practice content and are not converted source drag-and-drop questions.
+The source arrays remain untouched. At page startup, the app replaces each approved source record in its normal set with the canonical copy that has the same numeric ID. As a result, saved sessions continue to resolve the question, and no duplicate card or question is introduced. A compatibility snapshot retains the old choices for historical result display. `?legacyInteractions=1` disables the runtime replacements for controlled comparison while retaining enough canonical metadata to review results previously saved in the new format. MB-800 is intentionally excluded because its Beta questions are original practice content and are not converted source drag-and-drop questions.
 
-Use `tests/interactive-pilots-browser.html` to verify source traceability, answer mappings, schema validity, local-only gating, analytics isolation flags, and immutability of the production banks. The detailed migration record is in `INTERACTIVE-PILOT-AUDIT.md`. Historical-progress migration and full-bank conversion remain separate later phases.
+Use `tests/interactive-pilots-browser.html` to verify source traceability, answer mappings, schema validity, rollback behavior, compatibility snapshots, and immutability of the source banks. `tests/interactive-pilot-app-browser.html` verifies the public runtime replacements inside normal sets and both directions of saved-result compatibility. The detailed migration record is in `INTERACTIVE-PILOT-AUDIT.md`.

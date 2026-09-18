@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>ArquiQuiz interactive pilot migration test</title>
+  <title>ArquiQuiz interactive migration release test</title>
 </head>
 <body data-status="running">RUNNING</body>
 
@@ -55,6 +55,8 @@
       assert(!pilots.isLocalPreviewEnabled({ protocol: "https:", hostname: "example.com", search: "?interactivePreview=1" }), "Public HTTPS preview was allowed.");
       assert(pilots.isLocalPreviewEnabled({ protocol: "file:", hostname: "", search: "?interactivePreview=1" }), "Local-file preview was rejected.");
       assert(pilots.isLocalPreviewEnabled({ protocol: "http:", hostname: "localhost", search: "?interactivePreview=1" }), "Localhost preview was rejected.");
+      assert(pilots.isLegacyInteractionFallbackEnabled({ search: "?legacyInteractions=1" }), "Legacy rollback switch was rejected.");
+      assert(!pilots.isLegacyInteractionFallbackEnabled({ search: "" }), "Legacy rollback switch activated without a query flag.");
 
       var expectedIds = {
         pl900: [9057, 9073, 9112, 9313, 9351, 9335, 9343],
@@ -71,16 +73,22 @@
         });
       });
 
-      var sets = [
-        pilots.createPilotSet("pl900", pl900Banks, { force: true }),
-        pilots.createPilotSet("pl400", pl400Banks, { force: true }),
-        pilots.createPilotSet("mb820", mb820Banks, { force: true })
+      var releases = [
+        pilots.createRelease("pl900", pl900Banks),
+        pilots.createRelease("pl400", pl400Banks),
+        pilots.createRelease("mb820", mb820Banks)
       ];
+      var sets = releases.map(function (release) { return { data: release.questions }; });
 
-      assert(sets[0].data.length === 7, "PL-900 pilot count changed.");
-      assert(sets[1].data.length === 6, "PL-400 pilot count changed.");
-      assert(sets[2].data.length === 1, "MB-820 pilot count changed.");
-      assert(pilots.createPilotSet("mb800", [mb800Questions], { force: true }) === null, "MB-800 received a fabricated source migration.");
+      assert(releases[0].enabled && sets[0].data.length === 7, "PL-900 release count changed.");
+      assert(releases[1].enabled && sets[1].data.length === 6, "PL-400 release count changed.");
+      assert(releases[2].enabled && sets[2].data.length === 1, "MB-820 release count changed.");
+      assert(pilots.createRelease("mb800", [mb800Questions]) === null, "MB-800 received a fabricated source migration.");
+      var fallback = pilots.createRelease("pl900", pl900Banks, { location: { search: "?legacyInteractions=1" } });
+      assert(!fallback.enabled && fallback.questions.length === 0 && Object.keys(fallback.byId).length === 0, "Legacy rollback did not disable public replacements.");
+      assert(Object.keys(fallback.compatibilityById).length === 7, "Legacy rollback discarded new-format result compatibility.");
+      var forcedPilot = pilots.createPilotSet("pl900", pl900Banks, { force: true });
+      assert(forcedPilot.previewOnly && forcedPilot.countsTowardPreparation === false && forcedPilot.includeInRandom === false, "Historical pilot isolation flags changed.");
       Object.keys(expectedIds).forEach(function (examKey) {
         expectedIds[examKey].forEach(function (id, index) {
           assert(JSON.stringify(findQuestion(banksByExam[examKey], id)) === originalSnapshots[examKey][index], examKey + " source question was mutated: " + id);
@@ -88,17 +96,17 @@
       });
 
       sets.forEach(function (set) {
-        assert(set.previewOnly && set.countsTowardPreparation === false && set.includeInRandom === false, "Pilot isolation flags are incomplete.");
         var ids = new Set();
         set.data.forEach(function (question) {
-          assert(!ids.has(question.id), "Duplicate question in pilot set: " + question.id);
+          assert(!ids.has(question.id), "Duplicate question in release: " + question.id);
           ids.add(question.id);
-          assert(question.type === "matching" || question.type === "ordering", "Legacy question entered the pilot set.");
-          assert(!Object.prototype.hasOwnProperty.call(question, "choices") && !Object.prototype.hasOwnProperty.call(question, "correct"), "Pilot question mixes canonical and legacy fields.");
-          assert(question.interactivePilot && question.interactivePilot.sourceQuestionId === question.id, "Source traceability is missing.");
+          assert(question.type === "matching" || question.type === "ordering", "Legacy question entered the release.");
+          assert(!Object.prototype.hasOwnProperty.call(question, "choices") && !Object.prototype.hasOwnProperty.call(question, "correct"), "Release question mixes canonical and legacy fields.");
+          assert(question.interactiveMigration && question.interactiveMigration.sourceQuestionId === question.id, "Source traceability is missing.");
+          assert(Array.isArray(question.interactiveMigration.legacyQuestion.choices) && Array.isArray(question.interactiveMigration.legacyQuestion.correct), "Legacy result compatibility snapshot is missing.");
           assert(Array.isArray(question.verificationSources) && question.verificationSources.length > 0, "Verification sources are missing.");
           var validation = model.validateQuestion(question, { allowLegacy: false });
-          assert(validation.valid, "Invalid canonical pilot question: " + question.id);
+          assert(validation.valid, "Invalid canonical release question: " + question.id);
           assert(!validation.warnings.some(function (issue) { return issue.code === "answer_order_exposed"; }), "Ordering answer is exposed by source item order: " + question.id);
 
           var host = document.createElement("div");
@@ -156,15 +164,17 @@
 
       Object.keys(expectedIds).forEach(function (examKey) {
         assert(pilots.getPilotIds(examKey).join(",") === expectedIds[examKey].join(","), examKey + " pilot ID manifest changed.");
+        var release = releases[["pl900", "pl400", "mb820"].indexOf(examKey)];
+        assert(Object.keys(release.byId).length === expectedIds[examKey].length, examKey + " replacement map count changed.");
       });
 
       document.body.dataset.status = "pass";
-      document.body.textContent = "PASS: 14 source-backed pilot migrations validated; public banks remain unchanged";
-      document.title = "PASS: ArquiQuiz interactive pilots";
+      document.body.textContent = "PASS: 14 source-backed migrations validated for public replacement with rollback and legacy-result compatibility";
+      document.title = "PASS: ArquiQuiz interactive release";
     } catch (error) {
       document.body.dataset.status = "fail";
       document.body.textContent = "FAIL: " + error.message;
-      document.title = "FAIL: ArquiQuiz interactive pilots";
+      document.title = "FAIL: ArquiQuiz interactive release";
     }
   })();
 </script>

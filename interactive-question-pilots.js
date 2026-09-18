@@ -498,6 +498,16 @@
     }
   }
 
+  function isLegacyInteractionFallbackEnabled(locationObject) {
+    var currentLocation = locationObject || (typeof window !== "undefined" ? window.location : null);
+    if (!currentLocation) return false;
+    try {
+      return new URLSearchParams(currentLocation.search || "").get("legacyInteractions") === "1";
+    } catch (error) {
+      return false;
+    }
+  }
+
   function findSourceQuestion(questionBanks, sourceId) {
     for (var bankIndex = 0; bankIndex < questionBanks.length; bankIndex++) {
       var bank = questionBanks[bankIndex];
@@ -509,22 +519,32 @@
     return null;
   }
 
-  function copySourceMetadata(source, target) {
+  function copySourceMetadata(source, target, mode) {
     ["category", "source", "sourceUrl", "sources", "originalPractice"].forEach(function (key) {
       if (Object.prototype.hasOwnProperty.call(source, key)) target[key] = clone(source[key]);
     });
-    target.interactivePilot = {
+    target.interactiveMigration = {
       sourceQuestionId: source.id,
       sourceType: source.type,
-      sourceOrdered: source.ordered === true
+      sourceOrdered: source.ordered === true,
+      legacyQuestion: {
+        type: source.type,
+        choices: Array.isArray(source.choices) ? clone(source.choices) : [],
+        correct: Array.isArray(source.correct) ? clone(source.correct) : [],
+        ordered: source.ordered === true
+      }
     };
+    if (mode === "pilot") {
+      target.interactivePilot = {
+        sourceQuestionId: source.id,
+        sourceType: source.type,
+        sourceOrdered: source.ordered === true
+      };
+    }
     return target;
   }
 
-  function createPilotSet(examKey, questionBanks, options) {
-    var settings = options || {};
-    if (settings.force !== true && !isLocalPreviewEnabled(settings.location)) return null;
-
+  function createQuestions(examKey, questionBanks, mode) {
     var definitions = PILOT_DEFINITIONS[String(examKey || "").toLowerCase()];
     if (!definitions || definitions.length === 0) return null;
 
@@ -535,7 +555,7 @@
         errors.push("Source question " + definition.sourceId + " was not found.");
         return null;
       }
-      var question = copySourceMetadata(source, clone(definition.question));
+      var question = copySourceMetadata(source, clone(definition.question), mode);
       var validation = questionModel.validateQuestion(question, { allowLegacy: false });
       if (!validation.valid) {
         errors.push("Question " + question.id + ": " + validation.errors.map(function (issue) {
@@ -547,8 +567,17 @@
     }).filter(Boolean);
 
     if (errors.length > 0) {
-      throw new Error("Interactive pilot migration failed for " + examKey + ": " + errors.join(" | "));
+      throw new Error("Interactive " + mode + " migration failed for " + examKey + ": " + errors.join(" | "));
     }
+    return questions;
+  }
+
+  function createPilotSet(examKey, questionBanks, options) {
+    var settings = options || {};
+    if (settings.force !== true && !isLocalPreviewEnabled(settings.location)) return null;
+
+    var questions = createQuestions(examKey, questionBanks, "pilot");
+    if (!questions) return null;
 
     return {
       key: "interactive_pilot",
@@ -563,6 +592,37 @@
     };
   }
 
+  function createRelease(examKey, questionBanks, options) {
+    var definitions = PILOT_DEFINITIONS[String(examKey || "").toLowerCase()];
+    if (!definitions || definitions.length === 0) return null;
+
+    var settings = options || {};
+    var migratedIds = definitions.map(function (definition) { return definition.sourceId; });
+    var questions = createQuestions(examKey, questionBanks, "release");
+    var compatibilityById = {};
+    questions.forEach(function (question) { compatibilityById[String(question.id)] = question; });
+    if (settings.force !== true && isLegacyInteractionFallbackEnabled(settings.location)) {
+      return {
+        enabled: false,
+        questions: [],
+        byId: {},
+        compatibilityById: compatibilityById,
+        migratedIds: migratedIds,
+        fallbackReason: "legacyInteractions"
+      };
+    }
+
+    var byId = {};
+    questions.forEach(function (question) { byId[String(question.id)] = question; });
+    return {
+      enabled: true,
+      questions: questions,
+      byId: byId,
+      compatibilityById: compatibilityById,
+      migratedIds: migratedIds
+    };
+  }
+
   function getPilotIds(examKey) {
     var definitions = PILOT_DEFINITIONS[String(examKey || "").toLowerCase()] || [];
     return definitions.map(function (definition) { return definition.sourceId; });
@@ -570,7 +630,9 @@
 
   return Object.freeze({
     isLocalPreviewEnabled: isLocalPreviewEnabled,
+    isLegacyInteractionFallbackEnabled: isLegacyInteractionFallbackEnabled,
     createPilotSet: createPilotSet,
+    createRelease: createRelease,
     getPilotIds: getPilotIds
   });
 });
