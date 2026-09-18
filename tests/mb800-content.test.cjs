@@ -73,6 +73,6 @@ originalKeys.forEach((key, i) => {
 assert.match(read('index.html'), /4 quiz sets · 125 questions/);
 assert.match(read('mb800.html'), /125 original practice questions/);
 assert.match(read('user-guide.html'), /4 topic sets with 125 original practice questions/);
-assert.match(read('index.html'), /APP_VERSION = "1\.1\.1"/);
+assert.match(read('index.html'), /APP_VERSION = "1\.1\.2"/);
 assert.match(read('mb800.html'), /mb800-questions\.js\?v=1\.1\.1/);
 console.log('PASS: 125 questions; 22 mapped areas; source metadata, cardinality, wording checks, counts, weighting and original saved-answer compatibility.');
