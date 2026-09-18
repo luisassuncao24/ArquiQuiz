@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>ArquiQuiz question-bank model test</title>
+</head>
+<body data-status="running">RUNNING</body>
+
+<script src="../question-model.js"></script>
+
+<script src="../pl900-questions.js"></script>
+<script src="../pl900-questions2.js"></script>
+<script src="../pl900-questions3.js"></script>
+<script src="../pl900-context-revisions.js"></script>
+<script src="../pl900-passleader-archive.js"></script>
+<script src="../pl900-testcases.js"></script>
+
+<script src="../pl400-questions.js"></script>
+<script src="../pl400-questions2.js"></script>
+<script src="../pl400-questions3.js"></script>
+<script src="../pl400-questions4.js"></script>
+<script src="../pl400-questions5.js"></script>
+<script src="../pl400-testcases.js"></script>
+<script src="../pl400-revisions.js"></script>
+
+<script src="../questions.js"></script>
+<script src="../questions2.js"></script>
+<script src="../questionsOfficial.js"></script>
+<script src="../testcases.js"></script>
+<script src="../mb820-revisions.js"></script>
+
+<script src="../mb800-questions.js"></script>
+
+<script>
+  (function () {
+    "use strict";
+    var model = window.ArquiQuizQuestionModel;
+    var banks = [
+      ["PL-900 Foundations", window.pl900Questions],
+      ["PL-900 Workloads", window.pl900Questions2],
+      ["PL-900 Advanced", window.pl900Questions3],
+      ["PL-900 PassLeader archive", window.PL900_PASSLEADER_ARCHIVE_QUESTIONS],
+      ["PL-400 Beginner", window.pl400Questions],
+      ["PL-400 Intermediate", window.pl400Questions2],
+      ["PL-400 Advanced", window.pl400Questions3],
+      ["PL-400 Proficient", window.pl400Questions4],
+      ["PL-400 Expert", window.pl400Questions5],
+      ["MB-820 Beginner source", questionsSet2],
+      ["MB-820 Main source", questions],
+      ["MB-820 Official", questionsOfficial],
+      ["MB-800 Beta", window.mb800Questions]
+    ];
+
+    window.PL400_TEST_CASES.forEach(function (testCase) {
+      banks.push(["PL-400 case: " + testCase.key, testCase.questions]);
+    });
+    TEST_CASES.forEach(function (testCase) {
+      banks.push(["MB-820 case: " + testCase.key, testCase.questions]);
+    });
+
+    var failures = [];
+    var warningCount = 0;
+    var questionCount = 0;
+    banks.forEach(function (entry) {
+      var name = entry[0];
+      var questionsInBank = entry[1];
+      var result = model.validateQuestionBank(questionsInBank);
+      questionCount += questionsInBank.length;
+      warningCount += result.warnings.length;
+      result.errors.forEach(function (issue) {
+        failures.push(name + " / " + issue.path + " / " + issue.code + ": " + issue.message);
+      });
+    });
+
+    if (failures.length) {
+      document.body.dataset.status = "fail";
+      document.body.textContent = "FAIL (" + failures.length + "): " + failures.join(" || ");
+      document.title = "FAIL: ArquiQuiz question banks";
+      return;
+    }
+    document.body.dataset.status = "pass";
+    document.body.textContent = "PASS: " + questionCount + " bank entries validated; " + warningCount + " legacy display-order warnings recorded.";
+    document.title = "PASS: ArquiQuiz question banks";
+  })();
+</script>
+</html>

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>ArquiQuiz question model test</title>
+</head>
+<body data-status="running">RUNNING</body>
+<script src="../question-model.js"></script>
+<script>
+  (function () {
+    "use strict";
+    function assert(condition, message) {
+      if (!condition) throw new Error(message);
+    }
+    try {
+      var model = window.ArquiQuizQuestionModel;
+      assert(model && model.schemaVersion === 1, "Schema API was not loaded.");
+      var question = {
+        schemaVersion: 1,
+        id: "browser-match",
+        text: "Match both prompts.",
+        type: "matching",
+        interaction: {
+          prompts: [{ id: "one", text: "One" }, { id: "two", text: "Two" }],
+          options: [{ id: "a", text: "A" }, { id: "b", text: "B" }],
+          allowReuse: false
+        },
+        answer: {
+          matches: [
+            { promptId: "one", optionId: "a" },
+            { promptId: "two", optionId: "b" }
+          ]
+        }
+      };
+      assert(model.validateQuestion(question).valid, "Valid matching fixture was rejected.");
+      question.interaction.allowReuse = false;
+      question.answer.matches[1].optionId = "a";
+      assert(
+        model.validateQuestion(question).errors.some(function (issue) { return issue.code === "reuse_not_allowed"; }),
+        "Forbidden option reuse was not rejected."
+      );
+
+      var legacySequence = {
+        id: 1,
+        text: "Place the actions in order.",
+        type: "sequence",
+        choices: ["First", "Second", "Distractor"],
+        correct: [0, 1]
+      };
+      var normalized = model.normalizeInteractiveQuestion(legacySequence);
+      assert(normalized.type === "ordering", "Legacy sequence was not normalized to ordering.");
+      assert(normalized.answer.order.join(",") === "choice-0,choice-1", "Normalized order is incorrect.");
+      assert(model.validateQuestion(normalized).valid, "Normalized ordering question was rejected.");
+
+      var duplicateBank = model.validateQuestionBank([legacySequence, legacySequence]);
+      assert(
+        duplicateBank.errors.some(function (issue) { return issue.code === "duplicate_question_id"; }),
+        "Duplicate question IDs were not rejected."
+      );
+      document.body.dataset.status = "pass";
+      document.body.textContent = "PASS: question model browser contract tests";
+      document.title = "PASS: ArquiQuiz question model";
+    } catch (error) {
+      document.body.dataset.status = "fail";
+      document.body.textContent = "FAIL: " + error.message;
+      document.title = "FAIL: ArquiQuiz question model";
+    }
+  })();
+</script>
+</html>

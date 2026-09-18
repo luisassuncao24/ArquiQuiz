@@ -68,6 +68,6 @@ for (const question of bank) {
   }
 }
 
-assert.match(read('index.html'), /APP_VERSION = "1\.1\.2"/);
+assert.match(read('index.html'), /APP_VERSION = "1\.2\.0-beta\.1"/);
 assert.match(read('pl900.html'), /pl900-context-revisions\.js\?v=1\.1\.2/);
 console.log('PASS: PL-900 Markdown cross-check corrections and bank cardinality checks.');
