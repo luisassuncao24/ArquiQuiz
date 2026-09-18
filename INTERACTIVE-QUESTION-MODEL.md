@@ -2,7 +2,7 @@
 
 ArquiQuiz schema version 1 adds two canonical interactive question types without changing the existing `single`, `multiple`, or legacy `sequence` formats. The schema is shared by every exam wizard through `question-model.js`.
 
-This phase defines and validates data only. Rendering remains unchanged until the interactive component is introduced behind the local feature branch.
+The shared renderer is provided by `interactive-question.js` and `interactive-question.css`. It is loaded but dormant in the real exam wizards until Phase 3 connects it to quiz sessions, scoring, and saved progress.
 
 ## Design guarantees
 
@@ -81,3 +81,38 @@ var canonical = ArquiQuizQuestionModel.normalizeInteractiveQuestion(legacySequen
 ```
 
 Validation returns `{ valid, errors, warnings }`. Each issue contains a stable `path`, `code`, and human-readable `message` so future migration reports can identify the exact field that needs attention.
+
+## Renderer API
+
+```js
+var interaction = ArquiQuizInteractiveQuestion.create(container, question, {
+  initialResponse: savedResponse,
+  onChange: function (response, state) {
+    // state.reason and state.isComplete are safe to use for autosave/UI updates.
+  }
+});
+
+interaction.getResponse();
+interaction.isComplete();
+interaction.evaluate();
+interaction.setResponse(savedResponse);
+interaction.showEvaluation({ revealCorrect: true, lock: true });
+interaction.showEvaluation({ revealCorrect: false, lock: true });
+interaction.reset();
+interaction.destroy();
+```
+
+Correct answers are not written into the DOM until `showEvaluation({ revealCorrect: true })` is explicitly requested. With `revealCorrect: false`, the interaction is locked and marked only as recorded, which is suitable for Test mode. Locked controls remain keyboard-focusable and expose their state through ARIA labels.
+
+The component supports:
+
+- mouse drag-and-drop;
+- touch or pointer selection followed by target selection;
+- keyboard Tab navigation plus Enter/Space activation and Escape to cancel a selection;
+- reusable and non-reusable matching options;
+- ordering distractors;
+- incomplete-answer restoration with stable IDs;
+- responsive dark and light themes;
+- legacy `sequence` normalization without changing its source record.
+
+Use `tests/interactive-question-demo.html` for isolated local manual testing. It never reads or writes quiz progress.

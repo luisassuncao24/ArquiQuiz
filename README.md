@@ -8,8 +8,8 @@ The MB-800 section contains 125 original English practice questions in four topi
 
 See [MB800-CONTENT.md](MB800-CONTENT.md) for coverage, sources, maintenance guidance, and browser checks. The user-facing guide is available from the MB-800 dashboard.
 
-## Interactive question model (development)
+## Interactive question layouts (development)
 
-The local `feature/interactive-layouts` work introduces a shared, versioned data contract for future matching and ordering interactions. It is currently data-only and does not change the visible quiz interface. See [INTERACTIVE-QUESTION-MODEL.md](INTERACTIVE-QUESTION-MODEL.md) for the schema and migration rules.
+The local `feature/interactive-layouts` work introduces a shared, versioned data contract and an accessible renderer for matching and ordering interactions. The renderer is loaded but remains dormant in the real quizzes until session integration is complete, so the current quiz interface is unchanged. See [INTERACTIVE-QUESTION-MODEL.md](INTERACTIVE-QUESTION-MODEL.md) for the schema, renderer API, and migration rules.
 
-The model can be checked with Node (`node tests/question-model.test.cjs`) or directly in a browser with `tests/question-model-browser.html`. The broader `tests/question-banks-browser.html` page loads the four exam banks and verifies that their existing single, multiple, and sequence data remains compatible.
+The model can be checked with Node (`node tests/question-model.test.cjs`) or directly in a browser with `tests/question-model-browser.html`. The component test is `tests/interactive-question-browser.html`, while `tests/interactive-question-demo.html` is the local manual playground. The broader `tests/question-banks-browser.html` page loads the four exam banks and verifies that their existing single, multiple, and sequence data remains compatible.

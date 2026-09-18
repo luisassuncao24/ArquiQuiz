@@ -413,8 +413,9 @@
         "use strict";
 
         // Release policy: increment this version and add a CHANGE_LOG entry for every deployed change.
-        var APP_VERSION = "1.2.0-beta.1";
+        var APP_VERSION = "1.2.0-beta.2";
         var CHANGE_LOG = [
+          { version: "1.2.0-beta.2", text: "Interactive layouts Phase 2: added the shared matching and ordering component with mouse drag-and-drop, touch/click placement, keyboard operation, reusable options, distractors, accessible status messages, responsive dark/light styling, answer restore, and controlled answer review. It remains dormant in real quizzes pending Phase 3 integration." },
           { version: "1.2.0-beta.1", text: "Interactive layouts Phase 1: added a shared, validated data contract for matching and ordering questions across every exam, with stable answer IDs, option-reuse rules, legacy sequence normalization, and full-bank browser checks. The visible quiz interaction is unchanged in this phase." },
           { version: "1.1.2", text: "Cross-checked the PL-900 bank against a second extracted question set: corrected canvas-connector objects, restored a two-answer Supply Chain Management scenario and missing view context, and removed one residual extraction artifact." },
           { version: "1.1.1", text: "Reviewed the original 50 MB-800 questions, strengthened distractors and source references, and added 75 scenarios. The Beta now has 125 questions mapped across 22 skill areas, with updated guide, counts, and regression checks." },
