@@ -12,8 +12,8 @@
       "use strict";
 
       var cases = [
-        { page: "pl900.html", count: 2 },
-        { page: "pl400.html", count: 2 },
+        { page: "pl900.html", count: 7 },
+        { page: "pl400.html", count: 6 },
         { page: "mb820.html", count: 1 },
         { page: "mb800.html", count: 0 }
       ];
@@ -56,6 +56,7 @@
             assert(pilotSet && pilotSet.data.length === testCase.count, testCase.page + " pilot data is missing.");
             assert(pilotCard, testCase.page + " pilot card is missing.");
             assert(pilotCard.textContent.indexOf(testCase.count + " question") !== -1, testCase.page + " pilot count is incorrect.");
+            assert(pilotCard.textContent.indexOf("Phase 5 expansion") !== -1, testCase.page + " pilot phase description is stale.");
             assert(!doc.querySelector("#qp-container .iq-component"), testCase.page + " leaked pilot questions into Quick Practice.");
 
             win.Math.random = function () { return 0.999999; };

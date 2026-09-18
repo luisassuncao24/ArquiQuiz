@@ -10,7 +10,7 @@ See [MB800-CONTENT.md](MB800-CONTENT.md) for coverage, sources, maintenance guid
 
 ## Interactive question layouts (development)
 
-The local `feature/interactive-layouts` work introduces a shared, versioned data contract and an accessible renderer for matching and ordering interactions. Phase 3 connects canonical questions to Practice, Test, Quick Practice, case studies, scoring, saved results, summaries, Review Later, and answer-safe issue reports. Phase 4 adds a five-question migration pilot while leaving every production question bank unchanged.
+The local `feature/interactive-layouts` work introduces a shared, versioned data contract and an accessible renderer for matching and ordering interactions. Phase 3 connects canonical questions to Practice, Test, Quick Practice, case studies, scoring, saved results, summaries, Review Later, and answer-safe issue reports. Phase 4 created a five-question migration pilot; Phase 5 expands it to 14 source-backed questions while leaving every production question bank unchanged.
 
 For local-only previewing, append `?interactivePreview=1` to `pl900.html`, `pl400.html`, or `mb820.html`. An **Interactive Layout Pilot** card then appears on that exam homepage. The flag is accepted only from a local file, `localhost`, or a loopback address; adding it to the GitHub Pages URL has no effect. Pilot attempts do not affect preparation progress, Random or Quick Practice, Exam Readiness, weak-topic reviews, or attempt history. MB-800 has no pilot because its Beta bank contains original practice material rather than converted official drag-and-drop questions.
 

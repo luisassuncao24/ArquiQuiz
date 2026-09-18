@@ -7,6 +7,7 @@
 <body data-status="running">RUNNING</body>
 
 <script src="../question-model.js"></script>
+<script src="../interactive-question.js"></script>
 
 <script src="../pl900-questions.js"></script>
 <script src="../pl900-questions2.js"></script>
@@ -55,14 +56,20 @@
       assert(pilots.isLocalPreviewEnabled({ protocol: "file:", hostname: "", search: "?interactivePreview=1" }), "Local-file preview was rejected.");
       assert(pilots.isLocalPreviewEnabled({ protocol: "http:", hostname: "localhost", search: "?interactivePreview=1" }), "Localhost preview was rejected.");
 
-      var original9313 = findQuestion(pl900Banks, 9313);
-      var original2007 = findQuestion(pl400Banks, 2007);
-      var original564 = findQuestion(mb820Banks, 564);
-      var originalSnapshots = [
-        JSON.stringify(original9313),
-        JSON.stringify(original2007),
-        JSON.stringify(original564)
-      ];
+      var expectedIds = {
+        pl900: [9057, 9073, 9112, 9313, 9351, 9335, 9343],
+        pl400: [2007, 2098, 2080, 2223, 3046, 3156],
+        mb820: [564]
+      };
+      var banksByExam = { pl900: pl900Banks, pl400: pl400Banks, mb820: mb820Banks };
+      var originalSnapshots = {};
+      Object.keys(expectedIds).forEach(function (examKey) {
+        originalSnapshots[examKey] = expectedIds[examKey].map(function (id) {
+          var source = findQuestion(banksByExam[examKey], id);
+          assert(source, examKey + " source question is missing: " + id);
+          return JSON.stringify(source);
+        });
+      });
 
       var sets = [
         pilots.createPilotSet("pl900", pl900Banks, { force: true }),
@@ -70,13 +77,15 @@
         pilots.createPilotSet("mb820", mb820Banks, { force: true })
       ];
 
-      assert(sets[0].data.length === 2, "PL-900 pilot count changed.");
-      assert(sets[1].data.length === 2, "PL-400 pilot count changed.");
+      assert(sets[0].data.length === 7, "PL-900 pilot count changed.");
+      assert(sets[1].data.length === 6, "PL-400 pilot count changed.");
       assert(sets[2].data.length === 1, "MB-820 pilot count changed.");
       assert(pilots.createPilotSet("mb800", [mb800Questions], { force: true }) === null, "MB-800 received a fabricated source migration.");
-      assert(JSON.stringify(original9313) === originalSnapshots[0], "PL-900 source question was mutated.");
-      assert(JSON.stringify(original2007) === originalSnapshots[1], "PL-400 source question was mutated.");
-      assert(JSON.stringify(original564) === originalSnapshots[2], "MB-820 source question was mutated.");
+      Object.keys(expectedIds).forEach(function (examKey) {
+        expectedIds[examKey].forEach(function (id, index) {
+          assert(JSON.stringify(findQuestion(banksByExam[examKey], id)) === originalSnapshots[examKey][index], examKey + " source question was mutated: " + id);
+        });
+      });
 
       sets.forEach(function (set) {
         assert(set.previewOnly && set.countsTowardPreparation === false && set.includeInRandom === false, "Pilot isolation flags are incomplete.");
@@ -91,6 +100,20 @@
           var validation = model.validateQuestion(question, { allowLegacy: false });
           assert(validation.valid, "Invalid canonical pilot question: " + question.id);
           assert(!validation.warnings.some(function (issue) { return issue.code === "answer_order_exposed"; }), "Ordering answer is exposed by source item order: " + question.id);
+
+          var host = document.createElement("div");
+          document.body.appendChild(host);
+          var controller = window.ArquiQuizInteractiveQuestion.create(host, question);
+          assert(!/Correct answer:/i.test(host.textContent), "Renderer exposed an answer before evaluation: " + question.id);
+          controller.setResponse(question.type === "matching"
+            ? { matches: question.answer.matches }
+            : { order: question.answer.order }, { emit: false });
+          var evaluation = controller.evaluate();
+          assert(evaluation.isComplete && evaluation.isCorrect, "Renderer failed the canonical answer for question: " + question.id);
+          controller.showEvaluation({ revealCorrect: false, lock: true });
+          assert(!host.querySelector(".iq-correct-answer, .iq-slot.is-correct, .iq-slot.is-incorrect"), "Hidden evaluation leaked correctness for question: " + question.id);
+          controller.destroy();
+          host.remove();
         });
       });
 
@@ -100,12 +123,43 @@
 
       var pl900Order = sets[0].data.find(function (question) { return question.id === 9351; });
       assert(pl900Order.answer.order.join(",") === "update-items,save-app,publish-app,share-app", "PL-900 publishing order is incorrect.");
+      var pl900AppOrder = sets[0].data.find(function (question) { return question.id === 9112; });
+      assert(pl900AppOrder.answer.order.join(",") === "create-app,add-components,save-app,publish-app", "PL-900 app-creation order is incorrect.");
+      var pl900DataOrder = sets[0].data.find(function (question) { return question.id === 9335; });
+      assert(pl900DataOrder.answer.order.join(",") === "customize-account,create-number-column,create-business-rule", "PL-900 Dataverse configuration order is incorrect.");
+      assert(pl900DataOrder.interaction.items.length === 6 && pl900DataOrder.interaction.slots.length === 3, "PL-900 Dataverse ordering distractors were lost.");
+
+      function answerMap(question) {
+        return question.answer.matches.reduce(function (map, match) {
+          map[match.promptId] = match.optionId;
+          return map;
+        }, {});
+      }
+
+      var petMap = answerMap(sets[0].data.find(function (question) { return question.id === 9057; }));
+      assert(petMap["pet-owner"] === "standard-table" && petMap["pet-data"] === "custom-table" && petMap["owner-link"] === "relationship", "PL-900 Dataverse component mapping is incorrect.");
+      var appTypeMap = answerMap(sets[0].data.find(function (question) { return question.id === 9073; }));
+      assert(appTypeMap["complex-process"] === "model-driven-app" && appTypeMap["custom-layout"] === "canvas-app", "PL-900 app-type mapping is incorrect.");
+      var controlMap = answerMap(sets[0].data.find(function (question) { return question.id === 9343; }));
+      assert(controlMap["create-task"] === "form" && controlMap["responsive-scroll"] === "vertical-container" && controlMap["browse-spices"] === "gallery", "PL-900 control mapping is incorrect.");
+
       var pl400Order = sets[1].data.find(function (question) { return question.id === 2098; });
       assert(pl400Order.answer.order[0] === "remove-view-reference" && pl400Order.answer.order[3] === "deploy-solution-a", "PL-400 dependency order is incorrect.");
-      assert(pilots.getPilotIds("pl900").join(",") === "9313,9351", "Pilot ID manifest changed.");
+      var componentOrder = sets[1].data.find(function (question) { return question.id === 2223; });
+      assert(componentOrder.answer.order.join(",") === "create-solution,add-reference,build-solution,deploy-solution", "PL-400 component packaging order is incorrect.");
+      var healthcareMap = answerMap(sets[1].data.find(function (question) { return question.id === 2080; }));
+      assert(healthcareMap.doctors === "standard-table" && healthcareMap.medications === "virtual-table", "PL-400 healthcare table mapping is incorrect.");
+      var sensorMap = answerMap(sets[1].data.find(function (question) { return question.id === 3046; }));
+      assert(sensorMap["sensor-events"] === "elastic-table" && sensorMap["sensor-config"] === "standard-table", "PL-400 sensor table mapping is incorrect.");
+      var resourceMap = answerMap(sets[1].data.find(function (question) { return question.id === 3156; }));
+      assert(resourceMap["scalable-image"] === "svg" && resourceMap["localized-text"] === "resx", "PL-400 web-resource mapping is incorrect.");
+
+      Object.keys(expectedIds).forEach(function (examKey) {
+        assert(pilots.getPilotIds(examKey).join(",") === expectedIds[examKey].join(","), examKey + " pilot ID manifest changed.");
+      });
 
       document.body.dataset.status = "pass";
-      document.body.textContent = "PASS: 5 source-backed pilot migrations validated; public banks remain unchanged";
+      document.body.textContent = "PASS: 14 source-backed pilot migrations validated; public banks remain unchanged";
       document.title = "PASS: ArquiQuiz interactive pilots";
     } catch (error) {
       document.body.dataset.status = "fail";

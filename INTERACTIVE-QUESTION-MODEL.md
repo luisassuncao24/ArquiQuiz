@@ -2,7 +2,7 @@
 
 ArquiQuiz schema version 1 adds two canonical interactive question types without changing the existing `single`, `multiple`, or legacy `sequence` formats. The schema is shared by every exam wizard through `question-model.js`.
 
-The shared renderer is provided by `interactive-question.js` and `interactive-question.css`. Phase 3 connects it to quiz sessions. Phase 4 adds a local-only, source-backed migration pilot without modifying the production question banks.
+The shared renderer is provided by `interactive-question.js` and `interactive-question.css`. Phase 3 connects it to quiz sessions. Phases 4 and 5 add and expand a local-only, source-backed migration pilot without modifying the production question banks.
 
 ## Design guarantees
 
@@ -158,12 +158,12 @@ Interactive session results use stable IDs and the following versioned shape:
 
 `tests/app-interactive-integration.html` exercises the complete flow in both modes, including Quick Practice, case studies, summaries, saved results, Review Later, and issue copying.
 
-## Phase 4 pilot migration
+## Phases 4–5 pilot migration
 
-`interactive-question-pilots.js` builds canonical copies of five existing source questions only when local preview is enabled:
+`interactive-question-pilots.js` builds canonical copies of 14 existing source questions only when local preview is enabled:
 
-- PL-900: questions 9313 (matching with option reuse) and 9351 (ordering with a distractor);
-- PL-400: questions 2007 (matching with distractors) and 2098 (ordering);
+- PL-900: questions 9057, 9073, 9112, 9313, 9335, 9343, and 9351;
+- PL-400: questions 2007, 2080, 2098, 2223, 3046, and 3156;
 - MB-820: question 564 (ordering).
 
 The originals remain untouched and continue to power the normal quizzes. The pilot set is excluded from preparation progress, Random Practice, Quick Practice, Exam Readiness, weak-topic scheduling, and attempt history. MB-800 is intentionally excluded because its Beta questions are original practice content and are not converted source drag-and-drop questions.
