@@ -129,6 +129,14 @@ body {
   background: #0f766e;
   color: #ccfbf1;
 }
+.question-type-badge.matching {
+  background: #0369a1;
+  color: #e0f2fe;
+}
+.question-type-badge.ordering {
+  background: #a16207;
+  color: #fef3c7;
+}
 
 /* ── Question text ────────────────────────────────────────────────────── */
 .question-text {

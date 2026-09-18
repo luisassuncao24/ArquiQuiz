@@ -1,4 +1,36 @@
-/* Shared matching and ordering interaction. Loaded by every quiz, dormant until mounted. */
+/* Shared matching and ordering interaction. */
+.interactive-question-host,
+.qp-interactive-host {
+  width: 100%;
+  min-width: 0;
+}
+
+.interactive-question-host {
+  margin-bottom: 0.15rem;
+}
+
+.qp-interactive-host .iq-component {
+  font-size: 0.96rem;
+}
+
+.interactive-preview-required {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 1px solid #f59e0b;
+  border-left-width: 4px;
+  border-radius: 8px;
+  background: #422006;
+  color: #fde68a;
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+html[data-theme="light"] .interactive-preview-required {
+  border-color: #d97706;
+  background: #fffbeb;
+  color: #92400e;
+}
+
 .iq-component {
   --iq-surface: #0f172a;
   --iq-surface-raised: #172033;

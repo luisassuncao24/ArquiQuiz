@@ -2,7 +2,7 @@
 
 ArquiQuiz schema version 1 adds two canonical interactive question types without changing the existing `single`, `multiple`, or legacy `sequence` formats. The schema is shared by every exam wizard through `question-model.js`.
 
-The shared renderer is provided by `interactive-question.js` and `interactive-question.css`. It is loaded but dormant in the real exam wizards until Phase 3 connects it to quiz sessions, scoring, and saved progress.
+The shared renderer is provided by `interactive-question.js` and `interactive-question.css`. Phase 3 connects it to quiz sessions while keeping it behind a local preview flag until question-bank migration is approved.
 
 ## Design guarantees
 
@@ -116,3 +116,43 @@ The component supports:
 - legacy `sequence` normalization without changing its source record.
 
 Use `tests/interactive-question-demo.html` for isolated local manual testing. It never reads or writes quiz progress.
+
+## Quiz integration
+
+Canonical matching and ordering questions now use the shared renderer in:
+
+- Practice mode, including immediate correctness and partial-credit feedback;
+- Test mode, with no correctness or answer key exposed before the summary;
+- Quick Practice;
+- standalone and combined case studies;
+- score summaries and question breakdowns;
+- Review Later and answer-safe issue reports.
+
+The integration is disabled by default. Append `?interactivePreview=1` to a local wizard URL to enable it, or set `interactiveLayouts: true` in `QUIZ_CONFIG` for a dedicated test page. The existing single, multiple, and legacy sequence paths are unchanged.
+
+Interactive session results use stable IDs and the following versioned shape:
+
+```js
+{
+  questionId: "pl900-example-match",
+  answerFormat: "interactive-v1",
+  interactionType: "matching",
+  isCorrect: true,
+  partialScore: 1,
+  selected: {
+    type: "matching",
+    matches: [
+      { promptId: "external-users", optionId: "power-pages" },
+      { promptId: "automation", optionId: "power-automate" }
+    ]
+  },
+  correct: {
+    matches: [
+      { promptId: "external-users", optionId: "power-pages" },
+      { promptId: "automation", optionId: "power-automate" }
+    ]
+  }
+}
+```
+
+`tests/app-interactive-integration.html` exercises the complete flow in both modes, including Quick Practice, case studies, summaries, saved results, Review Later, and issue copying. Historical-progress migration and question-bank conversion remain separate later phases.

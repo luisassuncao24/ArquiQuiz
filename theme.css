@@ -390,6 +390,16 @@ html[data-theme="light"] .question-type-badge.sequence {
   color: #0f766e;
 }
 
+html[data-theme="light"] .question-type-badge.matching {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+html[data-theme="light"] .question-type-badge.ordering {
+  background: #fef3c7;
+  color: #92400e;
+}
+
 html[data-theme="light"] :is(#math-card, #pause-card, #confirm-card, #mode-card, #peek-card, #streak-card) {
   background: #ffffff;
   box-shadow: 0 25px 60px rgba(15, 23, 42, 0.24);
