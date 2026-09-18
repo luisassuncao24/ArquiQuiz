@@ -109,7 +109,7 @@
     }
   }
 
-  function validateOrdering(question, errors) {
+  function validateOrdering(question, errors, warnings) {
     rejectMixedLegacyFields(question, errors);
     if (question.schemaVersion !== SCHEMA_VERSION) {
       addIssue(errors, "schemaVersion", "unsupported_schema", "Ordering questions must declare schemaVersion " + SCHEMA_VERSION + ".");
@@ -141,6 +141,17 @@
         seenAnswers[itemId] = true;
       }
     });
+
+    if (itemIds.length === question.answer.order.length && itemIds.every(function (itemId, index) {
+      return itemId === question.answer.order[index];
+    })) {
+      addIssue(
+        warnings,
+        "interaction.items",
+        "answer_order_exposed",
+        "Available ordering items are already displayed in the correct answer order. Scramble their source order before release."
+      );
+    }
   }
 
   function validateMatching(question, errors) {
@@ -227,7 +238,7 @@
     if (question.type === "matching") {
       validateMatching(question, errors);
     } else if (question.type === "ordering") {
-      validateOrdering(question, errors);
+      validateOrdering(question, errors, warnings);
     } else {
       if (settings.allowLegacy === false) {
         addIssue(errors, "type", "legacy_disabled", "Legacy single, multiple, and sequence schemas are disabled for this validation.");

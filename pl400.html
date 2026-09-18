@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="theme.js"></script>
-    <link rel="stylesheet" href="styles.css?v=1.2.0-beta.3">
-    <link rel="stylesheet" href="theme.css?v=1.2.0-beta.3">
-    <link rel="stylesheet" href="interactive-question.css?v=1.2.0-beta.3">
+    <link rel="stylesheet" href="styles.css?v=1.2.0-beta.4">
+    <link rel="stylesheet" href="theme.css?v=1.2.0-beta.4">
+    <link rel="stylesheet" href="interactive-question.css?v=1.2.0-beta.4">
     <title>PL-400 Quiz</title>
 </head>
 <body>
@@ -92,8 +92,8 @@
         </div>
     </div>
 
-    <script src="question-model.js?v=1.2.0-beta.1"></script>
-    <script src="interactive-question.js?v=1.2.0-beta.3"></script>
+    <script src="question-model.js?v=1.2.0-beta.4"></script>
+    <script src="interactive-question.js?v=1.2.0-beta.4"></script>
     <script src="pl400-questions.js"></script>
     <script src="pl400-questions2.js"></script>
     <script src="pl400-questions3.js"></script>
@@ -101,13 +101,22 @@
     <script src="pl400-questions5.js"></script>
     <script src="pl400-testcases.js"></script>
     <script src="pl400-revisions.js"></script>
+    <script src="interactive-question-pilots.js?v=1.2.0-beta.4"></script>
     <script>
+      var pl400InteractivePilot = window.ArquiQuizInteractivePilots.createPilotSet("pl400", [
+        pl400Questions,
+        pl400Questions2,
+        pl400Questions3,
+        pl400Questions4,
+        pl400Questions5
+      ]);
       window.QUIZ_CONFIG = {
         prefix:    "pl400",
         examName:  "PL-400",
         examTitle: "PL-400 Quiz",
         randomQuizMin: 40,
         randomQuizMax: 45,
+        interactivePilotSet: pl400InteractivePilot,
         questionSets: [
           {
             key: "beginner",
@@ -158,6 +167,6 @@
         }
       };
     </script>
-    <script src="app.js?v=1.2.0-beta.3"></script>
+    <script src="app.js?v=1.2.0-beta.4"></script>
 </body>
 </html>

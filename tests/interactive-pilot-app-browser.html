@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>ArquiQuiz interactive pilot app test</title>
+</head>
+<body data-status="running">
+  <pre id="result">RUNNING</pre>
+  <iframe id="app" title="Pilot app test" style="width:1280px;height:900px"></iframe>
+  <script>
+    (function () {
+      "use strict";
+
+      var cases = [
+        { page: "pl900.html", count: 2 },
+        { page: "pl400.html", count: 2 },
+        { page: "mb820.html", count: 1 },
+        { page: "mb800.html", count: 0 }
+      ];
+      var current = 0;
+      var frame = document.getElementById("app");
+      var result = document.getElementById("result");
+
+      function assert(condition, message) {
+        if (!condition) throw new Error(message);
+      }
+
+      function finishFailure(error) {
+        document.body.dataset.status = "fail";
+        result.textContent = "FAIL: " + error.message;
+        document.title = "FAIL: ArquiQuiz interactive pilot app";
+      }
+
+      function loadNext() {
+        if (current >= cases.length) {
+          document.body.dataset.status = "pass";
+          result.textContent = "PASS: Local pilot cards and canonical quiz rendering verified in PL-900, PL-400, and MB-820; MB-800 remains intentionally unchanged";
+          document.title = "PASS: ArquiQuiz interactive pilot app";
+          return;
+        }
+        frame.src = "../" + cases[current].page + "?interactivePreview=1";
+      }
+
+      frame.onload = function () {
+        try {
+          var testCase = cases[current];
+          var doc = frame.contentDocument;
+          var win = frame.contentWindow;
+          var pilotSet = win.QUIZ_CONFIG.interactivePilotSet;
+          var pilotCard = doc.querySelector('.interactive-pilot-card[data-key="interactive_pilot"]');
+
+          if (testCase.count === 0) {
+            assert(pilotSet === null, testCase.page + " unexpectedly created a pilot set.");
+            assert(!pilotCard, testCase.page + " unexpectedly rendered a pilot card.");
+          } else {
+            assert(pilotSet && pilotSet.data.length === testCase.count, testCase.page + " pilot data is missing.");
+            assert(pilotCard, testCase.page + " pilot card is missing.");
+            assert(pilotCard.textContent.indexOf(testCase.count + " question") !== -1, testCase.page + " pilot count is incorrect.");
+            assert(!doc.querySelector("#qp-container .iq-component"), testCase.page + " leaked pilot questions into Quick Practice.");
+
+            win.Math.random = function () { return 0.999999; };
+            var start = pilotCard.querySelector('.start-set-btn[data-key="interactive_pilot"]');
+            assert(start && !start.disabled, testCase.page + " pilot start button is unavailable.");
+            start.click();
+            doc.getElementById("practice-mode-btn").click();
+            var component = doc.querySelector("#choices .iq-component");
+            assert(component, testCase.page + " did not render a canonical pilot interaction.");
+            assert(component.getAttribute("data-iq-type") === "matching" || component.getAttribute("data-iq-type") === "ordering", testCase.page + " rendered an unsupported pilot type.");
+
+            if (testCase.page === "mb820.html") {
+              var pilotQuestion = pilotSet.data[0];
+              pilotQuestion.interaction.slots.forEach(function (slot, index) {
+                component.querySelector('[data-iq-option-id="' + pilotQuestion.answer.order[index] + '"]').click();
+                component.querySelector('[data-iq-target-id="' + slot.id + '"]').click();
+              });
+              doc.querySelector("#choices .submit-btn").click();
+              doc.getElementById("next-button").click();
+              assert(doc.getElementById("score-summary").textContent.indexOf("excluded from preparation progress") !== -1, "Pilot isolation notice is missing from the summary.");
+              assert(!win.localStorage.getItem("mb820_completed_quiz_interactive_pilot"), "Pilot created a completed-quiz record.");
+              assert(!win.localStorage.getItem("mb820_history"), "Pilot created an attempt-history entry.");
+              assert(!win.localStorage.getItem("mb820_weak_topic_reviews"), "Pilot scheduled a weak-topic review.");
+              assert(!doc.querySelector("#score-summary .attempt-comparison"), "Pilot displayed a normal-attempt comparison.");
+            }
+          }
+
+          current++;
+          loadNext();
+        } catch (error) {
+          finishFailure(error);
+        }
+      };
+
+      loadNext();
+    })();
+  </script>
+</body>
+</html>

@@ -819,6 +819,11 @@ body {
   border-color: #38bdf8;
 }
 
+.set-card.interactive-pilot-card {
+  border-color: #0ea5e9;
+  background: linear-gradient(145deg, #0f172a 0%, #10233b 100%);
+}
+
 .set-card-header {
   display: flex;
   align-items: center;
@@ -1148,6 +1153,12 @@ body {
   background: #0c1a3b;
   color: #93c5fd;
   border: 1px solid #2563eb;
+}
+
+.diff-pilot {
+  background: #082f49;
+  color: #bae6fd;
+  border: 1px solid #0ea5e9;
 }
 
 .diff-expert {

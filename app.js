@@ -70,13 +70,21 @@
       ]
     : [];
 
-  const QUESTION_SETS = _cfg.questionSets || _defaultQuestionSets;
+  const _baseQuestionSets = _cfg.questionSets || _defaultQuestionSets;
+  const QUESTION_SETS = _cfg.interactivePilotSet && Array.isArray(_cfg.interactivePilotSet.data) &&
+    _cfg.interactivePilotSet.data.length > 0
+    ? _baseQuestionSets.concat([_cfg.interactivePilotSet])
+    : _baseQuestionSets;
+  const TRACKED_QUESTION_SETS = QUESTION_SETS.filter(function (set) {
+    return set.countsTowardPreparation !== false;
+  });
 
   // ── All-questions pool (used for Random Practice Quiz) ──────────────────
   const ALL_QUESTIONS = (function () {
     const seen = {};
     const pool = [];
     QUESTION_SETS.forEach(function (set) {
+      if (set.includeInRandom === false) return;
       set.data.forEach(function (q) {
         if (!seen[q.id]) { seen[q.id] = true; pool.push(q); }
       });
@@ -760,6 +768,7 @@
 
   function saveCompletedState() {
     if (reviewMode) return; // never overwrite when re-viewing
+    if (activeSet && activeSet.countsTowardPreparation === false) return;
     try {
       if (caseStudyMode === "combined") {
         // Persist quiz portion
@@ -1313,7 +1322,7 @@
   // ── Quick Practice ────────────────────────────────────────────────────────
   function buildQuickPracticePool() {
     var failedIds = {}, seenIds = {};
-    QUESTION_SETS.forEach(function (set) {
+    TRACKED_QUESTION_SETS.forEach(function (set) {
       var c = loadCompletedQuiz(set);
       if (c && Array.isArray(c.results)) {
         c.results.forEach(function (r) {
@@ -1711,10 +1720,10 @@
 
   function calcPrepPct() {
     const availableCases = _testCases.filter(function (tc) { return tc.questions.length > 0; });
-    const totalItems = QUESTION_SETS.length + availableCases.length;
+    const totalItems = TRACKED_QUESTION_SETS.length + availableCases.length;
     let completedItems = 0;
 
-    QUESTION_SETS.forEach(function (set) {
+    TRACKED_QUESTION_SETS.forEach(function (set) {
       const c = loadCompletedQuiz(set);
       if (c && c.pct >= PASS_PCT) completedItems++;
     });
@@ -1769,7 +1778,7 @@
       });
     }
 
-    QUESTION_SETS.forEach(function (set) { addResults(loadCompletedQuiz(set)); });
+    TRACKED_QUESTION_SETS.forEach(function (set) { addResults(loadCompletedQuiz(set)); });
     _testCases.forEach(function (testCase) { addResults(loadCompletedCase(testCase)); });
 
     const rows = Object.keys(categories).map(function (name) {
@@ -1937,7 +1946,8 @@
       advanced:     { icon: "\uD83D\uDFE3", label: "Advanced",     cls: "diff-advanced" },
       proficient:   { icon: "\uD83D\uDD34", label: "Proficient",   cls: "diff-proficient" },
       expert:       { icon: "\uD83D\uDD35", label: "Expert",       cls: "diff-expert" },
-      official:     { icon: "\uD83D\uDCCB", label: "Official",     cls: "diff-official" }
+      official:     { icon: "\uD83D\uDCCB", label: "Official",     cls: "diff-official" },
+      pilot:        { icon: "\uD83E\uDDEA", label: "Local Pilot",  cls: "diff-pilot" }
     };
 
     // ── Count all in-progress sessions for the banner ─────────────────────
@@ -2049,7 +2059,7 @@
         : '';
 
       html +=
-        '<div class="set-card" data-key="' + set.key + '">' +
+        '<div class="set-card' + (set.previewOnly ? ' interactive-pilot-card' : '') + '" data-key="' + set.key + '">' +
           '<div class="set-card-header">' +
             '<span class="set-card-title">' + set.label + '</span>' +
             '<span class="set-card-count">' + set.data.length + ' questions</span>' +
@@ -2061,7 +2071,7 @@
             ? '<p class="set-card-resume">\u23F8 Saved: question ' + (saved.results.length + 1) + ' of ' + saved.shuffled.length +
               (savedTimer !== null ? ' \u2014 \u23F1 ' + formatTime(savedTimer) + ' left' : '') + '</p>'
             : combinedResumeInfo) +
-          (_testCases.length ? '<div class="case-selector">' +
+          (_testCases.length && set.supportsCaseStudy !== false ? '<div class="case-selector">' +
             '<label class="case-selector-label">\uD83D\uDCCB Case Study (optional):</label>' +
             '<select class="case-select" data-quiz-key="' + set.key + '">' +
               caseOptions +
@@ -3400,9 +3410,10 @@
   function showQuizSummary() {
     const isWeak = activeSet && activeSet.key === "weak_topics";
     const isRandom = activeSet && activeSet.key === "random";
-    const previousAttempt = (!reviewMode && !isWeak && !isRandom) ? getPreviousAttempt("quiz", activeSet.key) : null;
+    const isPreview = activeSet && activeSet.previewOnly === true;
+    const previousAttempt = (!reviewMode && !isWeak && !isRandom && !isPreview) ? getPreviousAttempt("quiz", activeSet.key) : null;
     const weakFollowUp = isWeak ? completeWeakTopicReview() : "";
-    if (!isWeak) {
+    if (!isWeak && !isPreview) {
       saveCompletedState();
       scheduleWeakTopicReview();
     }
@@ -3419,6 +3430,8 @@
       ? (pct >= PASS_PCT
           ? "Great progress \u2014 you strengthened a topic that needs attention. " + weakFollowUp
           : "Keep working through the explanations below. " + weakFollowUp)
+      : isPreview
+      ? "Local pilot complete. These results are intentionally excluded from preparation progress, Exam Readiness, and attempt history."
       : isRandom
       ? (pct >= PASS_PCT
           ? "Well done \u2014 " + pct + "% on the random practice quiz! \uD83C\uDF89"
@@ -3451,24 +3464,25 @@
       proficient:   { icon: "\uD83D\uDD34", label: "Proficient" },
       official:     { icon: "\uD83D\uDCCB", label: "Official" },
       random:       { icon: "\uD83C\uDFB2", label: "Random" },
-      weak:         { icon: "\uD83C\uDFAF", label: "Focused Review" }
+      weak:         { icon: "\uD83C\uDFAF", label: "Focused Review" },
+      pilot:        { icon: "\uD83E\uDDEA", label: "Local Pilot" }
     };
     const dmeta = difficultyMeta[activeSet.difficulty] || { icon: "", label: "" };
 
     const bd = buildBreakdownHtml("Quiz", results, activeSet.data);
     const chart = buildCategoryChart(results, activeSet.data);
-    const comparison = (!isWeak && !isRandom) ? buildAttemptComparison(pct, previousAttempt, summarizeCategoryScores(results), previousAttempt && previousAttempt.categoryScores) : "";
+    const comparison = (!isWeak && !isRandom && !isPreview) ? buildAttemptComparison(pct, previousAttempt, summarizeCategoryScores(results), previousAttempt && previousAttempt.categoryScores) : "";
 
     summaryEl.innerHTML =
       '<div class="summary-card ' + badge + '">' +
-        (pct >= PASS_PCT && !reviewMode && !isWeak ? '<div class="celebration-banner"><span class="celebration-text">\uD83C\uDF89 Congratulations!</span><span class="celebration-sub">' + (_cfg.beta ? 'You reached the Beta practice target!' : 'You cleared the ' + _examName + ' passing threshold!') + '</span></div>' : '') +
-        '<h2>' + (isWeak ? "Weak Topics Challenge Complete!" : isRandom ? "Random Practice Complete!" : "Quiz Complete!") + '</h2>' +
+        (pct >= PASS_PCT && !reviewMode && !isWeak && !isPreview ? '<div class="celebration-banner"><span class="celebration-text">\uD83C\uDF89 Congratulations!</span><span class="celebration-sub">' + (_cfg.beta ? 'You reached the Beta practice target!' : 'You cleared the ' + _examName + ' passing threshold!') + '</span></div>' : '') +
+        '<h2>' + (isWeak ? "Weak Topics Challenge Complete!" : isRandom ? "Random Practice Complete!" : isPreview ? "Interactive Pilot Complete!" : "Quiz Complete!") + '</h2>' +
         '<p class="summary-set-label">' +
           dmeta.icon + ' ' + activeSet.label + ' &nbsp;&middot;&nbsp; ' + perfLabel +
         '</p>' +
         '<div class="score-circle">' +
           '<span class="score-number">' + pct + '%</span>' +
-          '<span class="score-label">' + ((isRandom || isWeak || _cfg.beta) ? fullyCorrect + " / " + total + " correct" : examPoints + ' / 1000 ' + _examName + ' pts') + '</span>' +
+          '<span class="score-label">' + ((isRandom || isWeak || isPreview || _cfg.beta) ? fullyCorrect + " / " + total + " correct" : examPoints + ' / 1000 ' + _examName + ' pts') + '</span>' +
         '</div>' +
         '<p class="score-verdict">' + verdict + '</p>' +
         comparison +
@@ -3488,7 +3502,7 @@
       bd.breakdownHtml;
 
     summaryEl.style.display = "block";
-    if (pct >= PASS_PCT && !reviewMode && !isWeak) launchConfetti();
+    if (pct >= PASS_PCT && !reviewMode && !isWeak && !isPreview) launchConfetti();
 
     const restartBtn = document.getElementById("restart-btn");
     if (restartBtn) restartBtn.addEventListener("click", function () {

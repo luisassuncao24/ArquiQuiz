@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="theme.js"></script>
-    <link rel="stylesheet" href="styles.css?v=1.2.0-beta.3">
-    <link rel="stylesheet" href="theme.css?v=1.2.0-beta.3">
-    <link rel="stylesheet" href="interactive-question.css?v=1.2.0-beta.3">
+    <link rel="stylesheet" href="styles.css?v=1.2.0-beta.4">
+    <link rel="stylesheet" href="theme.css?v=1.2.0-beta.4">
+    <link rel="stylesheet" href="interactive-question.css?v=1.2.0-beta.4">
     <title>PL-900 Quiz</title>
 </head>
 <body>
@@ -92,21 +92,28 @@
         </div>
     </div>
 
-    <script src="question-model.js?v=1.2.0-beta.1"></script>
-    <script src="interactive-question.js?v=1.2.0-beta.3"></script>
+    <script src="question-model.js?v=1.2.0-beta.4"></script>
+    <script src="interactive-question.js?v=1.2.0-beta.4"></script>
     <script src="pl900-questions.js?v=1.0.21"></script>
     <script src="pl900-questions2.js"></script>
     <script src="pl900-questions3.js"></script>
     <script src="pl900-context-revisions.js?v=1.1.2"></script>
     <script src="pl900-passleader-archive.js"></script>
     <script src="pl900-testcases.js"></script>
+    <script src="interactive-question-pilots.js?v=1.2.0-beta.4"></script>
     <script>
+      var pl900InteractivePilot = window.ArquiQuizInteractivePilots.createPilotSet("pl900", [
+        pl900Questions,
+        pl900Questions2,
+        pl900Questions3
+      ]);
       window.QUIZ_CONFIG = {
         prefix:    "pl900",
         examName:  "PL-900",
         examTitle: "PL-900 Quiz",
         randomQuizMin: 40,
         randomQuizMax: 45,
+        interactivePilotSet: pl900InteractivePilot,
         questionSets: [
           {
             key: "foundations",
@@ -145,6 +152,6 @@
         }
       };
     </script>
-    <script src="app.js?v=1.2.0-beta.3"></script>
+    <script src="app.js?v=1.2.0-beta.4"></script>
 </body>
 </html>

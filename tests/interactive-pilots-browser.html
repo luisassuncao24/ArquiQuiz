@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>ArquiQuiz interactive pilot migration test</title>
+</head>
+<body data-status="running">RUNNING</body>
+
+<script src="../question-model.js"></script>
+
+<script src="../pl900-questions.js"></script>
+<script src="../pl900-questions2.js"></script>
+<script src="../pl900-questions3.js"></script>
+<script src="../pl900-context-revisions.js"></script>
+
+<script src="../pl400-questions.js"></script>
+<script src="../pl400-questions2.js"></script>
+<script src="../pl400-questions3.js"></script>
+<script src="../pl400-questions4.js"></script>
+<script src="../pl400-questions5.js"></script>
+<script src="../pl400-revisions.js"></script>
+
+<script src="../questions.js"></script>
+<script src="../questions2.js"></script>
+<script src="../questionsOfficial.js"></script>
+<script src="../mb820-revisions.js"></script>
+
+<script src="../mb800-questions.js"></script>
+<script src="../interactive-question-pilots.js"></script>
+<script>
+  (function () {
+    "use strict";
+
+    function assert(condition, message) {
+      if (!condition) throw new Error(message);
+    }
+
+    function findQuestion(banks, id) {
+      for (var bankIndex = 0; bankIndex < banks.length; bankIndex++) {
+        var found = banks[bankIndex].find(function (question) { return question.id === id; });
+        if (found) return found;
+      }
+      return null;
+    }
+
+    try {
+      var pilots = window.ArquiQuizInteractivePilots;
+      var model = window.ArquiQuizQuestionModel;
+      var pl900Banks = [pl900Questions, pl900Questions2, pl900Questions3];
+      var pl400Banks = [pl400Questions, pl400Questions2, pl400Questions3, pl400Questions4, pl400Questions5];
+      var mb820Banks = [questionsSet2, questions, questionsOfficial];
+
+      assert(!pilots.createPilotSet("pl900", pl900Banks), "Pilot activated without the local preview switch.");
+      assert(!pilots.isLocalPreviewEnabled({ protocol: "https:", hostname: "example.com", search: "?interactivePreview=1" }), "Public HTTPS preview was allowed.");
+      assert(pilots.isLocalPreviewEnabled({ protocol: "file:", hostname: "", search: "?interactivePreview=1" }), "Local-file preview was rejected.");
+      assert(pilots.isLocalPreviewEnabled({ protocol: "http:", hostname: "localhost", search: "?interactivePreview=1" }), "Localhost preview was rejected.");
+
+      var original9313 = findQuestion(pl900Banks, 9313);
+      var original2007 = findQuestion(pl400Banks, 2007);
+      var original564 = findQuestion(mb820Banks, 564);
+      var originalSnapshots = [
+        JSON.stringify(original9313),
+        JSON.stringify(original2007),
+        JSON.stringify(original564)
+      ];
+
+      var sets = [
+        pilots.createPilotSet("pl900", pl900Banks, { force: true }),
+        pilots.createPilotSet("pl400", pl400Banks, { force: true }),
+        pilots.createPilotSet("mb820", mb820Banks, { force: true })
+      ];
+
+      assert(sets[0].data.length === 2, "PL-900 pilot count changed.");
+      assert(sets[1].data.length === 2, "PL-400 pilot count changed.");
+      assert(sets[2].data.length === 1, "MB-820 pilot count changed.");
+      assert(pilots.createPilotSet("mb800", [mb800Questions], { force: true }) === null, "MB-800 received a fabricated source migration.");
+      assert(JSON.stringify(original9313) === originalSnapshots[0], "PL-900 source question was mutated.");
+      assert(JSON.stringify(original2007) === originalSnapshots[1], "PL-400 source question was mutated.");
+      assert(JSON.stringify(original564) === originalSnapshots[2], "MB-820 source question was mutated.");
+
+      sets.forEach(function (set) {
+        assert(set.previewOnly && set.countsTowardPreparation === false && set.includeInRandom === false, "Pilot isolation flags are incomplete.");
+        var ids = new Set();
+        set.data.forEach(function (question) {
+          assert(!ids.has(question.id), "Duplicate question in pilot set: " + question.id);
+          ids.add(question.id);
+          assert(question.type === "matching" || question.type === "ordering", "Legacy question entered the pilot set.");
+          assert(!Object.prototype.hasOwnProperty.call(question, "choices") && !Object.prototype.hasOwnProperty.call(question, "correct"), "Pilot question mixes canonical and legacy fields.");
+          assert(question.interactivePilot && question.interactivePilot.sourceQuestionId === question.id, "Source traceability is missing.");
+          assert(Array.isArray(question.verificationSources) && question.verificationSources.length > 0, "Verification sources are missing.");
+          var validation = model.validateQuestion(question, { allowLegacy: false });
+          assert(validation.valid, "Invalid canonical pilot question: " + question.id);
+          assert(!validation.warnings.some(function (issue) { return issue.code === "answer_order_exposed"; }), "Ordering answer is exposed by source item order: " + question.id);
+        });
+      });
+
+      var reusableMatch = sets[0].data.find(function (question) { return question.id === 9313; });
+      assert(reusableMatch.interaction.allowReuse === true, "PL-900 reusable Dataverse mapping was lost.");
+      assert(reusableMatch.answer.matches.filter(function (match) { return match.optionId === "dataverse"; }).length === 2, "PL-900 Dataverse reuse mapping is incorrect.");
+
+      var pl900Order = sets[0].data.find(function (question) { return question.id === 9351; });
+      assert(pl900Order.answer.order.join(",") === "update-items,save-app,publish-app,share-app", "PL-900 publishing order is incorrect.");
+      var pl400Order = sets[1].data.find(function (question) { return question.id === 2098; });
+      assert(pl400Order.answer.order[0] === "remove-view-reference" && pl400Order.answer.order[3] === "deploy-solution-a", "PL-400 dependency order is incorrect.");
+      assert(pilots.getPilotIds("pl900").join(",") === "9313,9351", "Pilot ID manifest changed.");
+
+      document.body.dataset.status = "pass";
+      document.body.textContent = "PASS: 5 source-backed pilot migrations validated; public banks remain unchanged";
+      document.title = "PASS: ArquiQuiz interactive pilots";
+    } catch (error) {
+      document.body.dataset.status = "fail";
+      document.body.textContent = "FAIL: " + error.message;
+      document.title = "FAIL: ArquiQuiz interactive pilots";
+    }
+  })();
+</script>
+</html>

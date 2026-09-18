@@ -52,6 +52,14 @@
       assert(normalized.answer.order.join(",") === "choice-0,choice-1", "Normalized order is incorrect.");
       assert(model.validateQuestion(normalized).valid, "Normalized ordering question was rejected.");
 
+      var exposedOrdering = JSON.parse(JSON.stringify(normalized));
+      exposedOrdering.id = 2;
+      exposedOrdering.interaction.items = exposedOrdering.interaction.items.slice(0, 2);
+      assert(
+        model.validateQuestion(exposedOrdering).warnings.some(function (issue) { return issue.code === "answer_order_exposed"; }),
+        "Ordering answer-order exposure was not detected."
+      );
+
       var duplicateBank = model.validateQuestionBank([legacySequence, legacySequence]);
       assert(
         duplicateBank.errors.some(function (issue) { return issue.code === "duplicate_question_id"; }),

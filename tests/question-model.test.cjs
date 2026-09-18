@@ -28,6 +28,11 @@ const ordering = {
 };
 assert.equal(model.validateQuestion(ordering).valid, true);
 
+const exposedOrdering = JSON.parse(JSON.stringify(ordering));
+exposedOrdering.id = 'ordering-exposed';
+exposedOrdering.interaction.items = exposedOrdering.interaction.items.slice(0, 3);
+assert.ok(model.validateQuestion(exposedOrdering).warnings.some(issue => issue.code === 'answer_order_exposed'));
+
 const matchingWithReuse = {
   schemaVersion: 1,
   id: 'matching-valid',
