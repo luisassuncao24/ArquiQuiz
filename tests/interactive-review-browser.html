@@ -1,21 +1,37 @@
 <!doctype html>
 <html lang="en">
-<head><meta charset="utf-8"><title>ArquiQuiz local interactive review test</title></head>
+<head><meta charset="utf-8"><title>ArquiQuiz interactive review test</title></head>
 <body data-status="running">
   <pre id="result">RUNNING</pre>
-  <iframe id="review" title="Local review test" style="width:1280px;height:900px" src="../interactive-review.html?question=pl400-2080"></iframe>
+  <iframe id="review" title="Interactive review test" style="width:1280px;height:900px"></iframe>
   <script>
     (function () {
       "use strict";
       var frame = document.getElementById("review");
       var output = document.getElementById("result");
+      var authKey = "quiz_hub_authenticated";
+      var previousAuth = window.localStorage.getItem(authKey);
+      var phase = "unauthenticated";
       function assert(value, message) { if (!value) throw new Error(message); }
+      function restoreAuth() {
+        if (previousAuth === null) window.localStorage.removeItem(authKey);
+        else window.localStorage.setItem(authKey, previousAuth);
+      }
+      window.localStorage.removeItem(authKey);
       frame.onload = function () {
         try {
           var doc = frame.contentDocument;
           var win = frame.contentWindow;
+          if (phase === "unauthenticated") {
+            assert(doc.body.dataset.status === "auth-required", "Review page opened without a hub session.");
+            assert(doc.getElementById("review-app").hidden, "Question content is visible without a hub session.");
+            window.localStorage.setItem(authKey, "1");
+            phase = "authenticated";
+            frame.src = "../interactive-review.html?question=pl400-2080&authTest=1";
+            return;
+          }
           var progressBefore = Object.keys(win.localStorage).filter(function (key) { return /^(pl900|pl400|mb820|mb800)_/.test(key); }).sort().join(",");
-          assert(doc.body.dataset.status === "ready", "Local review page did not unlock.");
+          assert(doc.body.dataset.status === "ready", "Review page did not unlock with a hub session.");
           assert(doc.getElementById("review-count").textContent === "14 migrações", "Review count does not follow the central manifest.");
           assert(doc.querySelectorAll(".review-list-item").length === 14, "Expected all 14 migrated questions in the list.");
           assert(doc.querySelector('.review-list-item[aria-current="true"]').dataset.question === "pl400-2080", "Direct question link did not select the requested ID.");
@@ -55,15 +71,18 @@
           assert(doc.documentElement.dataset.theme === "light", "Review page did not switch to light mode.");
           assert(win.getComputedStyle(doc.querySelector(".review-detail")).color === "rgb(15, 23, 42)", "Review labels are not readable in light mode.");
 
+          restoreAuth();
           document.body.dataset.status = "pass";
-          output.textContent = "PASS: 14 migrations, direct links, filtering, evaluation, reset, source comparison, mobile/light layout, and progress isolation";
-          document.title = "PASS: ArquiQuiz local interactive review";
+          output.textContent = "PASS: hub session gate, 14 migrations, direct links, filtering, evaluation, reset, source comparison, mobile/light layout, and progress isolation";
+          document.title = "PASS: ArquiQuiz interactive review";
         } catch (error) {
+          restoreAuth();
           document.body.dataset.status = "fail";
           output.textContent = "FAIL: " + error.message;
-          document.title = "FAIL: ArquiQuiz local interactive review";
+          document.title = "FAIL: ArquiQuiz interactive review";
         }
       };
+      frame.src = "../interactive-review.html?question=pl400-2080";
     })();
   </script>
 </body>

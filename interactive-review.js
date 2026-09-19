@@ -4,8 +4,21 @@
   var migrations = window.ArquiQuizInteractivePilots;
   var app = document.getElementById("review-app");
   var blocked = document.getElementById("review-blocked");
-  if (!migrations || !migrations.isLocalEnvironment(window.location)) {
-    document.body.dataset.status = "blocked";
+  function stopWithMessage(title, message, status) {
+    blocked.querySelector("h1").textContent = title;
+    blocked.querySelector("p").textContent = message;
+    document.body.dataset.status = status;
+  }
+
+  if (!migrations) {
+    stopWithMessage("Não foi possível carregar a revisão", "Falta o módulo de perguntas interativas. Atualiza a página e tenta novamente.", "error");
+    return;
+  }
+
+  var hubAuthenticated = false;
+  try { hubAuthenticated = window.localStorage.getItem("quiz_hub_authenticated") === "1"; } catch (error) { /* storage unavailable */ }
+  if (!hubAuthenticated) {
+    stopWithMessage("Entra primeiro no hub", "Acede ao ArquiQuiz pelo hub e introduz a palavra-passe. Depois, abre a revisão de perguntas interativas a partir do hub.", "auth-required");
     return;
   }
 
@@ -18,9 +31,7 @@
       mb800: [mb800Questions]
     });
   } catch (error) {
-    blocked.querySelector("h1").textContent = "Não foi possível carregar a revisão";
-    blocked.querySelector("p").textContent = error.message;
-    document.body.dataset.status = "error";
+    stopWithMessage("Não foi possível carregar a revisão", error.message, "error");
     return;
   }
 

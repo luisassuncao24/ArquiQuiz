@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>ArquiQuiz hub review entry test</title></head>
+<body data-status="running">
+  <pre id="result">RUNNING</pre>
+  <iframe id="hub" title="Hub review entry test" style="width:1200px;height:900px"></iframe>
+  <script>
+    (function () {
+      "use strict";
+      var authKey = "quiz_hub_authenticated";
+      var previousAuth = window.localStorage.getItem(authKey);
+      var frame = document.getElementById("hub");
+      var output = document.getElementById("result");
+      function assert(value, message) { if (!value) throw new Error(message); }
+      function restoreAuth() {
+        if (previousAuth === null) window.localStorage.removeItem(authKey);
+        else window.localStorage.setItem(authKey, previousAuth);
+      }
+      window.localStorage.setItem(authKey, "1");
+      frame.onload = function () {
+        try {
+          var doc = frame.contentDocument;
+          var win = frame.contentWindow;
+          var callout = doc.querySelector(".hub-review-callout");
+          var link = doc.getElementById("hub-interactive-review");
+          assert(doc.getElementById("hub-container").style.display !== "none", "Hub did not open with the existing session.");
+          assert(callout && link && !link.hidden, "Review entry is missing from the hub.");
+          assert(link.getAttribute("href") === "interactive-review.html", "Review entry points to the wrong page.");
+          assert(win.getComputedStyle(link).display !== "none", "Review entry is not visible.");
+          assert(doc.getElementById("hub-version").textContent.indexOf("1.2.0-beta.8") !== -1, "Version was not incremented.");
+          doc.getElementById("theme-toggle").click();
+          assert(doc.documentElement.dataset.theme === "light", "Hub theme toggle failed.");
+          assert(win.getComputedStyle(callout).color === "rgb(15, 23, 42)", "Callout text is not readable in light mode.");
+          restoreAuth();
+          document.body.dataset.status = "pass";
+          output.textContent = "PASS: signed-in hub shows quick interactive review in dark and light themes";
+        } catch (error) {
+          restoreAuth();
+          document.body.dataset.status = "fail";
+          output.textContent = "FAIL: " + error.message;
+        }
+      };
+      frame.src = "../index.html";
+    })();
+  </script>
+</body>
+</html>

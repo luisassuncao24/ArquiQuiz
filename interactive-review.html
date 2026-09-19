@@ -3,20 +3,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Revisão local de perguntas · ArquiQuiz</title>
+  <title>Revisão de perguntas interativas · ArquiQuiz</title>
   <script src="theme.js"></script>
   <link rel="stylesheet" href="styles.css?v=1.2.0-beta.7">
   <link rel="stylesheet" href="theme.css?v=1.2.0-beta.7">
   <link rel="stylesheet" href="interactive-question.css?v=1.2.0-beta.7">
-  <link rel="stylesheet" href="interactive-review.css?v=1.2.0-beta.7">
+  <link rel="stylesheet" href="interactive-review.css?v=1.2.0-beta.8">
 </head>
-<body data-status="locked">
+<body data-status="loading">
   <main id="review-app" class="review-shell" hidden>
     <header class="review-header">
       <div>
         <a class="review-back" href="index.html">← ArquiQuiz</a>
         <h1>Revisão de perguntas interativas</h1>
-        <p>Abre diretamente qualquer migração de layout. Esta página funciona apenas no computador local e não modifica o progresso dos exames.</p>
+        <p>Abre diretamente qualquer pergunta com layout interativo. Podes testar respostas sem começar um quiz nem modificar o progresso dos exames.</p>
       </div>
       <span id="review-count" class="review-count"></span>
     </header>
@@ -61,8 +61,8 @@
   </main>
 
   <div id="review-blocked" class="review-blocked">
-    <h1>Revisão disponível apenas localmente</h1>
-    <p>Abre este ficheiro no teu computador ou em <code>localhost</code>. Esta página não está disponível no site publicado.</p>
+    <h1>A carregar revisão…</h1>
+    <p>Se esta mensagem não desaparecer, atualiza a página e tenta novamente.</p>
     <a href="index.html">Voltar ao ArquiQuiz</a>
   </div>
 
@@ -83,7 +83,7 @@
   <script src="questionsOfficial.js"></script>
   <script src="mb820-revisions.js"></script>
   <script src="mb800-questions.js?v=1.1.1"></script>
-  <script src="interactive-question-pilots.js?v=1.2.0-beta.7"></script>
-  <script src="interactive-review.js?v=1.2.0-beta.7"></script>
+  <script src="interactive-question-pilots.js?v=1.2.0-beta.8"></script>
+  <script src="interactive-review.js?v=1.2.0-beta.8"></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-/* Local-only review of source-backed layout migrations. */
+/* Shared review of source-backed layout migrations. */
 .review-shell,
 .review-blocked {
   --review-surface: #1e293b;

@@ -173,21 +173,53 @@
             text-decoration: underline;
         }
 
-        .hub-review-link:not([hidden]) {
-            display: block;
-            width: fit-content;
-            margin: .7rem auto .15rem;
-            padding: .45rem .7rem;
-            border: 1px solid #475569;
-            border-radius: 7px;
-            color: #38bdf8;
-            font-weight: 700;
+        .hub-review-callout {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+            padding: 1.35rem 1.5rem;
+            border: 1px solid #0e7490;
+            border-radius: 12px;
+            background: #102b3a;
         }
 
-        html[data-theme="light"] .hub-review-link:not([hidden]) {
-            color: #0369a1;
-            border-color: #cbd5e1;
+        .hub-review-callout h2 {
+            margin: 0 0 .4rem;
+            color: #7dd3fc;
+            font-size: 1.1rem;
         }
+
+        .hub-review-callout p {
+            margin: 0;
+            color: #cbd5e1;
+            font-size: .85rem;
+            line-height: 1.5;
+        }
+
+        .hub-review-link {
+            flex: 0 0 auto;
+            display: inline-block;
+            padding: .7rem 1rem;
+            border-radius: 8px;
+            background: #38bdf8;
+            color: #0f172a;
+            font-size: .87rem;
+            font-weight: 700;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .hub-review-link:hover { background: #7dd3fc; }
+        .hub-review-link:focus-visible { outline: 3px solid #f8fafc; outline-offset: 3px; }
+
+        html[data-theme="light"] .hub-review-callout { background: #f0f9ff; border-color: #7dd3fc; }
+        html[data-theme="light"] .hub-review-callout h2 { color: #075985; }
+        html[data-theme="light"] .hub-review-callout p { color: #334155; }
+        html[data-theme="light"] .hub-review-link { background: #0369a1; color: #ffffff; }
+        html[data-theme="light"] .hub-review-link:hover { background: #075985; }
+        html[data-theme="light"] .hub-review-link:focus-visible { outline-color: #0369a1; }
 
         .hub-version {
             margin-top: 0.45rem;
@@ -316,6 +348,8 @@
             .hub-container {
                 padding: 2rem 1.25rem 2.5rem;
             }
+
+            .hub-review-callout { flex-direction: column; align-items: stretch; }
         }
     </style>
 </head>
@@ -406,9 +440,16 @@
             </div>
         </div>
 
+        <section class="hub-review-callout" aria-labelledby="hub-review-title">
+            <div>
+                <h2 id="hub-review-title">🧩 Testar perguntas interativas</h2>
+                <p>Abre diretamente as perguntas de correspondência e ordenação, experimenta as respostas e compara o layout anterior. Sem quiz longo, temporizador ou alteração do progresso.</p>
+            </div>
+            <a id="hub-interactive-review" class="hub-review-link" href="interactive-review.html">Abrir revisão rápida →</a>
+        </section>
+
         <div class="hub-footer">
             Progress is saved per exam in your browser
-            <a id="hub-interactive-review" class="hub-review-link" href="interactive-review.html" hidden>Rever perguntas interativas · apenas local</a>
             <button id="hub-version" class="hub-version version-button" type="button" aria-haspopup="dialog" aria-controls="version-history-overlay"></button>
         </div>
     </div>
@@ -430,8 +471,9 @@
         "use strict";
 
         // Release policy: increment this version and add a CHANGE_LOG entry for every deployed change.
-        var APP_VERSION = "1.2.0-beta.7";
+        var APP_VERSION = "1.2.0-beta.8";
         var CHANGE_LOG = [
+          { version: "1.2.0-beta.8", text: "Made the interactive-question review available from the public hub to signed-in colleagues. The quick review opens migrated questions directly, preserves exam progress, and now checks the existing hub session without a second password prompt." },
           { version: "1.2.0-beta.7", text: "Added a local-only interactive-question review page linked from the local hub. It automatically lists every registered layout migration, supports direct question links, filters, answer testing, and comparison with the previous wording without changing quiz progress." },
           { version: "1.2.0-beta.6", text: "Interactive layouts Phase 6: promoted all 14 validated matching and ordering migrations into the normal PL-900, PL-400, and MB-820 question sets, preserved old saved-result readability, and added a temporary legacyInteractions fallback for controlled rollback." },
           { version: "1.2.0-beta.5", text: "Interactive layouts Phase 5: expanded the local-only pilot from five to 14 source-backed migrations (seven PL-900, six PL-400, and one MB-820), added exact mapping and ordering regression checks for every new question, and documented candidates excluded because their source wording or product behavior is outdated or ambiguous." },
@@ -474,12 +516,6 @@
         var versionOverlay = document.getElementById("version-history-overlay");
         var versionCloseButton = document.getElementById("version-history-close");
         var versionHistoryList = document.getElementById("version-history-list");
-        var reviewLink = document.getElementById("hub-interactive-review");
-
-        var localHost = window.location.hostname;
-        reviewLink.hidden = !(window.location.protocol === "file:" || localHost === "localhost" ||
-          localHost === "127.0.0.1" || localHost === "[::1]");
-
         versionButton.textContent = "Version " + APP_VERSION + " · View changelog";
         versionHistoryList.innerHTML = CHANGE_LOG.map(function (entry) {
           return '<li class="version-history-item"><span class="version-history-version">Version ' + entry.version + '</span><p>' + entry.text + '</p></li>';

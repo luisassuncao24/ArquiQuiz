@@ -638,10 +638,7 @@
     });
   }
 
-  function createReviewCatalog(questionBanksByExam, options) {
-    var settings = options || {};
-    if (settings.force !== true && !isLocalEnvironment(settings.location)) return null;
-
+  function createReviewCatalog(questionBanksByExam) {
     var banksByExam = questionBanksByExam || {};
     var catalog = [];
     getRegisteredExams().forEach(function (examKey) {
