@@ -55,6 +55,8 @@
       assert(!pilots.isLocalPreviewEnabled({ protocol: "https:", hostname: "example.com", search: "?interactivePreview=1" }), "Public HTTPS preview was allowed.");
       assert(pilots.isLocalPreviewEnabled({ protocol: "file:", hostname: "", search: "?interactivePreview=1" }), "Local-file preview was rejected.");
       assert(pilots.isLocalPreviewEnabled({ protocol: "http:", hostname: "localhost", search: "?interactivePreview=1" }), "Localhost preview was rejected.");
+      assert(pilots.isLocalEnvironment({ protocol: "file:", hostname: "" }), "Local review was rejected.");
+      assert(!pilots.isLocalEnvironment({ protocol: "https:", hostname: "example.com" }), "Public review was allowed.");
       assert(pilots.isLegacyInteractionFallbackEnabled({ search: "?legacyInteractions=1" }), "Legacy rollback switch was rejected.");
       assert(!pilots.isLegacyInteractionFallbackEnabled({ search: "" }), "Legacy rollback switch activated without a query flag.");
 
@@ -64,6 +66,17 @@
         mb820: [564]
       };
       var banksByExam = { pl900: pl900Banks, pl400: pl400Banks, mb820: mb820Banks };
+      banksByExam.mb800 = [mb800Questions];
+      assert(pilots.createReviewCatalog(banksByExam, { location: { protocol: "https:", hostname: "example.com" } }) === null, "Review catalog was available on a public origin.");
+      var reviewCatalog = pilots.createReviewCatalog(banksByExam, { force: true });
+      var registeredCount = pilots.getRegisteredExams().reduce(function (total, examKey) {
+        return total + pilots.getPilotIds(examKey).length;
+      }, 0);
+      assert(reviewCatalog.length === registeredCount && reviewCatalog.length === 14, "Review catalog does not follow the migration registry.");
+      reviewCatalog.forEach(function (entry) {
+        assert(entry.question.id === entry.sourceId && entry.sourceQuestion.id === entry.sourceId, "Review catalog source traceability is broken.");
+        assert(entry.question.type === "matching" || entry.question.type === "ordering", "Review catalog contains a legacy question.");
+      });
       var originalSnapshots = {};
       Object.keys(expectedIds).forEach(function (examKey) {
         originalSnapshots[examKey] = expectedIds[examKey].map(function (id) {

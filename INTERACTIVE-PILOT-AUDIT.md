@@ -51,4 +51,5 @@ Phases 4 and 5 converted 14 existing questions into canonical matching or orderi
 - The same numeric question IDs prevent duplicates and preserve in-progress session lookup.
 - Each released record carries a private compatibility snapshot so pre-release result histories still show their choice labels.
 - `?legacyInteractions=1` restores the old question representation for a controlled page load and can still display new-format saved results.
+- `interactive-review.html` reads this migration registry automatically for local-only, progress-free manual inspection; it is not a separate manually maintained question bank.
 - MB-800 is excluded because there is no converted official drag-and-drop source to migrate faithfully.

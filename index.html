@@ -173,6 +173,22 @@
             text-decoration: underline;
         }
 
+        .hub-review-link:not([hidden]) {
+            display: block;
+            width: fit-content;
+            margin: .7rem auto .15rem;
+            padding: .45rem .7rem;
+            border: 1px solid #475569;
+            border-radius: 7px;
+            color: #38bdf8;
+            font-weight: 700;
+        }
+
+        html[data-theme="light"] .hub-review-link:not([hidden]) {
+            color: #0369a1;
+            border-color: #cbd5e1;
+        }
+
         .hub-version {
             margin-top: 0.45rem;
             color: #64748b;
@@ -392,6 +408,7 @@
 
         <div class="hub-footer">
             Progress is saved per exam in your browser
+            <a id="hub-interactive-review" class="hub-review-link" href="interactive-review.html" hidden>Rever perguntas interativas · apenas local</a>
             <button id="hub-version" class="hub-version version-button" type="button" aria-haspopup="dialog" aria-controls="version-history-overlay"></button>
         </div>
     </div>
@@ -413,8 +430,9 @@
         "use strict";
 
         // Release policy: increment this version and add a CHANGE_LOG entry for every deployed change.
-        var APP_VERSION = "1.2.0-beta.6";
+        var APP_VERSION = "1.2.0-beta.7";
         var CHANGE_LOG = [
+          { version: "1.2.0-beta.7", text: "Added a local-only interactive-question review page linked from the local hub. It automatically lists every registered layout migration, supports direct question links, filters, answer testing, and comparison with the previous wording without changing quiz progress." },
           { version: "1.2.0-beta.6", text: "Interactive layouts Phase 6: promoted all 14 validated matching and ordering migrations into the normal PL-900, PL-400, and MB-820 question sets, preserved old saved-result readability, and added a temporary legacyInteractions fallback for controlled rollback." },
           { version: "1.2.0-beta.5", text: "Interactive layouts Phase 5: expanded the local-only pilot from five to 14 source-backed migrations (seven PL-900, six PL-400, and one MB-820), added exact mapping and ordering regression checks for every new question, and documented candidates excluded because their source wording or product behavior is outdated or ambiguous." },
           { version: "1.2.0-beta.4", text: "Interactive layouts Phase 4: added a local-only pilot set with five source-backed migrations (two PL-900, two PL-400, and one MB-820), kept the production banks unchanged, excluded pilot attempts from preparation analytics, and added validation that detects ordering items displayed in answer order. MB-800 is intentionally excluded because its Beta bank has no converted official drag-and-drop source questions." },
@@ -456,6 +474,11 @@
         var versionOverlay = document.getElementById("version-history-overlay");
         var versionCloseButton = document.getElementById("version-history-close");
         var versionHistoryList = document.getElementById("version-history-list");
+        var reviewLink = document.getElementById("hub-interactive-review");
+
+        var localHost = window.location.hostname;
+        reviewLink.hidden = !(window.location.protocol === "file:" || localHost === "localhost" ||
+          localHost === "127.0.0.1" || localHost === "[::1]");
 
         versionButton.textContent = "Version " + APP_VERSION + " · View changelog";
         versionHistoryList.innerHTML = CHANGE_LOG.map(function (entry) {

@@ -484,13 +484,17 @@
     return JSON.parse(JSON.stringify(value));
   }
 
-  function isLocalPreviewEnabled(locationObject) {
+  function isLocalEnvironment(locationObject) {
     var currentLocation = locationObject || (typeof window !== "undefined" ? window.location : null);
     if (!currentLocation) return false;
     var hostname = currentLocation.hostname || "";
-    var isLocal = currentLocation.protocol === "file:" || hostname === "localhost" ||
+    return currentLocation.protocol === "file:" || hostname === "localhost" ||
       hostname === "127.0.0.1" || hostname === "[::1]";
-    if (!isLocal) return false;
+  }
+
+  function isLocalPreviewEnabled(locationObject) {
+    var currentLocation = locationObject || (typeof window !== "undefined" ? window.location : null);
+    if (!isLocalEnvironment(currentLocation)) return false;
     try {
       return new URLSearchParams(currentLocation.search || "").get("interactivePreview") === "1";
     } catch (error) {
@@ -628,11 +632,47 @@
     return definitions.map(function (definition) { return definition.sourceId; });
   }
 
+  function getRegisteredExams() {
+    return Object.keys(PILOT_DEFINITIONS).filter(function (examKey) {
+      return PILOT_DEFINITIONS[examKey].length > 0;
+    });
+  }
+
+  function createReviewCatalog(questionBanksByExam, options) {
+    var settings = options || {};
+    if (settings.force !== true && !isLocalEnvironment(settings.location)) return null;
+
+    var banksByExam = questionBanksByExam || {};
+    var catalog = [];
+    getRegisteredExams().forEach(function (examKey) {
+      var definitions = PILOT_DEFINITIONS[examKey];
+      if (!definitions || definitions.length === 0) return;
+      var banks = banksByExam[examKey];
+      if (!Array.isArray(banks)) {
+        throw new Error("Review catalog is missing question banks for " + examKey + ".");
+      }
+      var questions = createQuestions(examKey, banks, "review");
+      questions.forEach(function (question) {
+        var source = findSourceQuestion(banks, question.id);
+        catalog.push({
+          examKey: examKey,
+          sourceId: question.id,
+          sourceQuestion: clone(source),
+          question: question
+        });
+      });
+    });
+    return catalog;
+  }
+
   return Object.freeze({
+    isLocalEnvironment: isLocalEnvironment,
     isLocalPreviewEnabled: isLocalPreviewEnabled,
     isLegacyInteractionFallbackEnabled: isLegacyInteractionFallbackEnabled,
     createPilotSet: createPilotSet,
     createRelease: createRelease,
+    createReviewCatalog: createReviewCatalog,
+    getRegisteredExams: getRegisteredExams,
     getPilotIds: getPilotIds
   });
 });
