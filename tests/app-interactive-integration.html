@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../theme.css">
+  <link rel="stylesheet" href="../interactive-question.css">
+  <title>ArquiQuiz app interactive integration test</title>
+</head>
+<body data-status="running">
+  <div id="quiz-container">
+    <div id="quiz-header">
+      <h1>Integration Test</h1>
+      <button id="home-btn" style="display:none;">Home</button>
+    </div>
+    <div id="set-selection" style="display:none;"></div>
+    <div id="timer-display" style="display:none;"></div>
+    <div id="question"></div>
+    <div id="choices"></div>
+    <button id="next-button" style="display:none;">Next</button>
+    <div id="score-summary" style="display:none;"></div>
+  </div>
+
+  <div id="confirm-overlay" style="display:none;"><div id="confirm-card"><h2 id="confirm-title"></h2><p id="confirm-message"></p><button id="confirm-yes-btn">Yes</button><button id="confirm-no-btn">Cancel</button></div></div>
+  <div id="pause-overlay" style="display:none;"><div id="pause-card"><button id="pause-resume-btn">Continue</button><button id="pause-home-btn">Home</button></div></div>
+  <div id="mode-overlay" style="display:none;"><div id="mode-card"><button id="practice-mode-btn" class="mode-btn">Practice</button><button id="test-mode-btn" class="mode-btn">Test</button><button id="mode-cancel-btn">Cancel</button></div></div>
+  <div id="peek-overlay" style="display:none;"><div id="peek-card"><span id="peek-emoji"></span><h2 id="peek-title"></h2><span id="peek-pct"></span><span id="peek-detail"></span><p id="peek-taunt"></p><button id="peek-continue-btn">Continue</button><button id="peek-quit-btn">Quit</button></div></div>
+  <div id="streak-overlay" style="display:none;"><div id="streak-card"><span id="streak-icon"></span><span id="streak-msg"></span><span id="streak-count"></span><button id="streak-dismiss-btn">Continue</button></div></div>
+  <output id="test-result">RUNNING</output>
+
+  <script src="../question-model.js"></script>
+  <script src="../interactive-question.js"></script>
+  <script>
+    (function () {
+      "use strict";
+      Math.random = function () { return 0.999999; };
+      try {
+        for (var index = localStorage.length - 1; index >= 0; index--) {
+          var key = localStorage.key(index);
+          if (key && key.indexOf("phase3_integration_") === 0) localStorage.removeItem(key);
+        }
+      } catch (error) { /* localStorage may be unavailable */ }
+
+      window.PHASE3_MATCHING = {
+        schemaVersion: 1,
+        id: "phase3-match",
+        text: "Match each prompt to the correct option.",
+        type: "matching",
+        interaction: {
+          prompts: [{ id: "p1", text: "Prompt one" }, { id: "p2", text: "Prompt two" }],
+          options: [{ id: "a", text: "Option A" }, { id: "b", text: "Option B" }],
+          allowReuse: false
+        },
+        answer: { matches: [{ promptId: "p1", optionId: "a" }, { promptId: "p2", optionId: "b" }] },
+        explanation: "Prompt one maps to Option A; prompt two maps to Option B."
+      };
+      window.PHASE3_ORDERING = {
+        schemaVersion: 1,
+        id: "phase3-order",
+        text: "Place the actions in the correct order.",
+        type: "ordering",
+        interaction: {
+          items: [{ id: "one", text: "Step one" }, { id: "two", text: "Step two" }, { id: "unused", text: "Unused distractor" }],
+          slots: [{ id: "first", text: "First" }, { id: "second", text: "Second" }]
+        },
+        answer: { order: ["one", "two"] },
+        explanation: "Step one must be completed before step two."
+      };
+      window.PHASE3_CASE_MATCHING = JSON.parse(JSON.stringify(window.PHASE3_MATCHING));
+      window.PHASE3_CASE_MATCHING.id = "phase3-case-match";
+
+      window.QUIZ_CONFIG = {
+        prefix: "phase3_integration",
+        examName: "TEST",
+        examTitle: "Integration Test",
+        interactiveLayouts: true,
+        timerDuration: 600,
+        questionSets: [
+          { key: "matching", label: "Matching Set", difficulty: "beginner", description: "Matching integration fixture.", data: [window.PHASE3_MATCHING] },
+          { key: "ordering", label: "Ordering Set", difficulty: "intermediate", description: "Ordering integration fixture.", data: [window.PHASE3_ORDERING] }
+        ],
+        testCases: [
+          { key: "interactive_case", label: "Interactive Case", description: "Interactive case fixture.", scenario: "A local integration-test scenario.", questions: [window.PHASE3_CASE_MATCHING] }
+        ]
+      };
+    })();
+  </script>
+  <script src="../app.js"></script>
+  <script>
+    (function () {
+      "use strict";
+      function assert(condition, message) {
+        if (!condition) throw new Error(message);
+      }
+      function findByAttribute(host, attribute, value) {
+        var controls = host.querySelectorAll("[" + attribute + "]");
+        for (var index = 0; index < controls.length; index++) {
+          if (controls[index].getAttribute(attribute) === value) return controls[index];
+        }
+        throw new Error("Control not found: " + attribute + "=" + value);
+      }
+      function place(host, optionId, targetId) {
+        findByAttribute(host, "data-iq-option-id", optionId).click();
+        findByAttribute(host, "data-iq-target-id", targetId).click();
+      }
+      function answerMatching(host) {
+        place(host, "a", "p1");
+        place(host, "b", "p2");
+      }
+      function answerOrdering(host, correct) {
+        place(host, "one", "first");
+        place(host, correct ? "two" : "unused", "second");
+      }
+      function startSet(key, modeButtonId) {
+        document.querySelector('.start-set-btn[data-key="' + key + '"]').click();
+        document.getElementById(modeButtonId).click();
+      }
+      function returnHome() {
+        document.getElementById("home-btn").click();
+      }
+
+      try {
+        var quickHost = document.querySelector("#qp-container .iq-component");
+        assert(quickHost && quickHost.getAttribute("data-iq-type") === "matching", "Quick Practice did not mount the matching component.");
+        answerMatching(quickHost);
+        document.getElementById("qp-submit-btn").click();
+        assert(document.querySelectorAll("#qp-container .iq-slot.is-correct").length === 2, "Quick Practice matching feedback is incorrect.");
+        document.getElementById("qp-next-btn").click();
+        quickHost = document.querySelector("#qp-container .iq-component");
+        assert(quickHost && quickHost.getAttribute("data-iq-type") === "ordering", "Quick Practice did not advance to ordering.");
+        answerOrdering(quickHost, true);
+        document.getElementById("qp-submit-btn").click();
+        assert(document.querySelectorAll("#qp-container .iq-slot.is-correct").length === 2, "Quick Practice ordering feedback is incorrect.");
+
+        startSet("matching", "practice-mode-btn");
+        var matchingHost = document.querySelector("#choices .iq-component");
+        assert(matchingHost && matchingHost.getAttribute("data-iq-type") === "matching", "Practice mode did not mount matching.");
+
+        document.getElementById("review-later-btn").click();
+        var bookmarks = JSON.parse(localStorage.getItem("phase3_integration_review_later") || "[]");
+        assert(bookmarks.length === 1 && bookmarks[0].questionText, "Review Later did not save the interactive question.");
+        assert(!Object.prototype.hasOwnProperty.call(bookmarks[0], "correct") && !Object.prototype.hasOwnProperty.call(bookmarks[0], "selected") && !Object.prototype.hasOwnProperty.call(bookmarks[0], "answer"), "Review Later leaked answer data.");
+
+        var copiedIssue = "";
+        try {
+          Object.defineProperty(navigator, "clipboard", { configurable: true, value: { writeText: function (text) { copiedIssue = text; return Promise.resolve(); } } });
+        } catch (error) { /* clipboard assertion is skipped when the browser forbids replacement */ }
+        document.getElementById("report-issue-btn").click();
+        if (copiedIssue) {
+          assert(copiedIssue.indexOf("Targets:") !== -1 && copiedIssue.indexOf("Available options:") !== -1, "Interactive issue report omitted public question details.");
+          assert(copiedIssue.indexOf("Correct answer") === -1, "Interactive issue report leaked the answer key.");
+        }
+
+        answerMatching(matchingHost);
+        document.querySelector("#choices .submit-btn").click();
+        assert(document.querySelectorAll("#choices .iq-slot.is-correct").length === 2, "Practice mode did not reveal correct matching feedback.");
+        assert(document.querySelector("#choices .correct-exp"), "Practice explanation was not displayed.");
+        var saved = JSON.parse(localStorage.getItem("phase3_integration_quiz_progress_matching"));
+        assert(saved.results[0].answerFormat === "interactive-v1", "Interactive result format was not saved.");
+        document.getElementById("next-button").click();
+        if (document.getElementById("review-later-results-btn")) document.getElementById("review-later-results-btn").click();
+        assert(document.getElementById("score-summary").textContent.indexOf("Prompt one") !== -1, "Matching summary omitted mapped prompts.");
+
+        returnHome();
+        startSet("ordering", "test-mode-btn");
+        var orderingHost = document.querySelector("#choices .iq-component");
+        assert(orderingHost && orderingHost.getAttribute("data-iq-type") === "ordering", "Test mode did not mount ordering.");
+        answerOrdering(orderingHost, false);
+        document.querySelector("#choices .submit-btn").click();
+        assert(!document.querySelector("#choices .iq-slot.is-correct, #choices .iq-slot.is-incorrect, #choices .iq-correct-answer"), "Test mode leaked correctness before the summary.");
+        assert(document.querySelector("#choices .test-mode-exp"), "Test mode did not show its neutral recorded message.");
+        var orderingSaved = JSON.parse(localStorage.getItem("phase3_integration_quiz_progress_ordering"));
+        assert(orderingSaved.results[0].partialScore === 0.5, "Interactive partial scoring was not saved correctly.");
+        document.getElementById("next-button").click();
+        assert(document.getElementById("score-summary").textContent.indexOf("Step one") !== -1, "Ordering summary omitted the correct sequence.");
+
+        returnHome();
+        document.querySelector('.case-start-btn[data-case-key="interactive_case"]').click();
+        document.getElementById("practice-mode-btn").click();
+        document.getElementById("case-intro-start-btn").click();
+        var caseHost = document.querySelector("#choices .iq-component");
+        assert(caseHost && caseHost.getAttribute("data-iq-type") === "matching", "Standalone case study did not mount matching.");
+        answerMatching(caseHost);
+        document.querySelector("#choices .submit-btn").click();
+        assert(document.querySelectorAll("#choices .iq-slot.is-correct").length === 2, "Case-study interactive feedback is incorrect.");
+
+        document.body.dataset.status = "pass";
+        document.getElementById("test-result").textContent = "PASS: Practice, Test, Quick Practice, case study, summary, saved result, Review Later, and issue-copy integration";
+        document.title = "PASS: ArquiQuiz app interactive integration";
+      } catch (error) {
+        document.body.dataset.status = "fail";
+        document.getElementById("test-result").textContent = "FAIL: " + error.message;
+        document.title = "FAIL: ArquiQuiz app interactive integration";
+      }
+    })();
+  </script>
+</body>
+</html>

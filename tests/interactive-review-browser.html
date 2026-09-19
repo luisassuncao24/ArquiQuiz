@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>ArquiQuiz local interactive review test</title></head>
+<body data-status="running">
+  <pre id="result">RUNNING</pre>
+  <iframe id="review" title="Local review test" style="width:1280px;height:900px" src="../interactive-review.html?question=pl400-2080"></iframe>
+  <script>
+    (function () {
+      "use strict";
+      var frame = document.getElementById("review");
+      var output = document.getElementById("result");
+      function assert(value, message) { if (!value) throw new Error(message); }
+      frame.onload = function () {
+        try {
+          var doc = frame.contentDocument;
+          var win = frame.contentWindow;
+          var progressBefore = Object.keys(win.localStorage).filter(function (key) { return /^(pl900|pl400|mb820|mb800)_/.test(key); }).sort().join(",");
+          assert(doc.body.dataset.status === "ready", "Local review page did not unlock.");
+          assert(doc.getElementById("review-count").textContent === "14 migrações", "Review count does not follow the central manifest.");
+          assert(doc.querySelectorAll(".review-list-item").length === 14, "Expected all 14 migrated questions in the list.");
+          assert(doc.querySelector('.review-list-item[aria-current="true"]').dataset.question === "pl400-2080", "Direct question link did not select the requested ID.");
+          assert(doc.getElementById("review-meta").textContent.indexOf("PL-400") !== -1, "Exam label is missing.");
+          assert(doc.querySelector(".review-original").open === false, "Legacy source is open before the user requests comparison.");
+          assert(doc.getElementById("review-evaluate").disabled, "Evaluation is available before the answer is complete.");
+          assert(!doc.querySelector("#review-interaction .iq-correct-answer"), "Correct answer leaked before evaluation.");
+
+          doc.querySelector('[data-iq-option-id="standard-table"]').click();
+          doc.querySelector('[data-iq-target-id="doctors"]').click();
+          doc.querySelector('[data-iq-option-id="virtual-table"]').click();
+          doc.querySelector('[data-iq-target-id="medications"]').click();
+          assert(!doc.getElementById("review-evaluate").disabled, "Completed answer cannot be evaluated.");
+          doc.getElementById("review-evaluate").click();
+          assert(doc.getElementById("review-result").classList.contains("is-correct"), "Correct answer was not scored correctly.");
+          assert(!doc.getElementById("review-explanation").hidden, "Explanation was not shown after evaluation.");
+          doc.getElementById("review-reset").click();
+          assert(doc.getElementById("review-evaluate").disabled && doc.getElementById("review-explanation").hidden, "Reset did not clear the evaluated answer.");
+
+          var exam = doc.getElementById("review-exam");
+          exam.value = "pl900";
+          exam.dispatchEvent(new Event("change", { bubbles: true }));
+          assert(doc.querySelectorAll(".review-list-item").length === 7, "PL-900 filter count is incorrect.");
+          var search = doc.getElementById("review-search");
+          search.value = "9351";
+          search.dispatchEvent(new Event("input", { bubbles: true }));
+          assert(doc.querySelectorAll(".review-list-item").length === 1, "Question ID search failed.");
+          assert(doc.querySelector("#review-interaction .iq-ordering"), "Ordering layout did not open directly from the filtered list.");
+          doc.querySelector(".review-original").open = true;
+          assert(doc.getElementById("review-source-text").textContent.length > 0, "Previous question text is missing.");
+          assert(doc.querySelectorAll("#review-source-choices li").length > 0, "Previous options are missing.");
+          assert(progressBefore === Object.keys(win.localStorage).filter(function (key) { return /^(pl900|pl400|mb820|mb800)_/.test(key); }).sort().join(","), "Review page changed exam-specific local storage.");
+
+          frame.style.width = "375px";
+          assert(doc.documentElement.scrollWidth <= doc.documentElement.clientWidth + 1, "Review page overflows a mobile-width viewport.");
+          doc.getElementById("theme-toggle").click();
+          assert(doc.documentElement.dataset.theme === "light", "Review page did not switch to light mode.");
+          assert(win.getComputedStyle(doc.querySelector(".review-detail")).color === "rgb(15, 23, 42)", "Review labels are not readable in light mode.");
+
+          document.body.dataset.status = "pass";
+          output.textContent = "PASS: 14 migrations, direct links, filtering, evaluation, reset, source comparison, mobile/light layout, and progress isolation";
+          document.title = "PASS: ArquiQuiz local interactive review";
+        } catch (error) {
+          document.body.dataset.status = "fail";
+          output.textContent = "FAIL: " + error.message;
+          document.title = "FAIL: ArquiQuiz local interactive review";
+        }
+      };
+    })();
+  </script>
+</body>
+</html>

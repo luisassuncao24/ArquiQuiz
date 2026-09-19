@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>ArquiQuiz interactive release app test</title>
+</head>
+<body data-status="running">
+  <pre id="result">RUNNING</pre>
+  <iframe id="app" title="Interactive release app test" style="width:1280px;height:900px"></iframe>
+  <script>
+    (function () {
+      "use strict";
+
+      var cases = [
+        { page: "pl900.html", prefix: "pl900", count: 7, setKey: "foundations", firstId: 9001, targetId: 9057, verifyLegacyResult: true },
+        { page: "pl400.html", prefix: "pl400", count: 6, setKey: "intermediate", firstId: 2009, targetId: 2080 },
+        { page: "mb820.html", prefix: "mb820", count: 1, setKey: "official", firstId: 501, targetId: 564 },
+        { page: "mb800.html", prefix: "mb800", count: 0 },
+        { page: "pl900.html", prefix: "pl900", count: 0, setKey: "foundations", firstId: 9001, targetId: 9057, rollback: true }
+      ];
+      var current = 0;
+      var phase = "inspect";
+      var frame = document.getElementById("app");
+      var result = document.getElementById("result");
+
+      function assert(condition, message) {
+        if (!condition) throw new Error(message);
+      }
+
+      function progressKey(testCase) {
+        return testCase.prefix + "_quiz_progress_" + testCase.setKey;
+      }
+
+      function completedKey(testCase) {
+        return testCase.prefix + "_completed_quiz_" + testCase.setKey;
+      }
+
+      function pageUrl(testCase, marker) {
+        var query = [];
+        if (testCase.rollback) query.push("legacyInteractions=1");
+        if (marker) query.push("releaseTest=" + marker);
+        return "../" + testCase.page + (query.length ? "?" + query.join("&") : "");
+      }
+
+      function finishFailure(error) {
+        document.body.dataset.status = "fail";
+        result.textContent = "FAIL: " + error.message;
+        document.title = "FAIL: ArquiQuiz interactive release app";
+      }
+
+      function finishCase(win, testCase) {
+        if (testCase.setKey) {
+          win.localStorage.removeItem(progressKey(testCase));
+          win.localStorage.removeItem(completedKey(testCase));
+        }
+        current++;
+        phase = "inspect";
+        loadNext();
+      }
+
+      function loadNext() {
+        if (current >= cases.length) {
+          document.body.dataset.status = "pass";
+          result.textContent = "PASS: Public interactive replacements, legacy rollback, normal-set rendering, and bidirectional saved-result display verified";
+          document.title = "PASS: ArquiQuiz interactive release app";
+          return;
+        }
+        frame.src = pageUrl(cases[current], phase);
+      }
+
+      frame.onload = function () {
+        try {
+          var testCase = cases[current];
+          var doc = frame.contentDocument;
+          var win = frame.contentWindow;
+          var replacements = win.QUIZ_CONFIG.interactiveQuestionReplacements || {};
+
+          assert(!doc.querySelector('.interactive-pilot-card[data-key="interactive_pilot"]'), testCase.page + " still displays the obsolete pilot card.");
+
+          if (phase === "inspect") {
+            assert(Object.keys(replacements).length === testCase.count, testCase.page + " replacement count is incorrect.");
+            if (testCase.count === 0) {
+              assert(win.QUIZ_CONFIG.interactiveLayouts !== true, testCase.page + " unexpectedly enabled public interactive layouts.");
+              if (!testCase.targetId) {
+                finishCase(win, testCase);
+                return;
+              }
+            } else {
+              assert(win.QUIZ_CONFIG.interactiveLayouts === true, testCase.page + " did not enable public interactive layouts.");
+              assert(replacements[String(testCase.targetId)], testCase.page + " target replacement is missing.");
+            }
+
+            win.localStorage.removeItem(completedKey(testCase));
+            win.localStorage.setItem(progressKey(testCase), JSON.stringify({
+              shuffledIds: [testCase.firstId, testCase.targetId],
+              current: 1,
+              score: 1,
+              results: [{ questionId: testCase.firstId, isCorrect: true, partialScore: 1, selected: [0], correct: [0] }],
+              timerSeconds: 7100,
+              practiceMode: true
+            }));
+            phase = "render";
+            frame.src = pageUrl(testCase, phase);
+            return;
+          }
+
+          if (phase === "render") {
+            var resume = doc.getElementById("resume-btn");
+            assert(resume, testCase.page + " did not restore the seeded normal-set session.");
+            resume.click();
+            if (testCase.rollback) {
+              assert(!doc.querySelector("#choices .iq-component"), "Legacy rollback still rendered the canonical component.");
+              assert(doc.querySelector("#choices .choice-item"), "Legacy rollback did not restore the original choice layout.");
+              win.localStorage.removeItem(progressKey(testCase));
+              var canonical = win.QUIZ_CONFIG.interactiveQuestionCompatibility[String(testCase.targetId)];
+              assert(canonical, "Legacy rollback lost the canonical result compatibility record.");
+              win.localStorage.setItem(completedKey(testCase), JSON.stringify({
+                setKey: testCase.setKey,
+                pct: 0,
+                score: 0,
+                shuffledIds: [testCase.targetId],
+                results: [{ questionId: testCase.targetId, answerFormat: "interactive-v1", interactionType: canonical.type, isCorrect: false, partialScore: 0, selected: canonical.answer, correct: canonical.answer }],
+                timerSeconds: 0
+              }));
+              phase = "rollback-result";
+              frame.src = pageUrl(testCase, phase);
+              return;
+            }
+
+            var component = doc.querySelector("#choices .iq-component");
+            assert(component, testCase.page + " did not render the migrated question inside its normal set.");
+            assert(component.getAttribute("data-iq-type") === "matching" || component.getAttribute("data-iq-type") === "ordering", testCase.page + " rendered an unsupported interaction type.");
+            assert(!doc.querySelector("#choices .interactive-preview-required"), testCase.page + " still treats the released interaction as preview-only.");
+
+            win.localStorage.removeItem(progressKey(testCase));
+            if (!testCase.verifyLegacyResult) {
+              finishCase(win, testCase);
+              return;
+            }
+
+            var legacy = replacements[String(testCase.targetId)].interactiveMigration.legacyQuestion;
+            var wrongIndex = legacy.correct.indexOf(0) === -1 ? 0 : 1;
+            win.localStorage.setItem(completedKey(testCase), JSON.stringify({
+              setKey: testCase.setKey,
+              pct: 0,
+              score: 0,
+              shuffledIds: [testCase.targetId],
+              results: [{ questionId: testCase.targetId, isCorrect: false, partialScore: 0, selected: [wrongIndex], correct: legacy.correct }],
+              timerSeconds: 0
+            }));
+            phase = "legacy-result";
+            frame.src = pageUrl(testCase, phase);
+            return;
+          }
+
+          if (phase === "legacy-result") {
+            var review = doc.querySelector('.review-btn[data-key="' + testCase.setKey + '"]');
+            assert(review, "A completed legacy attempt was not available for review.");
+            review.click();
+            var reviewItem = doc.querySelector("#score-summary .bd-item");
+            assert(reviewItem, "Legacy result review did not render a breakdown item.");
+            assert(reviewItem.textContent.indexOf("No answer") === -1 && reviewItem.textContent.indexOf("?") === -1, "Legacy result review lost its stored choice labels.");
+            assert(reviewItem.textContent.indexOf("Standard Dataverse table") !== -1, "Legacy result review did not use the compatibility snapshot.");
+            finishCase(win, testCase);
+          }
+
+          if (phase === "rollback-result") {
+            var rollbackReview = doc.querySelector('.review-btn[data-key="' + testCase.setKey + '"]');
+            assert(rollbackReview, "A new-format attempt was not available during legacy rollback.");
+            rollbackReview.click();
+            var rollbackItem = doc.querySelector("#score-summary .bd-item");
+            assert(rollbackItem && rollbackItem.textContent.indexOf("Represent a pet owner") !== -1, "Legacy rollback could not display the saved interactive answer.");
+            finishCase(win, testCase);
+          }
+        } catch (error) {
+          finishFailure(error);
+        }
+      };
+
+      loadNext();
+    })();
+  </script>
+</body>
+</html>

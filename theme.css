@@ -375,6 +375,17 @@ html[data-theme="light"] :is(.diff-official, .diff-random) {
   color: #1d4ed8;
 }
 
+html[data-theme="light"] .set-card.interactive-pilot-card {
+  background: linear-gradient(145deg, #f8fafc 0%, #e0f2fe 100%);
+  border-color: #38bdf8;
+}
+
+html[data-theme="light"] .diff-pilot {
+  background: #e0f2fe;
+  border-color: #38bdf8;
+  color: #075985;
+}
+
 html[data-theme="light"] .question-type-badge.single {
   background: #dbeafe;
   color: #1d4ed8;
@@ -388,6 +399,16 @@ html[data-theme="light"] .question-type-badge.multiple {
 html[data-theme="light"] .question-type-badge.sequence {
   background: #ccfbf1;
   color: #0f766e;
+}
+
+html[data-theme="light"] .question-type-badge.matching {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+html[data-theme="light"] .question-type-badge.ordering {
+  background: #fef3c7;
+  color: #92400e;
 }
 
 html[data-theme="light"] :is(#math-card, #pause-card, #confirm-card, #mode-card, #peek-card, #streak-card) {

@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../interactive-question.css">
+  <title>ArquiQuiz interactive renderer test</title>
+</head>
+<body data-status="running">
+  <div id="matching"></div>
+  <div id="reuse"></div>
+  <div id="ordering"></div>
+  <div id="legacy"></div>
+  <output id="result">RUNNING</output>
+  <script src="../question-model.js"></script>
+  <script src="../interactive-question.js"></script>
+  <script>
+    (function () {
+      "use strict";
+      function assert(condition, message) {
+        if (!condition) throw new Error(message);
+      }
+      function clickOption(host, id) {
+        var buttons = host.querySelectorAll("[data-iq-option-id]");
+        for (var i = 0; i < buttons.length; i++) {
+          if (buttons[i].getAttribute("data-iq-option-id") === id) { buttons[i].click(); return; }
+        }
+        throw new Error("Option not found: " + id);
+      }
+      function clickTarget(host, id) {
+        var buttons = host.querySelectorAll("[data-iq-target-id]");
+        for (var i = 0; i < buttons.length; i++) {
+          if (buttons[i].getAttribute("data-iq-target-id") === id) { buttons[i].click(); return; }
+        }
+        throw new Error("Target not found: " + id);
+      }
+      function keyActivate(element, key) {
+        element.dispatchEvent(new KeyboardEvent("keydown", { key: key, bubbles: true, cancelable: true }));
+      }
+      function drag(host, optionId, targetId) {
+        if (typeof DataTransfer !== "function" || typeof DragEvent !== "function") return false;
+        var option = Array.from(host.querySelectorAll("[data-iq-option-id]")).find(function (item) { return item.getAttribute("data-iq-option-id") === optionId; });
+        var target = Array.from(host.querySelectorAll("[data-iq-target-id]")).find(function (item) { return item.getAttribute("data-iq-target-id") === targetId; });
+        var transfer = new DataTransfer();
+        option.dispatchEvent(new DragEvent("dragstart", { bubbles: true, cancelable: true, dataTransfer: transfer }));
+        target.dispatchEvent(new DragEvent("dragover", { bubbles: true, cancelable: true, dataTransfer: transfer }));
+        target.dispatchEvent(new DragEvent("drop", { bubbles: true, cancelable: true, dataTransfer: transfer }));
+        return true;
+      }
+
+      try {
+        var matchingQuestion = {
+          schemaVersion: 1,
+          id: "matching-test",
+          text: "Match the options.",
+          type: "matching",
+          interaction: {
+            prompts: [{ id: "p1", text: "Prompt one" }, { id: "p2", text: "Prompt two" }],
+            options: [{ id: "a", text: "Option A" }, { id: "b", text: "Option B" }],
+            allowReuse: false
+          },
+          answer: { matches: [{ promptId: "p1", optionId: "a" }, { promptId: "p2", optionId: "b" }] }
+        };
+        var matchingHost = document.getElementById("matching");
+        var changes = 0;
+        var matching = ArquiQuizInteractiveQuestion.create(matchingHost, matchingQuestion, { onChange: function () { changes++; } });
+        assert(!/Correct answer:/i.test(matchingHost.textContent), "Answer key leaked before evaluation.");
+        clickOption(matchingHost, "a");
+        clickTarget(matchingHost, "p1");
+
+        var optionB = Array.from(matchingHost.querySelectorAll("[data-iq-option-id]")).find(function (item) { return item.getAttribute("data-iq-option-id") === "b"; });
+        keyActivate(optionB, "Enter");
+        var promptTwo = Array.from(matchingHost.querySelectorAll("[data-iq-target-id]")).find(function (item) { return item.getAttribute("data-iq-target-id") === "p2"; });
+        keyActivate(promptTwo, " ");
+        assert(matching.isComplete(), "Keyboard/click matching response is incomplete.");
+        assert(matching.evaluate().isCorrect, "Matching response should be correct.");
+        assert(changes === 2, "onChange was not emitted once per placement.");
+
+        matching.reset({ emit: false });
+        matching.setResponse({ matches: [{ promptId: "p1", optionId: "b" }, { promptId: "p2", optionId: "a" }] }, { emit: false });
+        var matchingResult = matching.showEvaluation({ revealCorrect: true });
+        assert(!matchingResult.isCorrect, "Incorrect matching response was accepted.");
+        assert(matchingHost.querySelectorAll(".iq-slot.is-incorrect").length === 2, "Incorrect matching targets were not marked.");
+        assert(matchingHost.querySelectorAll(".iq-correct-answer").length === 2, "Correct matches were not revealed on request.");
+
+        var reuseQuestion = JSON.parse(JSON.stringify(matchingQuestion));
+        reuseQuestion.id = "reuse-test";
+        reuseQuestion.interaction.allowReuse = true;
+        reuseQuestion.answer.matches[1].optionId = "a";
+        var reuseHost = document.getElementById("reuse");
+        var reuse = ArquiQuizInteractiveQuestion.create(reuseHost, reuseQuestion);
+        clickOption(reuseHost, "a");
+        clickTarget(reuseHost, "p1");
+        clickTarget(reuseHost, "p2");
+        assert(reuse.evaluate().isCorrect, "Reusable option did not remain selected for the second target.");
+        reuse.showEvaluation({ revealCorrect: false });
+        assert(reuseHost.querySelectorAll(".iq-slot.is-recorded").length === 2, "Hidden evaluation was not marked as recorded.");
+        assert(!reuseHost.querySelector(".iq-slot.is-correct, .iq-slot.is-incorrect, .iq-correct-answer"), "Hidden evaluation leaked correctness into the DOM.");
+
+        var orderingQuestion = {
+          schemaVersion: 1,
+          id: "ordering-test",
+          text: "Order the steps.",
+          type: "ordering",
+          interaction: {
+            items: [
+              { id: "one", text: "Step one" },
+              { id: "two", text: "Step two" },
+              { id: "three", text: "Step three" },
+              { id: "unused", text: "Unused distractor" }
+            ],
+            slots: [{ id: "s1", text: "First" }, { id: "s2", text: "Second" }, { id: "s3", text: "Third" }]
+          },
+          answer: { order: ["one", "two", "three"] }
+        };
+        var orderingHost = document.getElementById("ordering");
+        var ordering = ArquiQuizInteractiveQuestion.create(orderingHost, orderingQuestion);
+        assert(drag(orderingHost, "one", "s1"), "Browser does not expose drag-and-drop test primitives.");
+        clickOption(orderingHost, "two");
+        clickTarget(orderingHost, "s2");
+        clickOption(orderingHost, "three");
+        clickTarget(orderingHost, "s3");
+        assert(ordering.evaluate().isCorrect, "Ordering response should be correct.");
+        ordering.showEvaluation({ revealCorrect: true });
+        assert(orderingHost.querySelectorAll(".iq-slot.is-correct").length === 3, "Correct ordering targets were not marked.");
+        assert(orderingHost.querySelectorAll('.iq-slot[aria-disabled="true"]').length === 3, "Evaluated ordering interaction was not locked.");
+        assert(orderingHost.querySelector(".iq-slot").disabled === false, "Locked review controls must remain keyboard-focusable.");
+
+        document.documentElement.setAttribute("data-theme", "light");
+        assert(getComputedStyle(orderingHost.querySelector(".iq-component")).getPropertyValue("--iq-text").trim() === "#0f172a", "Light-theme component variables were not applied.");
+        document.documentElement.setAttribute("data-theme", "dark");
+
+        assert.throws = function (callback, message) {
+          var didThrow = false;
+          try { callback(); } catch (error) { didThrow = true; }
+          assert(didThrow, message);
+        };
+        assert.throws(function () {
+          ordering.setResponse({ order: ["one", "one"] });
+        }, "Duplicate ordering response was not rejected.");
+
+        var legacyHost = document.getElementById("legacy");
+        var legacy = ArquiQuizInteractiveQuestion.create(legacyHost, {
+          id: 99,
+          text: "Legacy sequence",
+          type: "sequence",
+          choices: ["First", "Second", "Unused"],
+          correct: [0, 1]
+        });
+        assert(legacy.getQuestion().type === "ordering", "Legacy sequence was not normalized by the renderer.");
+        legacy.destroy();
+        assert(!legacyHost.querySelector(".iq-component"), "Destroy did not remove the component.");
+
+        document.body.dataset.status = "pass";
+        document.getElementById("result").textContent = "PASS: matching, ordering, reuse, drag, keyboard, evaluation, restore, and legacy normalization";
+        document.title = "PASS: ArquiQuiz interactive renderer";
+      } catch (error) {
+        document.body.dataset.status = "fail";
+        document.getElementById("result").textContent = "FAIL: " + error.message;
+        document.title = "FAIL: ArquiQuiz interactive renderer";
+      }
+    })();
+  </script>
+</body>
+</html>

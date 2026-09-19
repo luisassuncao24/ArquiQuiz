@@ -1532,7 +1532,11 @@ var PL900_ADVANCED_AUDIT_REVISIONS = {
     correct: [1]
   },
   9260: {
-    text: "A company uses Dynamics 365 Supply Chain Management. When a sales order is created for a customer managed by a specific user, an Outlook task must remind the user to perform any required follow-up activities. Which feature should you use?"
+    text: "A company uses Dynamics 365 Supply Chain Management. When a sales order is created for a customer managed by a specific user, an Outlook task must remind the user to perform any required follow-up activities. Which two features should you use? Select all that apply.",
+    type: "multiple",
+    choices: ["AI Builder", "Power Apps", "Business events", "Power Automate", "Microsoft Dataverse"],
+    correct: [2, 3],
+    explanation: "A business event announces the sales-order event from Dynamics 365 Supply Chain Management, and Power Automate subscribes to that event and creates the Outlook task."
   },
   9265: {
     choices: ["Forums", "Home page", "Summary", "Search results", "Contact us"],
@@ -1578,14 +1582,15 @@ var PL900_ADVANCED_AUDIT_REVISIONS = {
     correct: [1]
   },
   9288: {
-    text: "You save and publish a view named My USA Accounts. The view is sorted by Address 1: City, filters Address 1: Country/Region to the United States, and filters Owner to the current user. Which statement is true?",
+    text: "You save and publish a view named My USA Accounts. The view is sorted by Address 1: City in ascending order, filters Address 1: Country/Region to the United States, and filters Owner to the current user. The only existing row is Alpine Ski House in Aspen. Which statement is true?",
     choices: [
       "When you create a new account in the city of Boston, it will be shown as the second row.",
       "All users will see the same number of rows in this view.",
       "To switch to this view, users should choose Accounts with USA addresses from the dropdown list.",
       "None of the above statements are true."
     ],
-    correct: [3]
+    correct: [0],
+    explanation: "Boston sorts after Aspen, so the new account appears second. The current-user owner filter can return a different number of rows for each user, and users select the view by its name, My USA Accounts."
   },
   9290: {
     text: "You are building a canvas app that allows users to record expenses. The app will also support screen readers for users with visual impairments. You need a tool that identifies potential accessibility issues and suggests app changes. Which tool should you use?"
@@ -1700,6 +1705,16 @@ var PL900_ADVANCED_AUDIT_REVISIONS = {
 };
 
 var PL900_WORKLOAD_AUDIT_REVISIONS = {
+  9074: {
+    choices: [
+      "1. Connector | 2. Connector",
+      "1. Power Automate flow | 2. Power Automate flow",
+      "1. Power Automate flow | 2. Connector",
+      "1. Connector | 2. Power Automate flow"
+    ],
+    correct: [2],
+    explanation: "A Power Automate flow runs the automation, while a connector supplies the service operations that the app or flow can use."
+  },
   9123: {
     choices: [
       "1. Power Automate | 2. Microsoft Azure",
@@ -1943,7 +1958,8 @@ var PL900_WORKLOAD_AUDIT_REVISIONS = {
   },
   9199: {
     choices: ["Customizations", "Actions", "Tables", "Triggers"],
-    correct: [1, 3]
+    correct: [1, 2],
+    explanation: "In a canvas app, a connector can provide tables of data, actions, or both. Triggers are used to start flows in Power Automate, not as canvas-app connector objects."
   },
   9201: {
     choices: [

@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="../theme.js"></script>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../theme.css">
+  <link rel="stylesheet" href="../interactive-question.css">
+  <title>ArquiQuiz Interactive Layouts — Local Demo</title>
+  <style>
+    #quiz-container { max-width: 1040px; }
+    .demo-intro { margin-bottom: 1.25rem; padding: 0.85rem 1rem; border: 1px solid #0ea5e9; border-radius: 10px; background: rgba(8, 47, 73, .5); color: #bae6fd; line-height: 1.55; }
+    .demo-example + .demo-example { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #334155; }
+    .demo-example h2 { margin-bottom: .45rem; color: #f1f5f9; }
+    .demo-example > p { margin-bottom: 1rem; color: #94a3b8; line-height: 1.5; }
+    .demo-controls { display: flex; flex-wrap: wrap; gap: .55rem; margin-top: .85rem; }
+    .demo-controls button { padding: .55rem .8rem; border: 1px solid #475569; border-radius: 8px; background: #1e293b; color: #e2e8f0; font-weight: 700; cursor: pointer; }
+    .demo-controls button:hover { border-color: #38bdf8; }
+    .demo-result { min-height: 1.4rem; margin-top: .65rem; color: #7dd3fc; font: 600 .8rem/1.45 Consolas, monospace; }
+    html[data-theme="light"] .demo-intro { background: #e0f2fe; color: #0c4a6e; }
+    html[data-theme="light"] .demo-example h2 { color: #0f172a; }
+    html[data-theme="light"] .demo-example > p { color: #475569; }
+    html[data-theme="light"] .demo-example + .demo-example { border-color: #cbd5e1; }
+    html[data-theme="light"] .demo-controls button { background: #f8fafc; border-color: #cbd5e1; color: #0f172a; }
+    html[data-theme="light"] .demo-result { color: #0369a1; }
+  </style>
+</head>
+<body>
+  <main id="quiz-container">
+    <div id="quiz-header"><h1>Interactive Layouts — Local Demo</h1></div>
+    <p class="demo-intro"><strong>Phase 2 test page.</strong> Nothing on this page changes quiz progress. Test with mouse drag-and-drop, touch/click, keyboard Tab + Enter/Space, mobile width, and both themes.</p>
+
+    <section class="demo-example">
+      <h2>Matching with reusable answers</h2>
+      <p>Choose Yes or No and assign it to each statement. The same answer may be used more than once.</p>
+      <div id="matching-demo"></div>
+      <div class="demo-controls">
+        <button type="button" id="matching-evaluate">Evaluate and reveal</button>
+        <button type="button" id="matching-record">Record without revealing</button>
+        <button type="button" id="matching-reset">Reset</button>
+      </div>
+      <p class="demo-result" id="matching-result" aria-live="polite"></p>
+    </section>
+
+    <section class="demo-example">
+      <h2>Ordering with a distractor</h2>
+      <p>Place three actions in the correct order. One available action is not used.</p>
+      <div id="ordering-demo"></div>
+      <div class="demo-controls">
+        <button type="button" id="ordering-sample">Load sample answer</button>
+        <button type="button" id="ordering-evaluate">Evaluate and reveal</button>
+        <button type="button" id="ordering-reset">Reset</button>
+      </div>
+      <p class="demo-result" id="ordering-result" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <script src="../question-model.js"></script>
+  <script src="../interactive-question.js"></script>
+  <script>
+    (function () {
+      "use strict";
+      var matchingQuestion = {
+        schemaVersion: 1,
+        id: "demo-matching",
+        text: "Classify the statements.",
+        type: "matching",
+        interaction: {
+          prompts: [
+            { id: "external", text: "Power Pages can provide authenticated external access to business data." },
+            { id: "approval", text: "Power Automate can implement an approval process." },
+            { id: "desktop-only", text: "Canvas apps can only run on desktop computers." }
+          ],
+          options: [
+            { id: "yes", text: "Yes" },
+            { id: "no", text: "No" }
+          ],
+          allowReuse: true
+        },
+        answer: {
+          matches: [
+            { promptId: "external", optionId: "yes" },
+            { promptId: "approval", optionId: "yes" },
+            { promptId: "desktop-only", optionId: "no" }
+          ]
+        }
+      };
+
+      var orderingQuestion = {
+        schemaVersion: 1,
+        id: "demo-ordering",
+        text: "Order the solution deployment actions.",
+        type: "ordering",
+        interaction: {
+          items: [
+            { id: "export", text: "Export the solution from the source environment" },
+            { id: "import", text: "Import the solution into the target environment" },
+            { id: "publish", text: "Publish all customizations in the target environment" },
+            { id: "delete", text: "Delete the source environment" }
+          ],
+          slots: [
+            { id: "first", text: "First" },
+            { id: "second", text: "Second" },
+            { id: "third", text: "Third" }
+          ]
+        },
+        answer: { order: ["export", "import", "publish"] }
+      };
+
+      function describe(result) {
+        return result.completedCount + "/" + result.total + " completed; " + result.correctCount + " correct; overall: " + (result.isCorrect ? "correct" : "not correct");
+      }
+
+      var matching = ArquiQuizInteractiveQuestion.create(document.getElementById("matching-demo"), matchingQuestion);
+      var ordering = ArquiQuizInteractiveQuestion.create(document.getElementById("ordering-demo"), orderingQuestion);
+
+      document.getElementById("matching-evaluate").addEventListener("click", function () {
+        document.getElementById("matching-result").textContent = describe(matching.showEvaluation({ revealCorrect: true }));
+      });
+      document.getElementById("matching-record").addEventListener("click", function () {
+        document.getElementById("matching-result").textContent = "Recorded without revealing: " + JSON.stringify(matching.showEvaluation({ revealCorrect: false }).response);
+      });
+      document.getElementById("matching-reset").addEventListener("click", function () {
+        matching.reset();
+        document.getElementById("matching-result").textContent = "Matching reset.";
+      });
+
+      document.getElementById("ordering-sample").addEventListener("click", function () {
+        ordering.setResponse({ order: ["export", "publish", "import"] });
+        document.getElementById("ordering-result").textContent = "An intentionally incorrect sample answer was loaded.";
+      });
+      document.getElementById("ordering-evaluate").addEventListener("click", function () {
+        document.getElementById("ordering-result").textContent = describe(ordering.showEvaluation({ revealCorrect: true }));
+      });
+      document.getElementById("ordering-reset").addEventListener("click", function () {
+        ordering.reset();
+        document.getElementById("ordering-result").textContent = "Ordering reset.";
+      });
+    })();
+  </script>
+</body>
+</html>

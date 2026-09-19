@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="pt" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Revisão local de perguntas · ArquiQuiz</title>
+  <script src="theme.js"></script>
+  <link rel="stylesheet" href="styles.css?v=1.2.0-beta.7">
+  <link rel="stylesheet" href="theme.css?v=1.2.0-beta.7">
+  <link rel="stylesheet" href="interactive-question.css?v=1.2.0-beta.7">
+  <link rel="stylesheet" href="interactive-review.css?v=1.2.0-beta.7">
+</head>
+<body data-status="locked">
+  <main id="review-app" class="review-shell" hidden>
+    <header class="review-header">
+      <div>
+        <a class="review-back" href="index.html">← ArquiQuiz</a>
+        <h1>Revisão de perguntas interativas</h1>
+        <p>Abre diretamente qualquer migração de layout. Esta página funciona apenas no computador local e não modifica o progresso dos exames.</p>
+      </div>
+      <span id="review-count" class="review-count"></span>
+    </header>
+
+    <div class="review-grid">
+      <aside class="review-sidebar" aria-label="Perguntas migradas">
+        <label class="review-label" for="review-exam">Exame</label>
+        <select id="review-exam"><option value="all">Todos os exames</option></select>
+        <label class="review-label" for="review-search">Procurar ID ou texto</label>
+        <input id="review-search" type="search" placeholder="Ex.: 9057 ou Dataverse">
+        <p id="review-list-count" class="review-list-count"></p>
+        <div id="review-list" class="review-list"></div>
+      </aside>
+
+      <section class="review-detail" aria-live="polite">
+        <div class="review-detail-header">
+          <div>
+            <p id="review-meta" class="review-meta"></p>
+            <h2 id="review-title"></h2>
+          </div>
+          <div class="review-nav">
+            <button id="review-previous" type="button" aria-label="Pergunta anterior">←</button>
+            <button id="review-next" type="button" aria-label="Pergunta seguinte">→</button>
+          </div>
+        </div>
+        <p id="review-question" class="review-question"></p>
+        <div id="review-interaction"></div>
+        <div class="review-actions">
+          <button id="review-evaluate" type="button" disabled>Avaliar resposta</button>
+          <button id="review-reset" type="button">Recomeçar</button>
+        </div>
+        <p id="review-result" class="review-result" role="status" aria-live="polite"></p>
+        <p id="review-explanation" class="review-explanation" hidden></p>
+
+        <details class="review-original">
+          <summary>Comparar com a pergunta anterior</summary>
+          <p id="review-source-text"></p>
+          <ol id="review-source-choices"></ol>
+        </details>
+      </section>
+    </div>
+  </main>
+
+  <div id="review-blocked" class="review-blocked">
+    <h1>Revisão disponível apenas localmente</h1>
+    <p>Abre este ficheiro no teu computador ou em <code>localhost</code>. Esta página não está disponível no site publicado.</p>
+    <a href="index.html">Voltar ao ArquiQuiz</a>
+  </div>
+
+  <script src="question-model.js?v=1.2.0-beta.7"></script>
+  <script src="interactive-question.js?v=1.2.0-beta.7"></script>
+  <script src="pl900-questions.js"></script>
+  <script src="pl900-questions2.js"></script>
+  <script src="pl900-questions3.js"></script>
+  <script src="pl900-context-revisions.js?v=1.1.2"></script>
+  <script src="pl400-questions.js"></script>
+  <script src="pl400-questions2.js"></script>
+  <script src="pl400-questions3.js"></script>
+  <script src="pl400-questions4.js"></script>
+  <script src="pl400-questions5.js"></script>
+  <script src="pl400-revisions.js"></script>
+  <script src="questions.js"></script>
+  <script src="questions2.js"></script>
+  <script src="questionsOfficial.js"></script>
+  <script src="mb820-revisions.js"></script>
+  <script src="mb800-questions.js?v=1.1.1"></script>
+  <script src="interactive-question-pilots.js?v=1.2.0-beta.7"></script>
+  <script src="interactive-review.js?v=1.2.0-beta.7"></script>
+</body>
+</html>

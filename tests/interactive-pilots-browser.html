@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>ArquiQuiz interactive migration release test</title>
+</head>
+<body data-status="running">RUNNING</body>
+
+<script src="../question-model.js"></script>
+<script src="../interactive-question.js"></script>
+
+<script src="../pl900-questions.js"></script>
+<script src="../pl900-questions2.js"></script>
+<script src="../pl900-questions3.js"></script>
+<script src="../pl900-context-revisions.js"></script>
+
+<script src="../pl400-questions.js"></script>
+<script src="../pl400-questions2.js"></script>
+<script src="../pl400-questions3.js"></script>
+<script src="../pl400-questions4.js"></script>
+<script src="../pl400-questions5.js"></script>
+<script src="../pl400-revisions.js"></script>
+
+<script src="../questions.js"></script>
+<script src="../questions2.js"></script>
+<script src="../questionsOfficial.js"></script>
+<script src="../mb820-revisions.js"></script>
+
+<script src="../mb800-questions.js"></script>
+<script src="../interactive-question-pilots.js"></script>
+<script>
+  (function () {
+    "use strict";
+
+    function assert(condition, message) {
+      if (!condition) throw new Error(message);
+    }
+
+    function findQuestion(banks, id) {
+      for (var bankIndex = 0; bankIndex < banks.length; bankIndex++) {
+        var found = banks[bankIndex].find(function (question) { return question.id === id; });
+        if (found) return found;
+      }
+      return null;
+    }
+
+    try {
+      var pilots = window.ArquiQuizInteractivePilots;
+      var model = window.ArquiQuizQuestionModel;
+      var pl900Banks = [pl900Questions, pl900Questions2, pl900Questions3];
+      var pl400Banks = [pl400Questions, pl400Questions2, pl400Questions3, pl400Questions4, pl400Questions5];
+      var mb820Banks = [questionsSet2, questions, questionsOfficial];
+
+      assert(!pilots.createPilotSet("pl900", pl900Banks), "Pilot activated without the local preview switch.");
+      assert(!pilots.isLocalPreviewEnabled({ protocol: "https:", hostname: "example.com", search: "?interactivePreview=1" }), "Public HTTPS preview was allowed.");
+      assert(pilots.isLocalPreviewEnabled({ protocol: "file:", hostname: "", search: "?interactivePreview=1" }), "Local-file preview was rejected.");
+      assert(pilots.isLocalPreviewEnabled({ protocol: "http:", hostname: "localhost", search: "?interactivePreview=1" }), "Localhost preview was rejected.");
+      assert(pilots.isLocalEnvironment({ protocol: "file:", hostname: "" }), "Local review was rejected.");
+      assert(!pilots.isLocalEnvironment({ protocol: "https:", hostname: "example.com" }), "Public review was allowed.");
+      assert(pilots.isLegacyInteractionFallbackEnabled({ search: "?legacyInteractions=1" }), "Legacy rollback switch was rejected.");
+      assert(!pilots.isLegacyInteractionFallbackEnabled({ search: "" }), "Legacy rollback switch activated without a query flag.");
+
+      var expectedIds = {
+        pl900: [9057, 9073, 9112, 9313, 9351, 9335, 9343],
+        pl400: [2007, 2098, 2080, 2223, 3046, 3156],
+        mb820: [564]
+      };
+      var banksByExam = { pl900: pl900Banks, pl400: pl400Banks, mb820: mb820Banks };
+      banksByExam.mb800 = [mb800Questions];
+      assert(pilots.createReviewCatalog(banksByExam, { location: { protocol: "https:", hostname: "example.com" } }) === null, "Review catalog was available on a public origin.");
+      var reviewCatalog = pilots.createReviewCatalog(banksByExam, { force: true });
+      var registeredCount = pilots.getRegisteredExams().reduce(function (total, examKey) {
+        return total + pilots.getPilotIds(examKey).length;
+      }, 0);
+      assert(reviewCatalog.length === registeredCount && reviewCatalog.length === 14, "Review catalog does not follow the migration registry.");
+      reviewCatalog.forEach(function (entry) {
+        assert(entry.question.id === entry.sourceId && entry.sourceQuestion.id === entry.sourceId, "Review catalog source traceability is broken.");
+        assert(entry.question.type === "matching" || entry.question.type === "ordering", "Review catalog contains a legacy question.");
+      });
+      var originalSnapshots = {};
+      Object.keys(expectedIds).forEach(function (examKey) {
+        originalSnapshots[examKey] = expectedIds[examKey].map(function (id) {
+          var source = findQuestion(banksByExam[examKey], id);
+          assert(source, examKey + " source question is missing: " + id);
+          return JSON.stringify(source);
+        });
+      });
+
+      var releases = [
+        pilots.createRelease("pl900", pl900Banks),
+        pilots.createRelease("pl400", pl400Banks),
+        pilots.createRelease("mb820", mb820Banks)
+      ];
+      var sets = releases.map(function (release) { return { data: release.questions }; });
+
+      assert(releases[0].enabled && sets[0].data.length === 7, "PL-900 release count changed.");
+      assert(releases[1].enabled && sets[1].data.length === 6, "PL-400 release count changed.");
+      assert(releases[2].enabled && sets[2].data.length === 1, "MB-820 release count changed.");
+      assert(pilots.createRelease("mb800", [mb800Questions]) === null, "MB-800 received a fabricated source migration.");
+      var fallback = pilots.createRelease("pl900", pl900Banks, { location: { search: "?legacyInteractions=1" } });
+      assert(!fallback.enabled && fallback.questions.length === 0 && Object.keys(fallback.byId).length === 0, "Legacy rollback did not disable public replacements.");
+      assert(Object.keys(fallback.compatibilityById).length === 7, "Legacy rollback discarded new-format result compatibility.");
+      var forcedPilot = pilots.createPilotSet("pl900", pl900Banks, { force: true });
+      assert(forcedPilot.previewOnly && forcedPilot.countsTowardPreparation === false && forcedPilot.includeInRandom === false, "Historical pilot isolation flags changed.");
+      Object.keys(expectedIds).forEach(function (examKey) {
+        expectedIds[examKey].forEach(function (id, index) {
+          assert(JSON.stringify(findQuestion(banksByExam[examKey], id)) === originalSnapshots[examKey][index], examKey + " source question was mutated: " + id);
+        });
+      });
+
+      sets.forEach(function (set) {
+        var ids = new Set();
+        set.data.forEach(function (question) {
+          assert(!ids.has(question.id), "Duplicate question in release: " + question.id);
+          ids.add(question.id);
+          assert(question.type === "matching" || question.type === "ordering", "Legacy question entered the release.");
+          assert(!Object.prototype.hasOwnProperty.call(question, "choices") && !Object.prototype.hasOwnProperty.call(question, "correct"), "Release question mixes canonical and legacy fields.");
+          assert(question.interactiveMigration && question.interactiveMigration.sourceQuestionId === question.id, "Source traceability is missing.");
+          assert(Array.isArray(question.interactiveMigration.legacyQuestion.choices) && Array.isArray(question.interactiveMigration.legacyQuestion.correct), "Legacy result compatibility snapshot is missing.");
+          assert(Array.isArray(question.verificationSources) && question.verificationSources.length > 0, "Verification sources are missing.");
+          var validation = model.validateQuestion(question, { allowLegacy: false });
+          assert(validation.valid, "Invalid canonical release question: " + question.id);
+          assert(!validation.warnings.some(function (issue) { return issue.code === "answer_order_exposed"; }), "Ordering answer is exposed by source item order: " + question.id);
+
+          var host = document.createElement("div");
+          document.body.appendChild(host);
+          var controller = window.ArquiQuizInteractiveQuestion.create(host, question);
+          assert(!/Correct answer:/i.test(host.textContent), "Renderer exposed an answer before evaluation: " + question.id);
+          controller.setResponse(question.type === "matching"
+            ? { matches: question.answer.matches }
+            : { order: question.answer.order }, { emit: false });
+          var evaluation = controller.evaluate();
+          assert(evaluation.isComplete && evaluation.isCorrect, "Renderer failed the canonical answer for question: " + question.id);
+          controller.showEvaluation({ revealCorrect: false, lock: true });
+          assert(!host.querySelector(".iq-correct-answer, .iq-slot.is-correct, .iq-slot.is-incorrect"), "Hidden evaluation leaked correctness for question: " + question.id);
+          controller.destroy();
+          host.remove();
+        });
+      });
+
+      var reusableMatch = sets[0].data.find(function (question) { return question.id === 9313; });
+      assert(reusableMatch.interaction.allowReuse === true, "PL-900 reusable Dataverse mapping was lost.");
+      assert(reusableMatch.answer.matches.filter(function (match) { return match.optionId === "dataverse"; }).length === 2, "PL-900 Dataverse reuse mapping is incorrect.");
+
+      var pl900Order = sets[0].data.find(function (question) { return question.id === 9351; });
+      assert(pl900Order.answer.order.join(",") === "update-items,save-app,publish-app,share-app", "PL-900 publishing order is incorrect.");
+      var pl900AppOrder = sets[0].data.find(function (question) { return question.id === 9112; });
+      assert(pl900AppOrder.answer.order.join(",") === "create-app,add-components,save-app,publish-app", "PL-900 app-creation order is incorrect.");
+      var pl900DataOrder = sets[0].data.find(function (question) { return question.id === 9335; });
+      assert(pl900DataOrder.answer.order.join(",") === "customize-account,create-number-column,create-business-rule", "PL-900 Dataverse configuration order is incorrect.");
+      assert(pl900DataOrder.interaction.items.length === 6 && pl900DataOrder.interaction.slots.length === 3, "PL-900 Dataverse ordering distractors were lost.");
+
+      function answerMap(question) {
+        return question.answer.matches.reduce(function (map, match) {
+          map[match.promptId] = match.optionId;
+          return map;
+        }, {});
+      }
+
+      var petMap = answerMap(sets[0].data.find(function (question) { return question.id === 9057; }));
+      assert(petMap["pet-owner"] === "standard-table" && petMap["pet-data"] === "custom-table" && petMap["owner-link"] === "relationship", "PL-900 Dataverse component mapping is incorrect.");
+      var appTypeMap = answerMap(sets[0].data.find(function (question) { return question.id === 9073; }));
+      assert(appTypeMap["complex-process"] === "model-driven-app" && appTypeMap["custom-layout"] === "canvas-app", "PL-900 app-type mapping is incorrect.");
+      var controlMap = answerMap(sets[0].data.find(function (question) { return question.id === 9343; }));
+      assert(controlMap["create-task"] === "form" && controlMap["responsive-scroll"] === "vertical-container" && controlMap["browse-spices"] === "gallery", "PL-900 control mapping is incorrect.");
+
+      var pl400Order = sets[1].data.find(function (question) { return question.id === 2098; });
+      assert(pl400Order.answer.order[0] === "remove-view-reference" && pl400Order.answer.order[3] === "deploy-solution-a", "PL-400 dependency order is incorrect.");
+      var componentOrder = sets[1].data.find(function (question) { return question.id === 2223; });
+      assert(componentOrder.answer.order.join(",") === "create-solution,add-reference,build-solution,deploy-solution", "PL-400 component packaging order is incorrect.");
+      var healthcareMap = answerMap(sets[1].data.find(function (question) { return question.id === 2080; }));
+      assert(healthcareMap.doctors === "standard-table" && healthcareMap.medications === "virtual-table", "PL-400 healthcare table mapping is incorrect.");
+      var sensorMap = answerMap(sets[1].data.find(function (question) { return question.id === 3046; }));
+      assert(sensorMap["sensor-events"] === "elastic-table" && sensorMap["sensor-config"] === "standard-table", "PL-400 sensor table mapping is incorrect.");
+      var resourceMap = answerMap(sets[1].data.find(function (question) { return question.id === 3156; }));
+      assert(resourceMap["scalable-image"] === "svg" && resourceMap["localized-text"] === "resx", "PL-400 web-resource mapping is incorrect.");
+
+      Object.keys(expectedIds).forEach(function (examKey) {
+        assert(pilots.getPilotIds(examKey).join(",") === expectedIds[examKey].join(","), examKey + " pilot ID manifest changed.");
+        var release = releases[["pl900", "pl400", "mb820"].indexOf(examKey)];
+        assert(Object.keys(release.byId).length === expectedIds[examKey].length, examKey + " replacement map count changed.");
+      });
+
+      document.body.dataset.status = "pass";
+      document.body.textContent = "PASS: 14 source-backed migrations validated for public replacement with rollback and legacy-result compatibility";
+      document.title = "PASS: ArquiQuiz interactive release";
+    } catch (error) {
+      document.body.dataset.status = "fail";
+      document.body.textContent = "FAIL: " + error.message;
+      document.title = "FAIL: ArquiQuiz interactive release";
+    }
+  })();
+</script>
+</html>

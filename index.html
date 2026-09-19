@@ -173,6 +173,22 @@
             text-decoration: underline;
         }
 
+        .hub-review-link:not([hidden]) {
+            display: block;
+            width: fit-content;
+            margin: .7rem auto .15rem;
+            padding: .45rem .7rem;
+            border: 1px solid #475569;
+            border-radius: 7px;
+            color: #38bdf8;
+            font-weight: 700;
+        }
+
+        html[data-theme="light"] .hub-review-link:not([hidden]) {
+            color: #0369a1;
+            border-color: #cbd5e1;
+        }
+
         .hub-version {
             margin-top: 0.45rem;
             color: #64748b;
@@ -392,6 +408,7 @@
 
         <div class="hub-footer">
             Progress is saved per exam in your browser
+            <a id="hub-interactive-review" class="hub-review-link" href="interactive-review.html" hidden>Rever perguntas interativas · apenas local</a>
             <button id="hub-version" class="hub-version version-button" type="button" aria-haspopup="dialog" aria-controls="version-history-overlay"></button>
         </div>
     </div>
@@ -413,8 +430,16 @@
         "use strict";
 
         // Release policy: increment this version and add a CHANGE_LOG entry for every deployed change.
-        var APP_VERSION = "1.1.1";
+        var APP_VERSION = "1.2.0-beta.7";
         var CHANGE_LOG = [
+          { version: "1.2.0-beta.7", text: "Added a local-only interactive-question review page linked from the local hub. It automatically lists every registered layout migration, supports direct question links, filters, answer testing, and comparison with the previous wording without changing quiz progress." },
+          { version: "1.2.0-beta.6", text: "Interactive layouts Phase 6: promoted all 14 validated matching and ordering migrations into the normal PL-900, PL-400, and MB-820 question sets, preserved old saved-result readability, and added a temporary legacyInteractions fallback for controlled rollback." },
+          { version: "1.2.0-beta.5", text: "Interactive layouts Phase 5: expanded the local-only pilot from five to 14 source-backed migrations (seven PL-900, six PL-400, and one MB-820), added exact mapping and ordering regression checks for every new question, and documented candidates excluded because their source wording or product behavior is outdated or ambiguous." },
+          { version: "1.2.0-beta.4", text: "Interactive layouts Phase 4: added a local-only pilot set with five source-backed migrations (two PL-900, two PL-400, and one MB-820), kept the production banks unchanged, excluded pilot attempts from preparation analytics, and added validation that detects ordering items displayed in answer order. MB-800 is intentionally excluded because its Beta bank has no converted official drag-and-drop source questions." },
+          { version: "1.2.0-beta.3", text: "Interactive layouts Phase 3: integrated canonical matching and ordering into Practice, Test, Quick Practice, and case studies, including partial scoring, saved results, summaries, Review Later, and answer-safe issue reports. The layouts remain available only through the local preview flag until question-bank migration is approved." },
+          { version: "1.2.0-beta.2", text: "Interactive layouts Phase 2: added the shared matching and ordering component with mouse drag-and-drop, touch/click placement, keyboard operation, reusable options, distractors, accessible status messages, responsive dark/light styling, answer restore, and controlled answer review. It remains dormant in real quizzes pending Phase 3 integration." },
+          { version: "1.2.0-beta.1", text: "Interactive layouts Phase 1: added a shared, validated data contract for matching and ordering questions across every exam, with stable answer IDs, option-reuse rules, legacy sequence normalization, and full-bank browser checks. The visible quiz interaction is unchanged in this phase." },
+          { version: "1.1.2", text: "Cross-checked the PL-900 bank against a second extracted question set: corrected canvas-connector objects, restored a two-answer Supply Chain Management scenario and missing view context, and removed one residual extraction artifact." },
           { version: "1.1.1", text: "Reviewed the original 50 MB-800 questions, strengthened distractors and source references, and added 75 scenarios. The Beta now has 125 questions mapped across 22 skill areas, with updated guide, counts, and regression checks." },
           { version: "1.1.0", text: "Added MB-800 Beta with 50 original, source-referenced questions across four topic sets, shared practice features, separate progress, and an exam-specific guide." },
           { version: "1.0.21", text: "Rewrote PL-900 question 9114 to assess model-driven app sharing permissions, removing an ambiguous step order and adding a Microsoft-backed explanation." },
@@ -449,6 +474,11 @@
         var versionOverlay = document.getElementById("version-history-overlay");
         var versionCloseButton = document.getElementById("version-history-close");
         var versionHistoryList = document.getElementById("version-history-list");
+        var reviewLink = document.getElementById("hub-interactive-review");
+
+        var localHost = window.location.hostname;
+        reviewLink.hidden = !(window.location.protocol === "file:" || localHost === "localhost" ||
+          localHost === "127.0.0.1" || localHost === "[::1]");
 
         versionButton.textContent = "Version " + APP_VERSION + " · View changelog";
         versionHistoryList.innerHTML = CHANGE_LOG.map(function (entry) {

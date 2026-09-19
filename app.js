@@ -8,6 +8,16 @@
   var _prefix    = _cfg.prefix    || "mb820";
   var _examName  = _cfg.examName  || "MB-820";
   var _examTitle = _cfg.examTitle || "MB-820 Quiz";
+  var _interactivePreviewFromQuery = false;
+  try {
+    var _previewHostname = window.location.hostname;
+    var _isLocalPreviewLocation = window.location.protocol === "file:" ||
+      _previewHostname === "localhost" || _previewHostname === "127.0.0.1" || _previewHostname === "[::1]";
+    _interactivePreviewFromQuery = _isLocalPreviewLocation &&
+      new URLSearchParams(window.location.search).get("interactivePreview") === "1";
+  } catch (e) { /* URLSearchParams may be unavailable in unusual embedded browsers */ }
+  const INTERACTIVE_LAYOUTS_ENABLED = Boolean((_cfg.interactiveLayouts === true || _interactivePreviewFromQuery) &&
+    typeof window !== "undefined" && window.ArquiQuizInteractiveQuestion && window.ArquiQuizQuestionModel);
 
   // ── Question sets ────────────────────────────────────────────────────────
   // If the page provides its own question sets via QUIZ_CONFIG, use those.
@@ -60,13 +70,30 @@
       ]
     : [];
 
-  const QUESTION_SETS = _cfg.questionSets || _defaultQuestionSets;
+  const _rawQuestionSets = _cfg.questionSets || _defaultQuestionSets;
+  const _interactiveQuestionReplacements = _cfg.interactiveQuestionReplacements || {};
+  const _interactiveQuestionCompatibility = _cfg.interactiveQuestionCompatibility || _interactiveQuestionReplacements;
+  const _baseQuestionSets = _rawQuestionSets.map(function (set) {
+    return Object.assign({}, set, {
+      data: Array.isArray(set.data) ? set.data.map(function (question) {
+        return _interactiveQuestionReplacements[String(question.id)] || question;
+      }) : []
+    });
+  });
+  const QUESTION_SETS = _cfg.interactivePilotSet && Array.isArray(_cfg.interactivePilotSet.data) &&
+    _cfg.interactivePilotSet.data.length > 0
+    ? _baseQuestionSets.concat([_cfg.interactivePilotSet])
+    : _baseQuestionSets;
+  const TRACKED_QUESTION_SETS = QUESTION_SETS.filter(function (set) {
+    return set.countsTowardPreparation !== false;
+  });
 
   // ── All-questions pool (used for Random Practice Quiz) ──────────────────
   const ALL_QUESTIONS = (function () {
     const seen = {};
     const pool = [];
     QUESTION_SETS.forEach(function (set) {
+      if (set.includeInRandom === false) return;
       set.data.forEach(function (q) {
         if (!seen[q.id]) { seen[q.id] = true; pool.push(q); }
       });
@@ -171,6 +198,8 @@
   const REVIEW_LATER_KEY = _prefix + "_review_later";
   const QUESTION_FEEDBACK_KEY = _prefix + "_question_feedback";
   var qp = { pool: [], poolIdx: 0, streak: 0, bestStreak: 0, seenInRun: new Set() };
+  var activeInteractiveController = null;
+  var activeQpInteractiveController = null;
   var UT_MESSAGES = [
     { streak: 5,  msg: "KILLING SPREE!",   emoji: "\uD83D\uDD25", color: "#f97316" },
     { streak: 10, msg: "RAMPAGE!",          emoji: "\uD83D\uDCA5", color: "#ef4444" },
@@ -297,11 +326,60 @@
     try { localStorage.setItem(STUDY_TIME_KEY, String(studyTimeSeconds)); } catch (e) { /* ignore */ }
   }
 
+  function isCanonicalInteractiveQuestion(question) {
+    return Boolean(question && (question.type === "matching" || question.type === "ordering"));
+  }
+
+  function usesInteractiveLayout(question) {
+    return Boolean(INTERACTIVE_LAYOUTS_ENABLED && isCanonicalInteractiveQuestion(question));
+  }
+
+  function getQuestionTypeMeta(question) {
+    if (question.type === "matching") return { cls: "matching", label: "Matching — match each item" };
+    if (question.type === "ordering") return { cls: "ordering", label: "Ordering — place in the correct order" };
+    if (question.type === "sequence") return { cls: "sequence", label: "Sequence — select in the correct order" };
+    if (question.type === "multiple") return { cls: "multiple", label: "Multiple Choice — select all that apply" };
+    return { cls: "single", label: "Single Choice" };
+  }
+
+  function destroyActiveInteractiveController() {
+    if (activeInteractiveController) {
+      activeInteractiveController.destroy();
+      activeInteractiveController = null;
+    }
+  }
+
+  function destroyActiveQpInteractiveController() {
+    if (activeQpInteractiveController) {
+      activeQpInteractiveController.destroy();
+      activeQpInteractiveController = null;
+    }
+  }
+
+  function formatQuestionDetailsForReport(question) {
+    if (question.type === "matching") {
+      return "Targets:\n" + question.interaction.prompts.map(function (prompt, index) {
+        return (index + 1) + ". " + prompt.text;
+      }).join("\n") + "\n\nAvailable options:\n" + question.interaction.options.map(function (option, index) {
+        return (index + 1) + ". " + option.text;
+      }).join("\n") + "\n\nOption reuse: " + (question.interaction.allowReuse ? "Allowed" : "Not allowed");
+    }
+    if (question.type === "ordering") {
+      return "Positions:\n" + question.interaction.slots.map(function (slot, index) {
+        return (index + 1) + ". " + slot.text;
+      }).join("\n") + "\n\nAvailable actions:\n" + question.interaction.items.map(function (item, index) {
+        return (index + 1) + ". " + item.text;
+      }).join("\n");
+    }
+    return "Choices:\n" + question.choices.map(function (choice, index) {
+      return (index + 1) + ". " + choice;
+    }).join("\n");
+  }
+
   // ── Copy issue to clipboard ───────────────────────────────────────────────
   // Copies question details to the clipboard so the user can paste them into
   // a Teams chat (or any other channel) to report a bug or typo.
   function copyIssue(q, setLabel, feedbackEl) {
-    var formattedChoices = q.choices.map(function (c, i) { return (i + 1) + ". " + c; }).join("\n");
     var text =
       "[" + _examTitle + "] Issue Report — Question #" + q.id + "\n\n" +
       "Please describe the issue you found:\n" +
@@ -310,7 +388,7 @@
       "Set: " + setLabel + "\n" +
       "Question ID: #" + q.id + "\n" +
       "Question Text:\n" + q.text + "\n\n" +
-      "Choices:\n" + formattedChoices + "\n\n" +
+      formatQuestionDetailsForReport(q) + "\n\n" +
       "--------------------------------";
 
     function showFeedback(msg) {
@@ -699,6 +777,7 @@
 
   function saveCompletedState() {
     if (reviewMode) return; // never overwrite when re-viewing
+    if (activeSet && activeSet.countsTowardPreparation === false) return;
     try {
       if (caseStudyMode === "combined") {
         // Persist quiz portion
@@ -1252,7 +1331,7 @@
   // ── Quick Practice ────────────────────────────────────────────────────────
   function buildQuickPracticePool() {
     var failedIds = {}, seenIds = {};
-    QUESTION_SETS.forEach(function (set) {
+    TRACKED_QUESTION_SETS.forEach(function (set) {
       var c = loadCompletedQuiz(set);
       if (c && Array.isArray(c.results)) {
         c.results.forEach(function (r) {
@@ -1305,6 +1384,7 @@
   function renderQuickPractice() {
     var container = document.getElementById("qp-container");
     if (!container) return;
+    destroyActiveQpInteractiveController();
     // Pool exhausted — user answered every remaining question correctly: reset run
     if (!qp.pool.length || qp.poolIdx >= qp.pool.length) {
       resetQpRun();
@@ -1313,13 +1393,20 @@
     }
 
     var q = qp.pool[qp.poolIdx];
-    var orderedChoices = (q.type === "sequence" || q.ordered)
+    var qpUsesInteractive = usesInteractiveLayout(q);
+    var qpInteractiveUnavailable = isCanonicalInteractiveQuestion(q) && !qpUsesInteractive;
+    var questionTypeMeta = getQuestionTypeMeta(q);
+    var orderedChoices = isCanonicalInteractiveQuestion(q) ? [] : (q.type === "sequence" || q.ordered)
       ? q.choices.map(function (t, i) { return { text: t, idx: i }; })
       : shuffle(q.choices.map(function (t, i) { return { text: t, idx: i }; }));
     var qpSeqOrder = []; // tracks click-order for sequence type
 
-    var choicesHtml = "";
-    orderedChoices.forEach(function (ch, di) {
+    var choicesHtml = qpUsesInteractive
+      ? '<div class="qp-interactive-host" id="qp-interactive-host"></div>'
+      : qpInteractiveUnavailable
+        ? '<div class="interactive-preview-required">This question requires the local interactive preview.</div>'
+        : "";
+    if (!isCanonicalInteractiveQuestion(q)) orderedChoices.forEach(function (ch, di) {
       if (q.type === "sequence") {
         choicesHtml +=
           '<div class="qp-choice-item qp-seq-item" data-idx="' + ch.idx + '">' +
@@ -1345,14 +1432,14 @@
             (qp.bestStreak > 0 ? ' &nbsp;&bull;&nbsp; Best: <span class="qp-best-num">' + qp.bestStreak + '</span>' : '') +
           '</span>' +
         '</div>' +
-        '<div class="question-type-badge ' + (q.type === "sequence" ? "sequence" : q.type) + '" style="margin-bottom:0.75rem">' +
-          (q.type === "sequence" ? 'Sequence \u2014 select in the correct order' : q.type === "multiple" ? 'Multiple Choice \u2014 select all that apply' : 'Single Choice') +
+        '<div class="question-type-badge ' + questionTypeMeta.cls + '" style="margin-bottom:0.75rem">' +
+          questionTypeMeta.label +
         '</div>' +
         (q.context ? '<div class="question-context">' + q.context + '</div>' : '') +
         '<div class="question-text qp-question-text">' + qpEsc(q.text) + '</div>' +
         '<div class="qp-choices">' + choicesHtml + '</div>' +
         '<div class="qp-btn-row">' +
-          '<button class="qp-submit-btn" id="qp-submit-btn"' + (q.type === "sequence" || q.type === "single" ? " disabled" : "") + '>Submit Answer</button>' +
+          '<button class="qp-submit-btn" id="qp-submit-btn"' + (qpUsesInteractive || qpInteractiveUnavailable || q.type === "sequence" || q.type === "single" ? " disabled" : "") + '>Submit Answer</button>' +
           '<button class="qp-skip-btn" id="qp-skip-btn">Skip \u23ED</button>' +
           '<button class="question-feedback-btn qp-feedback-btn" id="qp-feedback-btn" type="button">\uD83D\uDCDD Feedback</button>' +
           '<button class="report-issue-btn qp-report-btn" id="qp-report-btn" title="Copy question details to clipboard to report an issue">\uD83D\uDCCB Copy</button>' +
@@ -1361,7 +1448,15 @@
       '</div>';
 
     // Choice interaction
-    if (q.type === "sequence") {
+    if (qpUsesInteractive) {
+      var qpInteractiveHost = document.getElementById("qp-interactive-host");
+      activeQpInteractiveController = window.ArquiQuizInteractiveQuestion.create(qpInteractiveHost, q, {
+        onChange: function (_, state) {
+          var interactiveSubmit = document.getElementById("qp-submit-btn");
+          if (interactiveSubmit) interactiveSubmit.disabled = !state.isComplete;
+        }
+      });
+    } else if (q.type === "sequence") {
       container.querySelectorAll(".qp-seq-item").forEach(function (item) {
         item.addEventListener("click", function () {
           if (item.classList.contains("qp-correct") || item.classList.contains("qp-incorrect")) return;
@@ -1485,7 +1580,13 @@
 
   function onQpSubmit(container, q, qpSeqOrder) {
     var selected;
-    if (q.type === "sequence") {
+    var interactiveEvaluation = null;
+    if (usesInteractiveLayout(q)) {
+      if (!activeQpInteractiveController) return;
+      interactiveEvaluation = activeQpInteractiveController.evaluate();
+      if (!interactiveEvaluation.isComplete) return;
+      selected = interactiveEvaluation.response;
+    } else if (q.type === "sequence") {
       if (!qpSeqOrder || qpSeqOrder.length !== q.correct.length) return;
       selected = qpSeqOrder.slice();
     } else if (q.type === "single") {
@@ -1499,7 +1600,10 @@
     }
 
     var isCorrect;
-    if (q.type === "sequence") {
+    if (interactiveEvaluation) {
+      isCorrect = interactiveEvaluation.isCorrect;
+      activeQpInteractiveController.showEvaluation({ revealCorrect: true, lock: true });
+    } else if (q.type === "sequence") {
       isCorrect = arraysEqual(selected, q.correct);
     } else {
       var sortedSel = selected.slice().sort(function (a, b) { return a - b; });
@@ -1507,7 +1611,7 @@
       isCorrect = arraysEqual(sortedSel, sortedCor);
     }
 
-    container.querySelectorAll(".qp-choice-item").forEach(function (item) {
+    if (!interactiveEvaluation) container.querySelectorAll(".qp-choice-item").forEach(function (item) {
       var idx = parseInt(item.dataset.idx, 10);
       var inp = item.querySelector("input");
       if (inp) inp.disabled = true;
@@ -1625,10 +1729,10 @@
 
   function calcPrepPct() {
     const availableCases = _testCases.filter(function (tc) { return tc.questions.length > 0; });
-    const totalItems = QUESTION_SETS.length + availableCases.length;
+    const totalItems = TRACKED_QUESTION_SETS.length + availableCases.length;
     let completedItems = 0;
 
-    QUESTION_SETS.forEach(function (set) {
+    TRACKED_QUESTION_SETS.forEach(function (set) {
       const c = loadCompletedQuiz(set);
       if (c && c.pct >= PASS_PCT) completedItems++;
     });
@@ -1683,7 +1787,7 @@
       });
     }
 
-    QUESTION_SETS.forEach(function (set) { addResults(loadCompletedQuiz(set)); });
+    TRACKED_QUESTION_SETS.forEach(function (set) { addResults(loadCompletedQuiz(set)); });
     _testCases.forEach(function (testCase) { addResults(loadCompletedCase(testCase)); });
 
     const rows = Object.keys(categories).map(function (name) {
@@ -1829,6 +1933,8 @@
 
   // ── Set selection screen ─────────────────────────────────────────────────
   function showSetSelection() {
+    destroyActiveInteractiveController();
+    destroyActiveQpInteractiveController();
     reviewMode   = false;
     practiceMode = true;
     quizIsActive = false;
@@ -1849,7 +1955,8 @@
       advanced:     { icon: "\uD83D\uDFE3", label: "Advanced",     cls: "diff-advanced" },
       proficient:   { icon: "\uD83D\uDD34", label: "Proficient",   cls: "diff-proficient" },
       expert:       { icon: "\uD83D\uDD35", label: "Expert",       cls: "diff-expert" },
-      official:     { icon: "\uD83D\uDCCB", label: "Official",     cls: "diff-official" }
+      official:     { icon: "\uD83D\uDCCB", label: "Official",     cls: "diff-official" },
+      pilot:        { icon: "\uD83E\uDDEA", label: "Local Pilot",  cls: "diff-pilot" }
     };
 
     // ── Count all in-progress sessions for the banner ─────────────────────
@@ -1961,7 +2068,7 @@
         : '';
 
       html +=
-        '<div class="set-card" data-key="' + set.key + '">' +
+        '<div class="set-card' + (set.previewOnly ? ' interactive-pilot-card' : '') + '" data-key="' + set.key + '">' +
           '<div class="set-card-header">' +
             '<span class="set-card-title">' + set.label + '</span>' +
             '<span class="set-card-count">' + set.data.length + ' questions</span>' +
@@ -1973,7 +2080,7 @@
             ? '<p class="set-card-resume">\u23F8 Saved: question ' + (saved.results.length + 1) + ' of ' + saved.shuffled.length +
               (savedTimer !== null ? ' \u2014 \u23F1 ' + formatTime(savedTimer) + ' left' : '') + '</p>'
             : combinedResumeInfo) +
-          (_testCases.length ? '<div class="case-selector">' +
+          (_testCases.length && set.supportsCaseStudy !== false ? '<div class="case-selector">' +
             '<label class="case-selector-label">\uD83D\uDCCB Case Study (optional):</label>' +
             '<select class="case-select" data-quiz-key="' + set.key + '">' +
               caseOptions +
@@ -2742,12 +2849,15 @@
 
   // ── Render ───────────────────────────────────────────────────────────────
   function renderQuestion() {
+    destroyActiveInteractiveController();
+    destroyActiveQpInteractiveController();
     answered      = false;
     quizIsActive  = true;
     startIdleTimer();
     nextBtn.style.display = "none";
 
     const q = shuffled[current];
+    const questionTypeMeta = getQuestionTypeMeta(q);
     const reviewLaterSource = getCurrentQuestionSource();
     const isSavedForReview = isBookmarkedForReview(q, reviewLaterSource);
     const savedForReviewCount = getCurrentSessionReviewLaterNumbers().length;
@@ -2789,8 +2899,8 @@
             '<button class="peek-btn" id="peek-btn" title="Peek at your current score">\uD83D\uDC41\uFE0F Peek</button>') +
         quizNameBadge + reviewLaterCountBadge +
       '</div>' +
-      '<div class="question-type-badge ' + (q.type === "sequence" ? "sequence" : q.type === "multiple" ? "multiple" : "single") + '">' +
-        (q.type === "sequence" ? "Sequence \u2014 select in the correct order" : q.type === "multiple" ? "Multiple Choice \u2014 select all that apply" : "Single Choice") +
+      '<div class="question-type-badge ' + questionTypeMeta.cls + '">' +
+        questionTypeMeta.label +
       '</div>' +
       (q.context ? '<div class="question-context">' + q.context + '</div>' : '') +
       '<div class="question-text">' + q.text + '</div>' +
@@ -2830,6 +2940,38 @@
     }
 
     choicesEl.innerHTML = "";
+
+    if (isCanonicalInteractiveQuestion(q)) {
+      if (!usesInteractiveLayout(q)) {
+        const previewNotice = document.createElement("div");
+        previewNotice.className = "interactive-preview-required";
+        previewNotice.textContent = "This question uses the interactive-layout preview. Open this local page with ?interactivePreview=1 to test it.";
+        choicesEl.appendChild(previewNotice);
+        return;
+      }
+
+      const interactiveHost = document.createElement("div");
+      interactiveHost.className = "interactive-question-host";
+      choicesEl.appendChild(interactiveHost);
+
+      const interactiveSubmitBtn = document.createElement("button");
+      interactiveSubmitBtn.className = "submit-btn";
+      interactiveSubmitBtn.textContent = "Submit Answer";
+      interactiveSubmitBtn.disabled = true;
+      choicesEl.appendChild(interactiveSubmitBtn);
+
+      activeInteractiveController = window.ArquiQuizInteractiveQuestion.create(interactiveHost, q, {
+        onChange: function (_, state) {
+          interactiveSubmitBtn.disabled = answered || !state.isComplete;
+          const feedback = choicesEl.querySelector(".feedback-msg");
+          if (feedback && state.isComplete) feedback.remove();
+        }
+      });
+      interactiveSubmitBtn.addEventListener("click", function () {
+        onSubmitInteractive(q);
+      });
+      return;
+    }
 
     // Shuffle choices so answer position varies between attempts.
     // Test-case questions intentionally group choices by type (e.g. all
@@ -2986,6 +3128,72 @@
     submitAnswer(q, sequenceOrder);
   }
 
+  function onSubmitInteractive(q) {
+    if (answered || !activeInteractiveController) return;
+    const evaluation = activeInteractiveController.evaluate();
+    if (!evaluation.isComplete) {
+      showInlineFeedback("Please complete every target before submitting your answer.");
+      return;
+    }
+
+    answered = true;
+    const questionScore = evaluation.isCorrect ? 1 : evaluation.correctCount / evaluation.total;
+    score += questionScore;
+    results.push({
+      questionId: q.id,
+      answerFormat: "interactive-v1",
+      interactionType: q.type,
+      isCorrect: evaluation.isCorrect,
+      partialScore: questionScore,
+      selected: evaluation.response,
+      correct: JSON.parse(JSON.stringify(q.answer))
+    });
+    activeInteractiveController.showEvaluation({ revealCorrect: practiceMode, lock: true });
+    finalizeSubmittedQuestion(q, evaluation.isCorrect, questionScore);
+  }
+
+  function finalizeSubmittedQuestion(q, isCorrect, questionScore) {
+    const submitBtn = choicesEl.querySelector(".submit-btn");
+    if (submitBtn) submitBtn.disabled = true;
+
+    const exp = document.createElement("div");
+    if (practiceMode) {
+      let feedbackLabel;
+      if (isCorrect) {
+        feedbackLabel = "\u2713 Correct!";
+        exp.className = "explanation correct-exp";
+      } else if (questionScore > 0) {
+        const pctPartial = Math.round(questionScore * 100);
+        feedbackLabel = "\u25D1 Partially correct (" + pctPartial + "% credit)";
+        exp.className = "explanation partial-exp";
+      } else {
+        feedbackLabel = "\u2717 Incorrect";
+        exp.className = "explanation incorrect-exp";
+      }
+      exp.innerHTML = "<strong>" + feedbackLabel + "</strong><br>" + (q.explanation || "");
+    } else {
+      exp.className = "explanation test-mode-exp";
+      exp.textContent = "\uD83D\uDCDD Answer recorded \u2014 results will be shown at the end.";
+    }
+    choicesEl.appendChild(exp);
+
+    setTimeout(function () {
+      exp.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }, 50);
+
+    nextBtn.style.display = "inline-block";
+    if (current + 1 < shuffled.length) {
+      nextBtn.textContent = "Next Question \u2192";
+    } else if (caseStudyMode === "combined" && casePhase === "quiz") {
+      nextBtn.textContent = "Continue to Case Study \u2192";
+    } else if (getCurrentSessionReviewLaterNumbers().length > 0) {
+      nextBtn.textContent = "Review Saved Questions \u2192";
+    } else {
+      nextBtn.textContent = "See Results";
+    }
+    saveProgress();
+  }
+
   function submitAnswer(q, selected) {
     answered = true;
 
@@ -3036,51 +3244,7 @@
       }
     });
 
-    // Disable submit button
-    const submitBtn = choicesEl.querySelector(".submit-btn");
-    if (submitBtn) submitBtn.disabled = true;
-
-    // Show feedback — full explanation in practice mode, neutral notice in test mode
-    const exp = document.createElement("div");
-    if (practiceMode) {
-      let feedbackLabel;
-      if (isCorrect) {
-        feedbackLabel = "\u2713 Correct!";
-        exp.className = "explanation correct-exp";
-      } else if (questionScore > 0) {
-        const pctPartial = Math.round(questionScore * 100);
-        feedbackLabel = "\u25D1 Partially correct (" + pctPartial + "% credit)";
-        exp.className = "explanation partial-exp";
-      } else {
-        feedbackLabel = "\u2717 Incorrect";
-        exp.className = "explanation incorrect-exp";
-      }
-      exp.innerHTML = "<strong>" + feedbackLabel + "</strong><br>" + q.explanation;
-    } else {
-      exp.className = "explanation test-mode-exp";
-      exp.textContent = "\uD83D\uDCDD Answer recorded \u2014 results will be shown at the end.";
-    }
-    choicesEl.appendChild(exp);
-
-    // Scroll the feedback into view (helpful on mobile when the explanation is below the fold).
-    // The small delay lets the browser finish painting the newly appended element first.
-    setTimeout(function () {
-      exp.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    }, 50);
-
-    nextBtn.style.display  = "inline-block";
-    if (current + 1 < shuffled.length) {
-      nextBtn.textContent = "Next Question \u2192";
-    } else if (caseStudyMode === "combined" && casePhase === "quiz") {
-      nextBtn.textContent = "Continue to Case Study \u2192";
-    } else if (getCurrentSessionReviewLaterNumbers().length > 0) {
-      nextBtn.textContent = "Review Saved Questions \u2192";
-    } else {
-      nextBtn.textContent = "See Results";
-    }
-
-    // Save progress (includes current timer state)
-    saveProgress();
+    finalizeSubmittedQuestion(q, isCorrect, questionScore);
   }
 
   function showInlineFeedback(msg) {
@@ -3117,6 +3281,8 @@
   // ── Summary ───────────────────────────────────────────────────────────────
   function showSummary() {
     quizIsActive = false;
+    destroyActiveInteractiveController();
+    destroyActiveQpInteractiveController();
     clearIdleTimer();
     hideTimer();
     stopStudyOnlyTimer();
@@ -3133,6 +3299,55 @@
     } else {
       showQuizSummary();
     }
+  }
+
+  function formatInteractiveAnswer(question, response) {
+    if (question.type === "matching") {
+      const matchMap = {};
+      const matches = response && Array.isArray(response.matches) ? response.matches : [];
+      matches.forEach(function (match) { matchMap[match.promptId] = match.optionId; });
+      return question.interaction.prompts.map(function (prompt, index) {
+        const option = question.interaction.options.find(function (item) { return item.id === matchMap[prompt.id]; });
+        return (index + 1) + ". " + escapeHtml(prompt.text) + " &rarr; " + escapeHtml(option ? option.text : "No answer");
+      }).join("<br>");
+    }
+    const order = response && Array.isArray(response.order) ? response.order : [];
+    return question.interaction.slots.map(function (slot, index) {
+      const item = question.interaction.items.find(function (candidate) { return candidate.id === order[index]; });
+      return (index + 1) + ". " + escapeHtml(slot.text) + " &rarr; " + escapeHtml(item ? item.text : "No answer");
+    }).join("<br>");
+  }
+
+  function getResultAnswerDisplay(question, result) {
+    const interactiveQuestion = isCanonicalInteractiveQuestion(question)
+      ? question
+      : _interactiveQuestionCompatibility[String(result.questionId)];
+    if (result.answerFormat === "interactive-v1" && interactiveQuestion) {
+      return {
+        selected: formatInteractiveAnswer(interactiveQuestion, result.selected || {}),
+        correct: formatInteractiveAnswer(interactiveQuestion, result.correct || {})
+      };
+    }
+    if (isCanonicalInteractiveQuestion(question) && !Array.isArray(result.selected)) {
+      return {
+        selected: formatInteractiveAnswer(question, result.selected || {}),
+        correct: formatInteractiveAnswer(question, result.correct || {})
+      };
+    }
+    const legacyQuestion = question.interactiveMigration && question.interactiveMigration.legacyQuestion;
+    const choices = legacyQuestion && Array.isArray(legacyQuestion.choices)
+      ? legacyQuestion.choices
+      : (Array.isArray(question.choices) ? question.choices : []);
+    const selected = Array.isArray(result.selected) ? result.selected : [];
+    const correct = Array.isArray(result.correct) ? result.correct : [];
+    return {
+      selected: selected.map(function (choiceIndex) {
+        return choiceIndex >= 0 && choiceIndex < choices.length ? escapeHtml(choices[choiceIndex]) : "?";
+      }).join("; "),
+      correct: correct.map(function (choiceIndex) {
+        return choiceIndex >= 0 && choiceIndex < choices.length ? escapeHtml(choices[choiceIndex]) : "?";
+      }).join("; ")
+    };
   }
 
   // ── Shared helper: build a breakdown section ──────────────────────────────
@@ -3157,8 +3372,9 @@
         const q = qMap[r.questionId];
         if (!q) return;
         const originalPos = resArr.findIndex(function (res) { return res.questionId === r.questionId; }) + 1;
-        const correctLabels  = r.correct.map(function (ci) { return ci >= 0 && ci < q.choices.length ? q.choices[ci] : "?"; }).join("; ");
-        const selectedLabels = r.selected.map(function (ci) { return ci >= 0 && ci < q.choices.length ? q.choices[ci] : "?"; }).join("; ");
+        const answerDisplay = getResultAnswerDisplay(q, r);
+        const correctLabels  = answerDisplay.correct;
+        const selectedLabels = answerDisplay.selected;
         const itemIcon = r.partialScore > 0 ? "\u25D1" : "\u2717";
         const itemCls  = r.partialScore > 0 ? "bd-partial" : "bd-incorrect";
         reviewHtml +=
@@ -3195,9 +3411,7 @@
       if (r.isCorrect) { icon = "\u2713"; cls = "bd-correct"; }
       else if (r.partialScore > 0) { icon = "\u25D1"; cls = "bd-partial"; }
       else { icon = "\u2717"; cls = "bd-incorrect"; }
-      const correctLabels = r.correct.map(function (ci) {
-        return ci >= 0 && ci < q.choices.length ? q.choices[ci] : "?";
-      }).join("; ");
+      const correctLabels = getResultAnswerDisplay(q, r).correct;
       breakdownHtml +=
         '<li class="bd-item ' + cls + '">' +
           '<span class="bd-icon">' + icon + '</span>' +
@@ -3217,9 +3431,10 @@
   function showQuizSummary() {
     const isWeak = activeSet && activeSet.key === "weak_topics";
     const isRandom = activeSet && activeSet.key === "random";
-    const previousAttempt = (!reviewMode && !isWeak && !isRandom) ? getPreviousAttempt("quiz", activeSet.key) : null;
+    const isPreview = activeSet && activeSet.previewOnly === true;
+    const previousAttempt = (!reviewMode && !isWeak && !isRandom && !isPreview) ? getPreviousAttempt("quiz", activeSet.key) : null;
     const weakFollowUp = isWeak ? completeWeakTopicReview() : "";
-    if (!isWeak) {
+    if (!isWeak && !isPreview) {
       saveCompletedState();
       scheduleWeakTopicReview();
     }
@@ -3236,6 +3451,8 @@
       ? (pct >= PASS_PCT
           ? "Great progress \u2014 you strengthened a topic that needs attention. " + weakFollowUp
           : "Keep working through the explanations below. " + weakFollowUp)
+      : isPreview
+      ? "Local pilot complete. These results are intentionally excluded from preparation progress, Exam Readiness, and attempt history."
       : isRandom
       ? (pct >= PASS_PCT
           ? "Well done \u2014 " + pct + "% on the random practice quiz! \uD83C\uDF89"
@@ -3268,24 +3485,25 @@
       proficient:   { icon: "\uD83D\uDD34", label: "Proficient" },
       official:     { icon: "\uD83D\uDCCB", label: "Official" },
       random:       { icon: "\uD83C\uDFB2", label: "Random" },
-      weak:         { icon: "\uD83C\uDFAF", label: "Focused Review" }
+      weak:         { icon: "\uD83C\uDFAF", label: "Focused Review" },
+      pilot:        { icon: "\uD83E\uDDEA", label: "Local Pilot" }
     };
     const dmeta = difficultyMeta[activeSet.difficulty] || { icon: "", label: "" };
 
     const bd = buildBreakdownHtml("Quiz", results, activeSet.data);
     const chart = buildCategoryChart(results, activeSet.data);
-    const comparison = (!isWeak && !isRandom) ? buildAttemptComparison(pct, previousAttempt, summarizeCategoryScores(results), previousAttempt && previousAttempt.categoryScores) : "";
+    const comparison = (!isWeak && !isRandom && !isPreview) ? buildAttemptComparison(pct, previousAttempt, summarizeCategoryScores(results), previousAttempt && previousAttempt.categoryScores) : "";
 
     summaryEl.innerHTML =
       '<div class="summary-card ' + badge + '">' +
-        (pct >= PASS_PCT && !reviewMode && !isWeak ? '<div class="celebration-banner"><span class="celebration-text">\uD83C\uDF89 Congratulations!</span><span class="celebration-sub">' + (_cfg.beta ? 'You reached the Beta practice target!' : 'You cleared the ' + _examName + ' passing threshold!') + '</span></div>' : '') +
-        '<h2>' + (isWeak ? "Weak Topics Challenge Complete!" : isRandom ? "Random Practice Complete!" : "Quiz Complete!") + '</h2>' +
+        (pct >= PASS_PCT && !reviewMode && !isWeak && !isPreview ? '<div class="celebration-banner"><span class="celebration-text">\uD83C\uDF89 Congratulations!</span><span class="celebration-sub">' + (_cfg.beta ? 'You reached the Beta practice target!' : 'You cleared the ' + _examName + ' passing threshold!') + '</span></div>' : '') +
+        '<h2>' + (isWeak ? "Weak Topics Challenge Complete!" : isRandom ? "Random Practice Complete!" : isPreview ? "Interactive Pilot Complete!" : "Quiz Complete!") + '</h2>' +
         '<p class="summary-set-label">' +
           dmeta.icon + ' ' + activeSet.label + ' &nbsp;&middot;&nbsp; ' + perfLabel +
         '</p>' +
         '<div class="score-circle">' +
           '<span class="score-number">' + pct + '%</span>' +
-          '<span class="score-label">' + ((isRandom || isWeak || _cfg.beta) ? fullyCorrect + " / " + total + " correct" : examPoints + ' / 1000 ' + _examName + ' pts') + '</span>' +
+          '<span class="score-label">' + ((isRandom || isWeak || isPreview || _cfg.beta) ? fullyCorrect + " / " + total + " correct" : examPoints + ' / 1000 ' + _examName + ' pts') + '</span>' +
         '</div>' +
         '<p class="score-verdict">' + verdict + '</p>' +
         comparison +
@@ -3305,7 +3523,7 @@
       bd.breakdownHtml;
 
     summaryEl.style.display = "block";
-    if (pct >= PASS_PCT && !reviewMode && !isWeak) launchConfetti();
+    if (pct >= PASS_PCT && !reviewMode && !isWeak && !isPreview) launchConfetti();
 
     const restartBtn = document.getElementById("restart-btn");
     if (restartBtn) restartBtn.addEventListener("click", function () {
