@@ -173,53 +173,6 @@
             text-decoration: underline;
         }
 
-        .hub-review-callout {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1.5rem;
-            margin-top: 1.5rem;
-            padding: 1.35rem 1.5rem;
-            border: 1px solid #0e7490;
-            border-radius: 12px;
-            background: #102b3a;
-        }
-
-        .hub-review-callout h2 {
-            margin: 0 0 .4rem;
-            color: #7dd3fc;
-            font-size: 1.1rem;
-        }
-
-        .hub-review-callout p {
-            margin: 0;
-            color: #cbd5e1;
-            font-size: .85rem;
-            line-height: 1.5;
-        }
-
-        .hub-review-link {
-            flex: 0 0 auto;
-            display: inline-block;
-            padding: .7rem 1rem;
-            border-radius: 8px;
-            background: #38bdf8;
-            color: #0f172a;
-            font-size: .87rem;
-            font-weight: 700;
-            text-align: center;
-            text-decoration: none;
-        }
-
-        .hub-review-link:hover { background: #7dd3fc; }
-        .hub-review-link:focus-visible { outline: 3px solid #f8fafc; outline-offset: 3px; }
-
-        html[data-theme="light"] .hub-review-callout { background: #f0f9ff; border-color: #7dd3fc; }
-        html[data-theme="light"] .hub-review-callout h2 { color: #075985; }
-        html[data-theme="light"] .hub-review-callout p { color: #334155; }
-        html[data-theme="light"] .hub-review-link { background: #0369a1; color: #ffffff; }
-        html[data-theme="light"] .hub-review-link:hover { background: #075985; }
-        html[data-theme="light"] .hub-review-link:focus-visible { outline-color: #0369a1; }
 
         .hub-version {
             margin-top: 0.45rem;
@@ -349,7 +302,7 @@
                 padding: 2rem 1.25rem 2.5rem;
             }
 
-            .hub-review-callout { flex-direction: column; align-items: stretch; }
+
         }
     </style>
 </head>
@@ -440,13 +393,6 @@
             </div>
         </div>
 
-        <section class="hub-review-callout" aria-labelledby="hub-review-title">
-            <div>
-                <h2 id="hub-review-title">🧩 Testar perguntas interativas</h2>
-                <p>Abre diretamente as perguntas de correspondência e ordenação, experimenta as respostas e compara o layout anterior. Sem quiz longo, temporizador ou alteração do progresso.</p>
-            </div>
-            <a id="hub-interactive-review" class="hub-review-link" href="interactive-review.html">Abrir revisão rápida →</a>
-        </section>
 
         <div class="hub-footer">
             Progress is saved per exam in your browser
@@ -471,8 +417,9 @@
         "use strict";
 
         // Release policy: increment this version and add a CHANGE_LOG entry for every deployed change.
-        var APP_VERSION = "1.2.0";
+        var APP_VERSION = "1.2.1";
         var CHANGE_LOG = [
+          { version: "1.2.1", text: "Removed the interactive-question testing shortcut from the learner hub now that the layout migration is final. The maintenance review page remains available by direct link when needed." },
           { version: "1.2.0", text: "Finalized interactive matching and ordering layouts after a complete source-structure audit. ArquiQuiz now applies 240 validated migrations: 109 PL-900, 109 PL-400, 21 PL-400 case-study questions, and one MB-820 question. Ambiguous, corrupted, or obsolete-source entries remain in their original layout instead of being forced into the new model." },
           { version: "1.2.0-beta.8", text: "Made the interactive-question review available from the public hub to signed-in colleagues. The quick review opens migrated questions directly, preserves exam progress, and now checks the existing hub session without a second password prompt." },
           { version: "1.2.0-beta.7", text: "Added a local-only interactive-question review page linked from the local hub. It automatically lists every registered layout migration, supports direct question links, filters, answer testing, and comparison with the previous wording without changing quiz progress." },
