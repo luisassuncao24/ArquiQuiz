@@ -101,7 +101,7 @@
     <script src="pl400-questions5.js"></script>
     <script src="pl400-testcases.js"></script>
     <script src="pl400-revisions.js"></script>
-    <script src="interactive-question-pilots.js?v=1.2.0-beta.8"></script>
+    <script src="interactive-question-pilots.js?v=1.2.0"></script>
     <script>
       var pl400InteractiveRelease = window.ArquiQuizInteractivePilots.createRelease("pl400", [
         pl400Questions,
@@ -110,6 +110,7 @@
         pl400Questions4,
         pl400Questions5
       ]);
+      var pl400InteractiveCaseRelease = window.ArquiQuizInteractivePilots.createCaseRelease("pl400", PL400_TEST_CASES);
       window.QUIZ_CONFIG = {
         prefix:    "pl400",
         examName:  "PL-400",
@@ -119,6 +120,7 @@
         interactiveLayouts: pl400InteractiveRelease.enabled,
         interactiveQuestionReplacements: pl400InteractiveRelease.byId,
         interactiveQuestionCompatibility: pl400InteractiveRelease.compatibilityById,
+        interactiveCaseQuestionReplacements: pl400InteractiveCaseRelease.byCase,
         questionSets: [
           {
             key: "beginner",
@@ -169,6 +171,6 @@
         }
       };
     </script>
-    <script src="app.js?v=1.2.0-beta.7"></script>
+    <script src="app.js?v=1.2.0"></script>
 </body>
 </html>

@@ -1,55 +1,65 @@
-# Interactive layout migration audit
+# Interactive layout final audit
 
-Phases 4 and 5 converted 14 existing questions into canonical matching or ordering copies for local evaluation. Phase 6 releases the validated copies in the normal quiz sets. The source records are never mutated; runtime replacements preserve each original numeric question ID and the overall set counts.
+Version `1.2.0` promotes the interactive question model from Beta to final release. The migration replaces a legacy representation only when the existing source record retains enough information to rebuild the interaction without inferring an answer.
 
-| Exam | Source ID | Previous representation | Released representation | Integrity decision |
-| --- | ---: | --- | --- | --- |
-| PL-900 | 9057 | One choice containing a three-row mapping | Matching, three prompts, one distractor | Preserves standard table for the owner, custom table for pet data, and a relationship between them. |
-| PL-900 | 9073 | One choice containing a two-row mapping | Matching, two prompts, one distractor | Preserves model-driven for a complex Dataverse process and canvas for a custom layout. |
-| PL-900 | 9112 | One choice containing the complete action sequence | Ordering, four slots | Preserves create app → add components → save → publish. |
-| PL-900 | 9313 | One choice containing a complete four-row mapping | Matching, four prompts, reusable options | Dataverse is intentionally reused for secure storage and reusable table logic. |
-| PL-900 | 9335 | One choice containing the selected three-step sequence | Ordering, three slots, three distractors | Reuses Account, adds the number column, and then defines the business rule. |
-| PL-900 | 9343 | One choice containing a three-row control mapping | Matching, three prompts, one distractor | Preserves Form for record creation, vertical container for scrolling, and Gallery for browsing. |
-| PL-900 | 9351 | One choice containing the complete action sequence | Ordering, four slots, one distractor | Preserves update → save → publish → share and keeps the unrelated security-role action as a distractor. |
-| PL-400 | 2007 | Multiple choice containing two mapping rows | Matching, two prompts, two distractors | Preserves server-side synchronization for Exchange and server-based SharePoint integration for documents. |
-| PL-400 | 2080 | Multiple choice containing two mapping rows | Matching, two prompts, one distractor | Uses a standard table for Dataverse-managed doctor data and a virtual table for external medication data. |
-| PL-400 | 2098 | Legacy sequence | Ordering, four slots | Preserves the dependency-first solution deployment sequence. |
-| PL-400 | 2223 | Legacy sequence | Ordering, four slots | Preserves create solution → add component reference → build → deploy. |
-| PL-400 | 3046 | Multiple choice containing two mapping rows | Matching, two prompts, one distractor | Uses elastic storage for high-volume signals and standard storage for relational configuration. |
-| PL-400 | 3156 | Multiple choice containing two mapping rows | Matching, two prompts, two distractors | Preserves SVG for scalable images and RESX for localized strings. |
-| MB-820 | 564 | One choice containing a complete numbered sequence | Ordering, four slots | Preserves breakpoint → debug/attach → run report → inspect variable. |
+The source arrays are never edited. At runtime, a canonical copy with the same numeric ID replaces the source record, preserving question counts, saved sessions, result history, and rollback compatibility.
 
-## Verification sources
+## Final inventory
 
-- PL-900 9313: [Power Apps overview](https://learn.microsoft.com/en-us/power-apps/powerapps-overview), [Dataverse overview](https://learn.microsoft.com/en-us/power-apps/maker/data-platform/data-platform-intro), and [cloud-flow overview](https://learn.microsoft.com/en-us/power-automate/overview-cloud).
-- PL-900 9351: [save and publish canvas apps](https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/save-publish-app) and [share a canvas app](https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/share-app).
-- PL-900 9057: [create a custom Dataverse table](https://learn.microsoft.com/en-us/power-apps/maker/data-platform/create-custom-entity) and [Dataverse table relationships](https://learn.microsoft.com/en-us/power-apps/maker/data-platform/create-edit-entity-relationships).
-- PL-900 9073: [model-driven app overview](https://learn.microsoft.com/en-us/power-apps/maker/model-driven-apps/model-driven-app-overview) and [canvas app overview](https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/getting-started).
-- PL-900 9112: [create a blank canvas app](https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/app-from-image) and [save and publish canvas apps](https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/save-publish-app).
-- PL-900 9335: [edit a table](https://learn.microsoft.com/en-us/power-apps/maker/data-platform/edit-entities), [create columns](https://learn.microsoft.com/en-us/power-apps/maker/data-platform/create-edit-fields), and [create a business rule](https://learn.microsoft.com/en-us/power-apps/maker/data-platform/data-platform-create-business-rule).
-- PL-900 9343: [canvas-app forms](https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/add-form), [vertical containers](https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/controls/control-vertical-container), and [galleries](https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/controls/control-gallery).
-- PL-400 2007: [server-side synchronization](https://learn.microsoft.com/en-us/power-platform/admin/server-side-synchronization) and [server-based SharePoint document integration](https://learn.microsoft.com/en-us/power-pages/configure/manage-sharepoint-documents).
-- PL-400 2098: [remove Dataverse dependencies](https://learn.microsoft.com/en-us/power-platform/alm/removing-dependencies) and [delete a Dataverse column](https://learn.microsoft.com/en-us/power-apps/maker/data-platform/create-edit-field-solution-explorer).
-- PL-400 2080: [standard and custom tables](https://learn.microsoft.com/en-us/power-apps/maker/data-platform/create-custom-entity) and [virtual tables](https://learn.microsoft.com/en-us/power-apps/maker/data-platform/create-edit-virtual-entities).
-- PL-400 2223: [package a code component in a solution](https://learn.microsoft.com/en-us/power-apps/developer/component-framework/import-custom-controls).
-- PL-400 3046: [standard and elastic table selection](https://learn.microsoft.com/en-us/power-apps/maker/data-platform/create-edit-elastic-tables).
-- PL-400 3156: [model-driven app web-resource types](https://learn.microsoft.com/en-us/power-apps/developer/model-driven-apps/web-resources) and [RESX localization](https://learn.microsoft.com/en-us/power-apps/maker/model-driven-apps/custom-page-localize).
-- MB-820 564: [debugging in AL](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-debugging) and [attach and debug](https://learn.microsoft.com/en-us/dynamics365/business-central/dev-itpro/developer/devenv-attach-debug-next).
+| Scope | Validated migrations | Method |
+| --- | ---: | --- |
+| PL-900 normal sets | 109 | Numbered requirement matrices and complete action sequences |
+| PL-400 normal sets | 109 | Explicit `requirement -> option` pairs and complete action sequences |
+| PL-400 case studies | 21 | Explicit pairs and complete sequences, isolated per case study |
+| MB-820 normal sets | 1 | Complete source-backed ordering sequence |
+| **Total** | **240** | — |
 
-## Candidates deliberately excluded
+Of the 240 records, 20 use hand-reviewed definitions where the source needs an explicit distractor or source-specific interpretation. The other 220 are created by the conservative structural validator.
 
-- PL-400 3154: its stored sequence says to add a data source in command designer, but current Microsoft documentation states that additional tables can't be added directly there.
-- PL-400 3159: its cross-app component-import flow relies on a retired feature; component libraries are now recommended.
-- PL-400 2062: the wording mixes `Cascade Active` behavior with the `Cascade User Owned` answer and is therefore internally inconsistent.
-- MB-820 560: the extracted question does not retain the four original code segments needed to validate its No. Series order safely.
+## Eligibility rules
+
+A question is eligible only when all applicable checks pass:
+
+- A sequence has at least two complete source actions and a complete answer order.
+- A PL-900 matrix retains numbered requirements and a complete numbered answer with the same number of rows.
+- A PL-400 or case-study matrix retains at least two explicit `requirement -> option` correct pairs.
+- Prompt labels are unique, answer-option labels are usable, and the canonical schema has no validation errors or warnings.
+- Ordering choices are not released in answer order.
+- The canonical question preserves its source ID and a private legacy snapshot for old saved-result display.
+
+Questions that do not meet these rules retain their established single-, multiple-choice, or legacy-sequence layout.
+
+## Hand-reviewed definitions
+
+| Exam | Source IDs | Reason for an explicit definition |
+| --- | --- | --- |
+| PL-900 | 9016, 9057, 9068, 9073, 9112, 9254, 9298, 9313, 9335, 9343, 9351 | The original matrix needs a source-specific distractor, reusable option, or ordering interpretation. |
+| PL-400 | 2007, 2080, 2098, 2223, 3046, 3156, 4024, 5227 | The original source needs a source-specific distractor or retained product-context safeguard. |
+| MB-820 | 564 | The stored action order is complete and manually verified. |
+
+## Deliberately excluded
+
+| Exam | Source ID | Reason |
+| --- | ---: | --- |
+| PL-900 | 9171 | The retained answer uses only one distinct option label, so the original matrix cannot be reconstructed faithfully. |
+| PL-900 | 9228 | The retained operation labels are corrupted and do not form a trustworthy mapping. |
+| PL-900 | 9312 | The extracted answer area is internally inconsistent about the trigger and connector steps. |
+| PL-400 | 3154 | The sequence depends on command-designer behaviour that is no longer supported. |
+| PL-400 | 3159 | The sequence depends on a retired cross-app component-import pattern. |
+| MB-820 | 560 | The extracted source does not retain the original No. Series code segments. |
+
+MB-800 remains unchanged: it is an original Beta practice bank, not a bank with retained source drag-and-drop questions to convert.
 
 ## Release safeguards
 
-- The loaded source arrays retain their previous types, choices, and answer keys; replacement happens in the app's derived set data.
-- Released records contain stable interaction IDs and no top-level legacy `choices` or `correct` fields.
-- Ordering item banks are deliberately not stored in answer order.
-- The same numeric question IDs prevent duplicates and preserve in-progress session lookup.
-- Each released record carries a private compatibility snapshot so pre-release result histories still show their choice labels.
-- `?legacyInteractions=1` restores the old question representation for a controlled page load and can still display new-format saved results.
-- `interactive-review.html` reads this migration registry automatically for progress-free manual inspection from the signed-in hub, including on the published site; it is not a separate manually maintained question bank.
-- MB-800 is excluded because there is no converted official drag-and-drop source to migrate faithfully.
+- Canonical records contain no top-level legacy `choices` or `correct` fields.
+- The stored `interactiveMigration` snapshot retains prior choices and keys solely for saved-result compatibility; it is never rendered as an answer key during a quiz.
+- `?legacyInteractions=1` restores the previous representation for a single page load while keeping new-format historical results readable.
+- Case-study replacements are keyed by case-study key and question ID, preventing cross-case ID collisions.
+- `interactive-review.html` reads the same registry and now includes all 240 final migrations without changing quiz progress.
+
+## Verification
+
+`tests/interactive-pilots-browser.html` validates every canonical question, evaluates its correct answer in the renderer, checks source immutability, rollback compatibility, and the 21 PL-400 case-study replacements. `tests/interactive-pilot-app-browser.html` verifies normal-set and case-study rendering in the real app. `tests/interactive-review-browser.html` verifies the 240-item signed-in review page.
+
+`tests/interactive-migration-inventory-browser.html?audit=1` is a read-only inventory report for future audits. It lists candidates, successful structural conversions, and exclusions without modifying a question bank.

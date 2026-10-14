@@ -12,11 +12,12 @@
       "use strict";
 
       var cases = [
-        { page: "pl900.html", prefix: "pl900", count: 7, setKey: "foundations", firstId: 9001, targetId: 9057, verifyLegacyResult: true },
-        { page: "pl400.html", prefix: "pl400", count: 6, setKey: "intermediate", firstId: 2009, targetId: 2080 },
+        { page: "pl900.html", prefix: "pl900", count: 109, setKey: "foundations", firstId: 9001, targetId: 9057, verifyLegacyResult: true },
+        { page: "pl400.html", prefix: "pl400", count: 109, setKey: "intermediate", firstId: 2009, targetId: 2080 },
         { page: "mb820.html", prefix: "mb820", count: 1, setKey: "official", firstId: 501, targetId: 564 },
         { page: "mb800.html", prefix: "mb800", count: 0 },
-        { page: "pl900.html", prefix: "pl900", count: 0, setKey: "foundations", firstId: 9001, targetId: 9057, rollback: true }
+        { page: "pl900.html", prefix: "pl900", count: 0, setKey: "foundations", firstId: 9001, targetId: 9057, rollback: true },
+        { page: "pl400.html", prefix: "pl400", count: 109, caseKey: "city_power_and_light", firstCaseId: 9036, targetId: 9104, caseCount: 21 }
       ];
       var current = 0;
       var phase = "inspect";
@@ -33,6 +34,10 @@
 
       function completedKey(testCase) {
         return testCase.prefix + "_completed_quiz_" + testCase.setKey;
+      }
+
+      function caseProgressKey(testCase) {
+        return testCase.prefix + "_case_" + testCase.caseKey;
       }
 
       function pageUrl(testCase, marker) {
@@ -53,6 +58,7 @@
           win.localStorage.removeItem(progressKey(testCase));
           win.localStorage.removeItem(completedKey(testCase));
         }
+        if (testCase.caseKey) win.localStorage.removeItem(caseProgressKey(testCase));
         current++;
         phase = "inspect";
         loadNext();
@@ -61,7 +67,7 @@
       function loadNext() {
         if (current >= cases.length) {
           document.body.dataset.status = "pass";
-          result.textContent = "PASS: Public interactive replacements, legacy rollback, normal-set rendering, and bidirectional saved-result display verified";
+          result.textContent = "PASS: Public interactive replacements, legacy rollback, normal and case-study rendering, and bidirectional saved-result display verified";
           document.title = "PASS: ArquiQuiz interactive release app";
           return;
         }
@@ -79,6 +85,22 @@
 
           if (phase === "inspect") {
             assert(Object.keys(replacements).length === testCase.count, testCase.page + " replacement count is incorrect.");
+            if (testCase.caseKey) {
+              var caseReplacements = win.QUIZ_CONFIG.interactiveCaseQuestionReplacements || {};
+              var migratedCaseCount = Object.keys(caseReplacements).reduce(function (total, key) {
+                return total + Object.keys(caseReplacements[key] || {}).length;
+              }, 0);
+              assert(migratedCaseCount === testCase.caseCount, testCase.page + " case-study replacement count is incorrect.");
+              assert(caseReplacements[testCase.caseKey] && caseReplacements[testCase.caseKey][String(testCase.targetId)], testCase.page + " target case-study replacement is missing.");
+              win.localStorage.setItem(caseProgressKey(testCase), JSON.stringify({
+                shuffledIds: [testCase.firstCaseId, testCase.targetId], current: 1, score: 1,
+                results: [{ questionId: testCase.firstCaseId, isCorrect: true, partialScore: 1, selected: [0], correct: [0] }],
+                timerSeconds: null, practiceMode: true
+              }));
+              phase = "case-render";
+              frame.src = pageUrl(testCase, phase);
+              return;
+            }
             if (testCase.count === 0) {
               assert(win.QUIZ_CONFIG.interactiveLayouts !== true, testCase.page + " unexpectedly enabled public interactive layouts.");
               if (!testCase.targetId) {
@@ -150,6 +172,17 @@
             }));
             phase = "legacy-result";
             frame.src = pageUrl(testCase, phase);
+            return;
+          }
+
+          if (phase === "case-render") {
+            var caseResume = doc.querySelector('.case-resume-btn[data-case-key="' + testCase.caseKey + '"]');
+            assert(caseResume, testCase.page + " did not restore the seeded case-study session.");
+            caseResume.click();
+            var caseComponent = doc.querySelector("#choices .iq-component");
+            assert(caseComponent && caseComponent.getAttribute("data-iq-type") === "matching", testCase.page + " did not render the migrated case-study interaction.");
+            assert(!doc.querySelector("#choices .iq-correct-answer"), testCase.page + " exposed a case-study answer before evaluation.");
+            finishCase(win, testCase);
             return;
           }
 

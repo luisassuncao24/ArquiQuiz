@@ -32,8 +32,8 @@
           }
           var progressBefore = Object.keys(win.localStorage).filter(function (key) { return /^(pl900|pl400|mb820|mb800)_/.test(key); }).sort().join(",");
           assert(doc.body.dataset.status === "ready", "Review page did not unlock with a hub session.");
-          assert(doc.getElementById("review-count").textContent === "14 migrações", "Review count does not follow the central manifest.");
-          assert(doc.querySelectorAll(".review-list-item").length === 14, "Expected all 14 migrated questions in the list.");
+          assert(doc.getElementById("review-count").textContent === "240 migrações", "Review count does not follow the final migration inventory.");
+          assert(doc.querySelectorAll(".review-list-item").length === 240, "Expected all validated migrations in the list.");
           assert(doc.querySelector('.review-list-item[aria-current="true"]').dataset.question === "pl400-2080", "Direct question link did not select the requested ID.");
           assert(doc.getElementById("review-meta").textContent.indexOf("PL-400") !== -1, "Exam label is missing.");
           assert(doc.querySelector(".review-original").open === false, "Legacy source is open before the user requests comparison.");
@@ -51,10 +51,17 @@
           doc.getElementById("review-reset").click();
           assert(doc.getElementById("review-evaluate").disabled && doc.getElementById("review-explanation").hidden, "Reset did not clear the evaluated answer.");
 
+          var caseEntry = doc.querySelector('.review-list-item[data-question="pl400-case-city_power_and_light-9104"]');
+          assert(caseEntry, "A migrated PL-400 case-study question is missing from review.");
+          caseEntry.click();
+          assert(doc.getElementById("review-meta").textContent.indexOf("City Power & Light") !== -1, "Case-study context is missing from review metadata.");
+          assert(doc.querySelector("#review-interaction .iq-matching"), "Case-study matching layout did not open in review.");
+          assert(!doc.querySelector("#review-interaction .iq-correct-answer"), "Case-study review exposed an answer before evaluation.");
+
           var exam = doc.getElementById("review-exam");
           exam.value = "pl900";
           exam.dispatchEvent(new Event("change", { bubbles: true }));
-          assert(doc.querySelectorAll(".review-list-item").length === 7, "PL-900 filter count is incorrect.");
+          assert(doc.querySelectorAll(".review-list-item").length === 109, "PL-900 filter count is incorrect.");
           var search = doc.getElementById("review-search");
           search.value = "9351";
           search.dispatchEvent(new Event("input", { bubbles: true }));
@@ -73,7 +80,7 @@
 
           restoreAuth();
           document.body.dataset.status = "pass";
-          output.textContent = "PASS: hub session gate, 14 migrations, direct links, filtering, evaluation, reset, source comparison, mobile/light layout, and progress isolation";
+          output.textContent = "PASS: hub session gate, 240 validated migrations, case-study review, direct links, filtering, evaluation, reset, source comparison, mobile/light layout, and progress isolation";
           document.title = "PASS: ArquiQuiz interactive review";
         } catch (error) {
           restoreAuth();

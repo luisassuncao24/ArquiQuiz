@@ -149,8 +149,18 @@
 
   // ── Active test-cases list ────────────────────────────────────────────────
   // Use QUIZ_CONFIG.testCases if provided; otherwise fall back to the global
-  // TEST_CASES variable defined by testcases.js (MB-820 default).
-  var _testCases = _cfg.testCases || (typeof TEST_CASES !== "undefined" ? TEST_CASES : []);
+  // TEST_CASES variable defined by testcases.js (MB-820 default). Case-study
+  // replacements are keyed by case so that equal IDs can never collide.
+  var _interactiveCaseQuestionReplacements = _cfg.interactiveCaseQuestionReplacements || {};
+  var _rawTestCases = _cfg.testCases || (typeof TEST_CASES !== "undefined" ? TEST_CASES : []);
+  var _testCases = _rawTestCases.map(function (testCase) {
+    var replacements = _interactiveCaseQuestionReplacements[testCase.key] || {};
+    return Object.assign({}, testCase, {
+      questions: Array.isArray(testCase.questions) ? testCase.questions.map(function (question) {
+        return replacements[String(question.id)] || question;
+      }) : []
+    });
+  });
 
   // ── State ────────────────────────────────────────────────────────────────
   let activeSet     = null; // one of QUESTION_SETS entries

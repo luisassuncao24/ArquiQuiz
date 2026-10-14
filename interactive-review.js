@@ -30,6 +30,10 @@
       mb820: [questionsSet2, questions, questionsOfficial],
       mb800: [mb800Questions]
     });
+    catalog = catalog.concat(migrations.createCaseReviewCatalog({
+      pl400: PL400_TEST_CASES,
+      mb820: TEST_CASES
+    }));
   } catch (error) {
     stopWithMessage("Não foi possível carregar a revisão", error.message, "error");
     return;
@@ -37,7 +41,8 @@
 
   var examOrder = migrations.getRegisteredExams();
   catalog.sort(function (a, b) {
-    return examOrder.indexOf(a.examKey) - examOrder.indexOf(b.examKey) || a.sourceId - b.sourceId;
+    return examOrder.indexOf(a.examKey) - examOrder.indexOf(b.examKey) ||
+      String(a.caseKey || "").localeCompare(String(b.caseKey || "")) || a.sourceId - b.sourceId;
   });
 
   var examFilter = document.getElementById("review-exam");
@@ -62,7 +67,7 @@
   }
 
   function entryKey(entry) {
-    return entry.examKey + "-" + entry.sourceId;
+    return entry.examKey + "-" + (entry.caseKey ? "case-" + entry.caseKey + "-" : "") + entry.sourceId;
   }
 
   function shortText(value) {
@@ -94,7 +99,7 @@
       button.dataset.question = entryKey(entry);
       button.setAttribute("aria-current", selected === entry ? "true" : "false");
       var label = document.createElement("strong");
-      label.textContent = examLabel(entry.examKey) + " · Q" + entry.sourceId;
+      label.textContent = examLabel(entry.examKey) + (entry.caseLabel ? " · " + entry.caseLabel : "") + " · Q" + entry.sourceId;
       var type = document.createElement("span");
       type.textContent = entry.question.type === "matching" ? "Correspondência" : "Ordenação";
       var preview = document.createElement("small");
@@ -130,7 +135,9 @@
     explanation.textContent = "";
     explanation.hidden = true;
     evaluateButton.disabled = true;
-    document.getElementById("review-meta").textContent = examLabel(entry.examKey) + " · Pergunta " + entry.sourceId + " · " + (entry.question.type === "matching" ? "Correspondência" : "Ordenação");
+    document.getElementById("review-meta").textContent = examLabel(entry.examKey) +
+      (entry.caseLabel ? " · " + entry.caseLabel : "") + " · Pergunta " + entry.sourceId +
+      " · " + (entry.question.type === "matching" ? "Correspondência" : "Ordenação");
     document.getElementById("review-title").textContent = "Pergunta Q" + entry.sourceId;
     document.getElementById("review-question").textContent = entry.question.text;
     renderSource(entry);

@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>ArquiQuiz interactive migration inventory</title></head>
+<body data-status="running">
+  <pre id="result">RUNNING</pre>
+  <script src="../pl900-questions.js"></script>
+  <script src="../pl900-questions2.js"></script>
+  <script src="../pl900-questions3.js"></script>
+  <script src="../pl900-context-revisions.js"></script>
+  <script src="../pl400-questions.js"></script>
+  <script src="../pl400-questions2.js"></script>
+  <script src="../pl400-questions3.js"></script>
+  <script src="../pl400-questions4.js"></script>
+  <script src="../pl400-questions5.js"></script>
+  <script src="../pl400-testcases.js"></script>
+  <script src="../pl400-revisions.js"></script>
+  <script src="../questions.js"></script>
+  <script src="../questions2.js"></script>
+  <script src="../questionsOfficial.js"></script>
+  <script src="../testcases.js"></script>
+  <script src="../mb820-revisions.js"></script>
+  <script src="../question-model.js"></script>
+  <script src="../interactive-question-pilots.js"></script>
+  <script>
+    (function () {
+      "use strict";
+      var output = document.getElementById("result");
+      var filters = new URLSearchParams(window.location.search);
+      var requestedExam = filters.get("exam") || "all";
+      var includeAudit = filters.get("audit") === "1";
+      var pattern = /drag\s*(?:and|-)?\s*drop|match(?: each| the| .* to)|correct order|perform in sequence|arrange.*order|in which order/i;
+      var banks = {
+        pl900: [pl900Questions, pl900Questions2, pl900Questions3],
+        pl400: [pl400Questions, pl400Questions2, pl400Questions3, pl400Questions4, pl400Questions5],
+        mb820: [questionsSet2, questions, questionsOfficial]
+      };
+      var caseStudies = {
+        pl400: PL400_TEST_CASES,
+        mb820: TEST_CASES
+      };
+      var rows = [];
+
+      Object.keys(banks).forEach(function (exam) {
+        if (requestedExam !== "all" && requestedExam !== exam) return;
+        banks[exam].forEach(function (bank) {
+          bank.forEach(function (question) {
+            var text = String(question.text || "");
+            var choices = Array.isArray(question.choices) ? question.choices : [];
+            var isCandidate = question.type === "sequence" || pattern.test(text) || choices.some(function (choice) {
+              return /\s(?:->|\|)\s/.test(String(choice));
+            });
+            if (!isCandidate) return;
+            rows.push({
+              exam: exam,
+              id: question.id,
+              type: question.type,
+              ordered: question.ordered === true,
+              choices: choices.length,
+              text: text.replace(/\s+/g, " ").trim().slice(0, 220),
+              answer: (question.correct || []).map(function (index) { return choices[index]; })
+            });
+          });
+        });
+      });
+
+      rows.sort(function (left, right) { return left.exam.localeCompare(right.exam) || left.id - right.id; });
+      var audit = {};
+      var releaseCounts = {};
+      if (includeAudit) {
+        Object.keys(banks).forEach(function (exam) {
+          if (requestedExam !== "all" && requestedExam !== exam) return;
+          var result = window.ArquiQuizInteractivePilots.auditLegacyInteractionCandidates(exam, banks[exam]);
+          audit[exam] = {
+            eligible: result.eligible.map(function (entry) { return entry.sourceId; }),
+            excluded: result.excluded.map(function (entry) {
+              return { id: entry.sourceId, reason: entry.reason };
+            })
+          };
+        });
+        Object.keys(caseStudies).forEach(function (exam) {
+          if (requestedExam !== "all" && requestedExam !== exam) return;
+          audit[exam + "Cases"] = (caseStudies[exam] || []).map(function (testCase) {
+            var result = window.ArquiQuizInteractivePilots.auditLegacyInteractionCandidates(exam, [testCase.questions || []], { includeManualCandidates: true });
+            return {
+              key: testCase.key,
+              eligible: result.eligible.map(function (entry) { return entry.sourceId; }),
+              excluded: result.excluded.map(function (entry) { return { id: entry.sourceId, reason: entry.reason }; })
+            };
+          });
+        });
+      }
+      Object.keys(banks).forEach(function (exam) {
+        var release = window.ArquiQuizInteractivePilots.createRelease(exam, banks[exam]);
+        if (release) releaseCounts[exam] = release.questions.length;
+      });
+      document.body.dataset.status = "pass";
+      output.textContent = JSON.stringify({ candidateCount: rows.length, candidates: rows, audit: audit, releaseCounts: releaseCounts }, null, 2);
+    })();
+  </script>
+</body>
+</html>

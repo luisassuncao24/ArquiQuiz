@@ -251,6 +251,115 @@
             "https://learn.microsoft.com/en-us/power-apps/maker/canvas-apps/controls/control-gallery"
           ]
         }
+      },
+      {
+        sourceId: 9016,
+        question: {
+          schemaVersion: 1,
+          id: 9016,
+          text: "A company has locations in multiple regions and needs to support isolated Power Platform development and production work. Match each requirement to the appropriate feature.",
+          type: "matching",
+          interaction: {
+            prompts: [
+              { id: "regional-performance", text: "Provide the fastest response time for each geographic location." },
+              { id: "isolate-lifecycle", text: "Create isolated test and production copies of apps and data." }
+            ],
+            options: [
+              { id: "environment", text: "Environment" },
+              { id: "security-group", text: "Security group" },
+              { id: "sharepoint-library", text: "SharePoint library" }
+            ],
+            allowReuse: true
+          },
+          answer: {
+            matches: [
+              { promptId: "regional-performance", optionId: "environment" },
+              { promptId: "isolate-lifecycle", optionId: "environment" }
+            ]
+          },
+          explanation: "Power Platform environments provide regional deployment and lifecycle isolation. Security groups control access to an environment; SharePoint libraries do not provide environment isolation."
+        }
+      },
+      {
+        sourceId: 9068,
+        question: {
+          schemaVersion: 1,
+          id: 9068,
+          text: "A retail company needs to create and share near-real-time Power BI dashboards with store managers. Match each requirement to the appropriate tool.",
+          type: "matching",
+          interaction: {
+            prompts: [
+              { id: "create-dashboard", text: "Create a dashboard that contains one store's sales information." },
+              { id: "share-dashboard", text: "Share that dashboard with store managers." }
+            ],
+            options: [
+              { id: "power-bi-service", text: "Power BI service" },
+              { id: "power-bi-desktop", text: "Power BI Desktop" }
+            ],
+            allowReuse: true
+          },
+          answer: {
+            matches: [
+              { promptId: "create-dashboard", optionId: "power-bi-service" },
+              { promptId: "share-dashboard", optionId: "power-bi-service" }
+            ]
+          },
+          explanation: "Dashboards are created and shared in the Power BI service. Power BI Desktop creates reports but does not publish or share dashboards by itself."
+        }
+      },
+      {
+        sourceId: 9254,
+        question: {
+          schemaVersion: 1,
+          id: 9254,
+          text: "A company needs mobile apps for sales staff to photograph expense receipts and for accountants to update a shared Excel document. Match each scenario to the appropriate app type.",
+          type: "matching",
+          interaction: {
+            prompts: [
+              { id: "sales-expenses", text: "Capture receipt photos and purchase details on mobile devices." },
+              { id: "accounting-excel", text: "View and update a shared Excel document on mobile devices." }
+            ],
+            options: [
+              { id: "canvas-app", text: "Canvas app" },
+              { id: "model-driven-app", text: "Model-driven app" }
+            ],
+            allowReuse: true
+          },
+          answer: {
+            matches: [
+              { promptId: "sales-expenses", optionId: "canvas-app" },
+              { promptId: "accounting-excel", optionId: "canvas-app" }
+            ]
+          },
+          explanation: "Canvas apps support mobile-device capabilities and Excel as a data source. Model-driven apps require Dataverse."
+        }
+      },
+      {
+        sourceId: 9298,
+        question: {
+          schemaVersion: 1,
+          id: 9298,
+          text: "A company needs an external, mobile-friendly seminar-registration experience that integrates with a PCI-compliant payment provider. Match each requirement to the appropriate Power Platform component.",
+          type: "matching",
+          interaction: {
+            prompts: [
+              { id: "external-registration", text: "Provide a responsive site where customers can register and prepay from mobile devices." },
+              { id: "payment-integration", text: "Host the external registration experience that integrates with the payment provider." }
+            ],
+            options: [
+              { id: "power-pages", text: "Power Pages" },
+              { id: "canvas-app", text: "Canvas app" }
+            ],
+            allowReuse: true
+          },
+          answer: {
+            matches: [
+              { promptId: "external-registration", optionId: "power-pages" },
+              { promptId: "payment-integration", optionId: "power-pages" }
+            ]
+          },
+          explanation: "Power Pages provides the external responsive site. Payment-card handling remains the responsibility of the integrated PCI-compliant payment provider."
+        }
       }
     ],
     pl400: [
@@ -443,6 +552,62 @@
             "https://learn.microsoft.com/en-us/power-apps/maker/model-driven-apps/custom-page-localize"
           ]
         }
+      },
+      {
+        sourceId: 4024,
+        question: {
+          schemaVersion: 1,
+          id: 4024,
+          text: "A model-driven app must calculate bicycle-finance payments and remind employees to validate data before saving. Match each requirement to the appropriate action, using out-of-box features before customizations.",
+          type: "matching",
+          interaction: {
+            prompts: [
+              { id: "calculate-payments", text: "Calculate payments based on the financing period." },
+              { id: "validation-reminder", text: "Show a reminder to validate entered information before saving." }
+            ],
+            options: [
+              { id: "out-of-box", text: "Configure an out-of-box feature" },
+              { id: "customize-app", text: "Customize the app" },
+              { id: "edit-xml", text: "Edit XML" }
+            ],
+            allowReuse: true
+          },
+          answer: {
+            matches: [
+              { promptId: "calculate-payments", optionId: "out-of-box" },
+              { promptId: "validation-reminder", optionId: "out-of-box" }
+            ]
+          },
+          explanation: "A calculated column and a business rule are out-of-box capabilities. Custom code or XML editing is unnecessary for these requirements."
+        }
+      },
+      {
+        sourceId: 5227,
+        question: {
+          schemaVersion: 1,
+          id: 5227,
+          text: "You need to define the load order for CSS and HTML resources in a Power Apps component framework control manifest. Match each resource to its order value.",
+          type: "matching",
+          interaction: {
+            prompts: [
+              { id: "css-order", text: "CSS file order" },
+              { id: "html-order", text: "HTML file order" }
+            ],
+            options: [
+              { id: "order-1", text: "1" },
+              { id: "order-2", text: "2" },
+              { id: "order-3", text: "3" }
+            ],
+            allowReuse: true
+          },
+          answer: {
+            matches: [
+              { promptId: "css-order", optionId: "order-1" },
+              { promptId: "html-order", optionId: "order-1" }
+            ]
+          },
+          explanation: "Both listed resources use order 1 in the source manifest answer area."
+        }
       }
     ],
     mb820: [
@@ -523,8 +688,326 @@
     return null;
   }
 
+  /*
+   * A legacy matrix can be promoted only when the source still carries every
+   * prompt and its complete, numbered answer. This deliberately rejects OCR
+   * fragments and ordinary multi-select questions: an interactive layout must
+   * never be inferred from an answer key alone.
+   */
+  var LEGACY_ORDERING_IDS = {
+    pl900: {
+      9039: true, 9112: true, 9172: true, 9181: true, 9264: true,
+      9284: true, 9286: true, 9335: true, 9349: true, 9351: true
+    }
+  };
+
+  var LEGACY_INTERACTION_EXCLUSIONS = {
+    pl400: {
+      3154: "Command-designer sequence relies on a product behavior that is no longer supported.",
+      3159: "Cross-app component-import sequence relies on a retired sharing pattern."
+    },
+    mb820: {
+      560: "The extracted source does not retain the original No. Series code segments."
+    }
+  };
+
+  function stableEntryId(prefix, value, index) {
+    var normalized = String(value || "")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 48);
+    return prefix + "-" + (normalized || "item") + "-" + (index + 1);
+  }
+
+  function stripLegacyAnswerArea(text) {
+    return String(text || "")
+      .replace(/\n\s*Requirements\/scenarios in order:[\s\S]*$/i, "")
+      .replace(/\s*Select the answer option that correctly matches every numbered item\.?\s*$/i, "")
+      .replace(/\s+/g, " ")
+      .trim();
+  }
+
+  function parseNumberedEntries(value) {
+    var entries = [];
+    var parts = String(value || "").split(/\s*\|\s*/);
+    parts.forEach(function (part) {
+      var match = part.match(/^\s*(\d+)\.\s*(.+?)\s*$/);
+      if (!match) return;
+      entries.push({ number: Number(match[1]), text: match[2].trim() });
+    });
+    return entries.length === parts.length ? entries : null;
+  }
+
+  function hasContiguousNumbers(entries) {
+    return Array.isArray(entries) && entries.every(function (entry, index) {
+      return entry.number === index + 1 && entry.text.length > 0;
+    });
+  }
+
+  function parseNumberedPrompts(source) {
+    var match = String(source.text || "").match(/Requirements\/scenarios in order:\s*([\s\S]*?)\s*Select the answer option that correctly matches every numbered item\.?\s*$/i);
+    if (!match) return null;
+    var entries = match[1].split(/\r?\n/).map(function (line) {
+      var item = line.match(/^\s*(\d+)\.\s*(.+?)\s*$/);
+      return item ? { number: Number(item[1]), text: item[2].trim() } : null;
+    }).filter(Boolean);
+    return hasContiguousNumbers(entries) ? entries : null;
+  }
+
+  function uniqueTexts(entries) {
+    var seen = Object.create(null);
+    return entries.filter(function (entry) {
+      var key = entry.text.toLocaleLowerCase();
+      if (seen[key]) return false;
+      seen[key] = true;
+      return true;
+    });
+  }
+
+  function textKey(value) {
+    return String(value || "").trim().toLocaleLowerCase();
+  }
+
+  function addMatchingInstruction(text) {
+    var base = String(text || "").trim();
+    if (/\bmatch\s+(?:each|the)\b/i.test(base)) return base;
+    return base + " Match each requirement to the appropriate option.";
+  }
+
+  function buildNumberedLegacyInteraction(examKey, source) {
+    if (source.type !== "single" || !Array.isArray(source.correct) || source.correct.length !== 1 ||
+      !Array.isArray(source.choices) || !source.choices[source.correct[0]]) {
+      return { reason: "The legacy question does not have one complete numbered answer." };
+    }
+
+    var prompts = parseNumberedPrompts(source);
+    var answers = parseNumberedEntries(source.choices[source.correct[0]]);
+    if (!prompts || !answers || prompts.length !== answers.length || !hasContiguousNumbers(answers)) {
+      return { reason: "The numbered prompts and answer do not form a complete one-to-one structure." };
+    }
+
+    var baseText = stripLegacyAnswerArea(source.text);
+    if (!baseText) return { reason: "The source question has no usable scenario text." };
+
+    if (LEGACY_ORDERING_IDS[examKey] && LEGACY_ORDERING_IDS[examKey][source.id]) {
+      var items = answers.map(function (answer, index) {
+        return { id: stableEntryId("action", answer.text, index), text: answer.text };
+      }).reverse();
+      var idsByText = Object.create(null);
+      items.forEach(function (item) { idsByText[item.text] = item.id; });
+      return {
+        question: {
+          schemaVersion: 1,
+          id: source.id,
+          text: baseText,
+          type: "ordering",
+          interaction: {
+            items: items,
+            slots: answers.map(function (_, index) {
+              return { id: "position-" + (index + 1), text: "Position " + (index + 1) };
+            })
+          },
+          answer: { order: answers.map(function (answer) { return idsByText[answer.text]; }) }
+        }
+      };
+    }
+
+    var options = uniqueTexts(answers);
+    if (options.length < 2) {
+      return { reason: "The correct mapping exposes fewer than two trustworthy option labels." };
+    }
+    var optionIds = Object.create(null);
+    var usedOptionIds = Object.create(null);
+    options.forEach(function (option, index) {
+      var id = stableEntryId("option", option.text, index);
+      optionIds[option.text] = id;
+      usedOptionIds[id] = 0;
+    });
+    var matches = prompts.map(function (prompt, index) {
+      var optionId = optionIds[answers[index].text];
+      usedOptionIds[optionId] += 1;
+      return { promptId: "prompt-" + prompt.number, optionId: optionId };
+    });
+    var allowReuse = Object.keys(usedOptionIds).some(function (id) { return usedOptionIds[id] > 1; });
+    return {
+      question: {
+        schemaVersion: 1,
+        id: source.id,
+        text: addMatchingInstruction(baseText),
+        type: "matching",
+        interaction: {
+          prompts: prompts.map(function (prompt) { return { id: "prompt-" + prompt.number, text: prompt.text }; }),
+          options: options.map(function (option, index) {
+            return { id: stableEntryId("option", option.text, index), text: option.text };
+          }),
+          allowReuse: allowReuse
+        },
+        answer: { matches: matches }
+      }
+    };
+  }
+
+  function parseArrowPair(value) {
+    var match = String(value || "").match(/^\s*(.+?)\s+->\s+(.+?)\s*$/);
+    return match ? { prompt: match[1].trim(), option: match[2].trim() } : null;
+  }
+
+  function buildArrowPairInteraction(source) {
+    if (source.type !== "multiple" || !Array.isArray(source.correct) || source.correct.length < 2 || !Array.isArray(source.choices)) {
+      return { reason: "The legacy question does not contain multiple complete answer pairs." };
+    }
+    var pairs = source.correct.map(function (choiceIndex) { return parseArrowPair(source.choices[choiceIndex]); });
+    if (pairs.some(function (pair) { return !pair; })) {
+      return { reason: "At least one correct selection is not an explicit requirement-to-option pair." };
+    }
+    var promptKeys = Object.create(null);
+    if (pairs.some(function (pair) {
+      var key = pair.prompt.toLocaleLowerCase();
+      if (promptKeys[key]) return true;
+      promptKeys[key] = true;
+      return false;
+    })) {
+      return { reason: "The source contains duplicate prompts and cannot be rendered as a one-to-one match." };
+    }
+    var expectedPromptKeys = Object.create(null);
+    pairs.forEach(function (pair) { expectedPromptKeys[textKey(pair.prompt)] = true; });
+    var sourcePairs = source.choices.map(parseArrowPair).filter(function (pair) {
+      return pair && expectedPromptKeys[textKey(pair.prompt)];
+    });
+    var options = uniqueTexts(sourcePairs.map(function (pair) { return { text: pair.option }; }));
+    if (options.length < 2) {
+      return { reason: "The correct mapping exposes fewer than two trustworthy option labels." };
+    }
+    var optionIds = Object.create(null);
+    var optionUses = Object.create(null);
+    options.forEach(function (option, index) {
+      var id = stableEntryId("option", option.text, index);
+      optionIds[textKey(option.text)] = id;
+      optionUses[id] = 0;
+    });
+    var matches = pairs.map(function (pair, index) {
+      var optionId = optionIds[textKey(pair.option)];
+      optionUses[optionId] += 1;
+      return { promptId: "prompt-" + (index + 1), optionId: optionId };
+    });
+    var allowReuse = Object.keys(optionUses).some(function (id) { return optionUses[id] > 1; });
+    return {
+      question: {
+        schemaVersion: 1,
+        id: source.id,
+        text: addMatchingInstruction(source.text),
+        type: "matching",
+        interaction: {
+          prompts: pairs.map(function (pair, index) { return { id: "prompt-" + (index + 1), text: pair.prompt }; }),
+          options: options.map(function (option, index) {
+            return { id: stableEntryId("option", option.text, index), text: option.text };
+          }),
+          allowReuse: allowReuse
+        },
+        answer: { matches: matches }
+      }
+    };
+  }
+
+  function buildLegacyOrderingInteraction(source) {
+    if (source.type !== "sequence" || !Array.isArray(source.choices) || !Array.isArray(source.correct) || source.correct.length < 2) {
+      return { reason: "The legacy question does not retain a complete ordered action list." };
+    }
+    var answerItems = source.correct.map(function (choiceIndex) {
+      return typeof choiceIndex === "number" ? source.choices[choiceIndex] : null;
+    });
+    if (answerItems.some(function (item) { return typeof item !== "string" || !item.trim(); })) {
+      return { reason: "The legacy order references a missing action." };
+    }
+    if (uniqueTexts(answerItems.map(function (item) { return { text: item }; })).length !== answerItems.length) {
+      return { reason: "The legacy order repeats an action label and cannot be rendered unambiguously." };
+    }
+    var items = source.choices.map(function (item, index) {
+      return { id: "action-" + (index + 1), text: String(item).trim() };
+    });
+    if (items.length === answerItems.length) items = items.slice(1).concat(items.slice(0, 1));
+    var idByText = Object.create(null);
+    items.forEach(function (item) { idByText[item.text] = item.id; });
+    return {
+      question: {
+        schemaVersion: 1,
+        id: source.id,
+        text: String(source.text || "").trim(),
+        type: "ordering",
+        interaction: {
+          items: items,
+          slots: answerItems.map(function (_, index) {
+            return { id: "position-" + (index + 1), text: "Position " + (index + 1) };
+          })
+        },
+        answer: { order: answerItems.map(function (item) { return idByText[item]; }) }
+      }
+    };
+  }
+
+  function isLegacyInteractionCandidate(examKey, source) {
+    if (!source) return false;
+    if (source.type === "sequence") return true;
+    if (examKey === "pl900") {
+      return Boolean(parseNumberedPrompts(source) && Array.isArray(source.correct) && source.correct.length === 1 &&
+        Array.isArray(source.choices) && parseNumberedEntries(source.choices[source.correct[0]]));
+    }
+    return source.type === "multiple" && Array.isArray(source.correct) && source.correct.length >= 2 &&
+      source.correct.every(function (choiceIndex) {
+        return Array.isArray(source.choices) && Boolean(parseArrowPair(source.choices[choiceIndex]));
+      });
+  }
+
+  function auditLegacyInteractionCandidate(examKey, source) {
+    var excluded = (LEGACY_INTERACTION_EXCLUSIONS[examKey] || {})[source.id];
+    if (excluded) return { sourceId: source.id, eligible: false, reason: excluded };
+
+    var result = source.type === "sequence"
+      ? buildLegacyOrderingInteraction(source)
+      : examKey === "pl900"
+        ? buildNumberedLegacyInteraction(examKey, source)
+        : buildArrowPairInteraction(source);
+    if (!result.question) return { sourceId: source.id, eligible: false, reason: result.reason };
+
+    var validation = questionModel.validateQuestion(result.question, { allowLegacy: false });
+    if (!validation.valid || validation.warnings.length > 0) {
+      return {
+        sourceId: source.id,
+        eligible: false,
+        reason: (validation.errors.concat(validation.warnings)).map(function (issue) {
+          return issue.path + " " + issue.message;
+        }).join("; ")
+      };
+    }
+    return { sourceId: source.id, eligible: true, question: result.question };
+  }
+
+  function auditLegacyInteractionCandidates(examKey, questionBanks, options) {
+    var settings = options || {};
+    var manualIds = Object.create(null);
+    if (settings.includeManualCandidates !== true) {
+      (PILOT_DEFINITIONS[examKey] || []).forEach(function (definition) { manualIds[definition.sourceId] = true; });
+    }
+    var seen = Object.create(null);
+    var result = { eligible: [], excluded: [] };
+    (questionBanks || []).forEach(function (bank) {
+      (bank || []).forEach(function (source) {
+        if (!source || manualIds[source.id] || seen[source.id]) return;
+        seen[source.id] = true;
+        if (!isLegacyInteractionCandidate(examKey, source)) return;
+        var audit = auditLegacyInteractionCandidate(examKey, source);
+        if (audit.eligible) result.eligible.push(audit);
+        else result.excluded.push(audit);
+      });
+    });
+    result.eligible.sort(function (left, right) { return left.sourceId - right.sourceId; });
+    result.excluded.sort(function (left, right) { return left.sourceId - right.sourceId; });
+    return result;
+  }
+
   function copySourceMetadata(source, target, mode) {
-    ["category", "source", "sourceUrl", "sources", "originalPractice"].forEach(function (key) {
+    ["category", "source", "sourceUrl", "sources", "originalPractice", "explanation"].forEach(function (key) {
       if (Object.prototype.hasOwnProperty.call(source, key)) target[key] = clone(source[key]);
     });
     target.interactiveMigration = {
@@ -548,8 +1031,22 @@
     return target;
   }
 
+  function validateMigratedQuestion(examKey, source, canonicalQuestion, mode, errors, automatic) {
+    var question = copySourceMetadata(source, clone(canonicalQuestion), mode);
+    if (automatic) question.interactiveMigration.autoValidated = true;
+    var validation = questionModel.validateQuestion(question, { allowLegacy: false });
+    if (!validation.valid || validation.warnings.length > 0) {
+      errors.push("Question " + question.id + ": " + (validation.errors.concat(validation.warnings)).map(function (issue) {
+        return issue.path + " " + issue.message;
+      }).join("; "));
+      return null;
+    }
+    return question;
+  }
+
   function createQuestions(examKey, questionBanks, mode) {
-    var definitions = PILOT_DEFINITIONS[String(examKey || "").toLowerCase()];
+    examKey = String(examKey || "").toLowerCase();
+    var definitions = PILOT_DEFINITIONS[examKey];
     if (!definitions || definitions.length === 0) return null;
 
     var errors = [];
@@ -559,19 +1056,36 @@
         errors.push("Source question " + definition.sourceId + " was not found.");
         return null;
       }
-      var question = copySourceMetadata(source, clone(definition.question), mode);
-      var validation = questionModel.validateQuestion(question, { allowLegacy: false });
-      if (!validation.valid) {
-        errors.push("Question " + question.id + ": " + validation.errors.map(function (issue) {
-          return issue.path + " " + issue.message;
-        }).join("; "));
-        return null;
-      }
-      return question;
+      return validateMigratedQuestion(examKey, source, definition.question, mode, errors, false);
     }).filter(Boolean);
+
+    var audit = auditLegacyInteractionCandidates(examKey, questionBanks || []);
+    audit.eligible.forEach(function (entry) {
+      var source = findSourceQuestion(questionBanks || [], entry.sourceId);
+      if (!source) {
+        errors.push("Source question " + entry.sourceId + " was not found.");
+        return;
+      }
+      var question = validateMigratedQuestion(examKey, source, entry.question, mode, errors, true);
+      if (question) questions.push(question);
+    });
 
     if (errors.length > 0) {
       throw new Error("Interactive " + mode + " migration failed for " + examKey + ": " + errors.join(" | "));
+    }
+    questions.sort(function (left, right) { return left.id - right.id; });
+    return questions;
+  }
+
+  function createCaseQuestions(examKey, testCase, mode) {
+    var errors = [];
+    var audit = auditLegacyInteractionCandidates(examKey, [testCase.questions || []], { includeManualCandidates: true });
+    var questions = audit.eligible.map(function (entry) {
+      var source = findSourceQuestion([testCase.questions || []], entry.sourceId);
+      return validateMigratedQuestion(examKey, source, entry.question, mode, errors, true);
+    }).filter(Boolean);
+    if (errors.length > 0) {
+      throw new Error("Interactive " + mode + " case migration failed for " + examKey + " / " + testCase.key + ": " + errors.join(" | "));
     }
     return questions;
   }
@@ -601,8 +1115,8 @@
     if (!definitions || definitions.length === 0) return null;
 
     var settings = options || {};
-    var migratedIds = definitions.map(function (definition) { return definition.sourceId; });
     var questions = createQuestions(examKey, questionBanks, "release");
+    var migratedIds = questions.map(function (question) { return question.id; });
     var compatibilityById = {};
     questions.forEach(function (question) { compatibilityById[String(question.id)] = question; });
     if (settings.force !== true && isLegacyInteractionFallbackEnabled(settings.location)) {
@@ -624,6 +1138,43 @@
       byId: byId,
       compatibilityById: compatibilityById,
       migratedIds: migratedIds
+    };
+  }
+
+  function createCaseRelease(examKey, testCases, options) {
+    examKey = String(examKey || "").toLowerCase();
+    var settings = options || {};
+    var byCase = {};
+    var compatibilityByCase = {};
+    var questions = [];
+    (testCases || []).forEach(function (testCase) {
+      if (!testCase || !testCase.key || !Array.isArray(testCase.questions)) return;
+      var migrated = createCaseQuestions(examKey, testCase, "release");
+      if (migrated.length === 0) return;
+      var byId = {};
+      migrated.forEach(function (question) {
+        byId[String(question.id)] = question;
+        questions.push(question);
+      });
+      byCase[testCase.key] = byId;
+      compatibilityByCase[testCase.key] = byId;
+    });
+    if (settings.force !== true && isLegacyInteractionFallbackEnabled(settings.location)) {
+      return {
+        enabled: false,
+        questions: [],
+        byCase: {},
+        compatibilityByCase: compatibilityByCase,
+        migratedCount: questions.length,
+        fallbackReason: "legacyInteractions"
+      };
+    }
+    return {
+      enabled: questions.length > 0,
+      questions: questions,
+      byCase: byCase,
+      compatibilityByCase: compatibilityByCase,
+      migratedCount: questions.length
     };
   }
 
@@ -662,13 +1213,39 @@
     return catalog;
   }
 
+  function createCaseReviewCatalog(caseStudiesByExam) {
+    var catalog = [];
+    Object.keys(caseStudiesByExam || {}).forEach(function (examKey) {
+      (caseStudiesByExam[examKey] || []).forEach(function (testCase) {
+        if (!testCase || !testCase.key || !Array.isArray(testCase.questions)) return;
+        var questions = createCaseQuestions(examKey, testCase, "review");
+        questions.forEach(function (question) {
+          var source = findSourceQuestion([testCase.questions], question.id);
+          catalog.push({
+            examKey: examKey,
+            caseKey: testCase.key,
+            caseLabel: testCase.label || testCase.key,
+            sourceId: question.id,
+            sourceQuestion: clone(source),
+            question: question
+          });
+        });
+      });
+    });
+    return catalog;
+  }
+
   return Object.freeze({
     isLocalEnvironment: isLocalEnvironment,
     isLocalPreviewEnabled: isLocalPreviewEnabled,
     isLegacyInteractionFallbackEnabled: isLegacyInteractionFallbackEnabled,
     createPilotSet: createPilotSet,
     createRelease: createRelease,
+    createCaseRelease: createCaseRelease,
     createReviewCatalog: createReviewCatalog,
+    createCaseReviewCatalog: createCaseReviewCatalog,
+    auditLegacyInteractionCandidate: auditLegacyInteractionCandidate,
+    auditLegacyInteractionCandidates: auditLegacyInteractionCandidates,
     getRegisteredExams: getRegisteredExams,
     getPilotIds: getPilotIds
   });

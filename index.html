@@ -471,8 +471,9 @@
         "use strict";
 
         // Release policy: increment this version and add a CHANGE_LOG entry for every deployed change.
-        var APP_VERSION = "1.2.0-beta.8";
+        var APP_VERSION = "1.2.0";
         var CHANGE_LOG = [
+          { version: "1.2.0", text: "Finalized interactive matching and ordering layouts after a complete source-structure audit. ArquiQuiz now applies 240 validated migrations: 109 PL-900, 109 PL-400, 21 PL-400 case-study questions, and one MB-820 question. Ambiguous, corrupted, or obsolete-source entries remain in their original layout instead of being forced into the new model." },
           { version: "1.2.0-beta.8", text: "Made the interactive-question review available from the public hub to signed-in colleagues. The quick review opens migrated questions directly, preserves exam progress, and now checks the existing hub session without a second password prompt." },
           { version: "1.2.0-beta.7", text: "Added a local-only interactive-question review page linked from the local hub. It automatically lists every registered layout migration, supports direct question links, filters, answer testing, and comparison with the previous wording without changing quiz progress." },
           { version: "1.2.0-beta.6", text: "Interactive layouts Phase 6: promoted all 14 validated matching and ordering migrations into the normal PL-900, PL-400, and MB-820 question sets, preserved old saved-result readability, and added a temporary legacyInteractions fallback for controlled rollback." },
